@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const cityLandmarks = {
             "Alipurduar": [
-                { name: "New Alipurduar Railway Station", lat: 26.48642, lng: 89.54156, type: "transport", icon: "🚉" },
+                { name: "New Alipurduar Railway Station", lat: 26.486342, lng: 89.541450, type: "transport", icon: "🚉" },
                 { name: "Alipurduar Court Station", lat: 26.501588, lng: 89.527886, type: "transport", icon: "🚉" },
                 { name: "Alipurduar Station", lat: 26.478928, lng: 89.521043, type: "transport", icon: "🚉" }, // Changed
                 { name: "Alipurduar Junction Railway Station", lat: 26.523268, lng: 89.533703, type: "transport", icon: "🚉" },
