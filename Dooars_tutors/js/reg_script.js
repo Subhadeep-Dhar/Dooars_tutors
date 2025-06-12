@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 { name: "Alipurduar Court Station", lat: 26.501588, lng: 89.527886, type: "transport", icon: "🚉" },
                 { name: "Alipurduar Station", lat: 26.478928, lng: 89.521043, type: "transport", icon: "🚉" }, // Changed
                 { name: "Alipurduar Junction Railway Station", lat: 26.523268, lng: 89.533703, type: "transport", icon: "🚉" },
-                // { name: "Buxa Tiger Reserve Office", lat: 26.4878, lng: 89.5245, type: "office", icon: "🏢" },
+                { name: "Alipurduar District Hospital", lat: 26.484184, lng: 89.523363, type: "office", icon: "🏢" },
                 // { name: "Alipurduar Bus Stand", lat: 26.4932, lng: 89.5312, type: "transport", icon: "🚌" },
                 // { name: "Alipurduar Town Hall", lat: 26.4908, lng: 89.5285, type: "government", icon: "🏛️" },
                 // { name: "Alipurduar High School", lat: 26.4885, lng: 89.5265, type: "education", icon: "🏫" },
