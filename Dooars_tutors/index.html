@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DooarsTutors - Find Your Perfect Tutor</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">DooarsTutors</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li class="dropdown">
+                    <a href="#skills">Skills</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#music">Music</a></li>
+                        <li><a href="#dance">Dance</a></li>
+                        <li><a href="#arts">Arts</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#sports&health">Sports & Health</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#sports">Sports</a></li>
+                        <li><a href="#yoga">Yoga</a></li>
+                        <li><a href="#gym">Gym</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#register">Become a Tutor</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#individual">As an Individual</a></li>
+                        <li><a href="#organization">As Organization</a></li>
+                    </ul>
+                </li>
+                <!-- <li><a href="#become-tutor">Become a Tutor</a></li> -->
+                <li><a href="#login">Login</a></li>
+            </ul>
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-overlay"></div>
+    <nav class="mobile-nav">
+        <div class="mobile-nav-header">
+            <h3>DooarsTutors</h3>
+        </div>
+        <div class="mobile-nav-content">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li class="dropdown">
+                    <a href="#skills">Skills</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#music">Music</a></li>
+                        <li><a href="#dance">Dance</a></li>
+                        <li><a href="#arts">Arts</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#sports&health">Sports & Health</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#sports">Sports</a></li>
+                        <li><a href="#yoga">Yoga</a></li>
+                        <li><a href="#gym">Gym</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#register">Become a Tutor</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#individual">As an Individual</a></li>
+                        <li><a href="#organization">As Organization</a></li>
+                    </ul>
+                </li>
+                <!-- <li><a href="#become-tutor">Become a Tutor</a></li> -->
+                <li><a href="#login">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <h1>Find Your Perfect Tutor</h1>
+            <p>Connect with qualified teachers across all boards and subjects. Excellence in education, delivered personally.</p>
+            
+            <!-- Search Section -->
+            <div class="search-section">
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Search by teacher name, subject, or class...">
+                    <select class="location-select">
+                        <option value="">Select Place</option>
+                        <option value="Alipurduar">Alipurduar</option>
+                        <option value="Coochbehar">Coochbehar</option>
+                    </select>
+                    <button class="search-btn">Search</button>
+                </div>
+                
+                <div class="filters">
+            <div class="filter-group">
+                <div class="filter-label" onclick="toggleDropdown('class')">
+                    Class 
+                    <span class="selected-count" id="class-count">0 selected</span>
+                </div>
+                <div class="filter-dropdown" id="class-dropdown">
+                    <div class="filter-option" onclick="toggleFilter('class', '1')">
+                        <div class="filter-checkbox" id="class-1"></div>
+                        <span class="filter-option-text">Class 1</span>
+                    </div>
+                    <div class="filter-option" onclick="toggleFilter('class', '2')">
+                        <div class="filter-checkbox" id="class-2"></div>
+                        <span class="filter-option-text">Class 2</span>
+                    </div>
+                    <div class="filter-option" onclick="toggleFilter('class', '3')">
+                        <div class="filter-checkbox" id="class-3"></div>
+                        <span class="filter-option-text">Class 3</span>
+                    </div>
+                    <div class="filter-option" onclick="toggleFilter('class', '4')">
+                        <div class="filter-checkbox" id="class-4"></div>
+                        <span class="filter-option-text">Class 4</span>
+                    </div>
+                    <div class="filter-option" onclick="toggleFilter('class', '5')">
+                        <div class="filter-checkbox" id="class-5"></div>
+                        <span class="filter-option-text">Class 5</span>
+                    </div>
+                    <div class="filter-option" onclick="toggleFilter('class', '6')">
+                        <div class="filter-checkbox" id="class-6"></div>
+                        <span class="filter-option-text">Class 6</span>
+                    </div>
+                    <div class="filter-option" onclick="toggleFilter('class', '7')">
+                        <div class="filter-checkbox" id="class-7"></div>
+                        <span class="filter-option-text">Class 7</span>
+                    </div>
+                    <div class="filter-option" onclick="toggleFilter('class', '8')">
+                        <div class="filter-checkbox" id="class-8"></div>
+                        <span class="filter-option-text">Class 8</span>
+                    </div>
+                    <div class="filter-option" onclick="toggleFilter('class', '9')">
+                        <div class="filter-checkbox" id="class-9"></div>
+                        <span class="filter-option-text">Class 9</span>
+                    </div>
+                    <div class="filter-option" onclick="toggleFilter('class', '10')">
+                        <div class="filter-checkbox" id="class-10"></div>
+                        <span class="filter-option-text">Class 10</span>
+                    </div>
+                    <div class="filter-option" onclick="toggleFilter('class', '11')">
+                        <div class="filter-checkbox" id="class-11"></div>
+                        <span class="filter-option-text">Class 11</span>
+                    </div>
+                    <div class="filter-option" onclick="toggleFilter('class', '12')">
+                        <div class="filter-checkbox" id="class-12"></div>
+                        <span class="filter-option-text">Class 12</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="filter-group">
+                <div class="filter-label" onclick="toggleDropdown('board')">
+                    Board 
+                    <span class="selected-count" id="board-count">0 selected</span>
+                </div>
+                <div class="filter-dropdown" id="board-dropdown">
+                    <div class="filter-option" onclick="toggleFilter('board', 'wbbse')">
+                        <div class="filter-checkbox" id="board-wbbse"></div>
+                        <span class="filter-option-text">WBBSE</span>
+                    </div>
+                    <div class="filter-option" onclick="toggleFilter('board', 'cbse')">
+                        <div class="filter-checkbox" id="board-cbse"></div>
+                        <span class="filter-option-text">CBSE</span>
+                    </div>
+                    <div class="filter-option" onclick="toggleFilter('board', 'icse')">
+                        <div class="filter-checkbox" id="board-icse"></div>
+                        <span class="filter-option-text">ICSE</span>
+                    </div>
+                    <div class="filter-option" onclick="toggleFilter('board', 'ise')">
+                        <div class="filter-checkbox" id="board-ise"></div>
+                        <span class="filter-option-text">ISE</span>
+                    </div>
+                    <div class="filter-option" onclick="toggleFilter('board', 'wbcshe')">
+                        <div class="filter-checkbox" id="board-wbcshe"></div>
+                        <span class="filter-option-text">WBCSHE</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="filter-group">
+                <div class="filter-label" onclick="toggleDropdown('subject')">
+                    Subject 
+                    <span class="selected-count" id="subject-count">0 selected</span>
+                </div>
+                <div class="filter-dropdown" id="subject-dropdown">
+                    <div class="filter-option" onclick="toggleFilter('subject', 'english')">
+                        <div class="filter-checkbox" id="subject-english"></div>
+                        <span class="filter-option-text">English</span>
+                    </div>
+                    <div class="filter-option" onclick="toggleFilter('subject', 'bengali')">
+                        <div class="filter-checkbox" id="subject-bengali"></div>
+                        <span class="filter-option-text">Bengali</span>
+                    </div>
+                    <div class="filter-option" onclick="toggleFilter('subject', 'mathematics')">
+                        <div class="filter-checkbox" id="subject-mathematics"></div>
+                        <span class="filter-option-text">Mathematics</span>
+                    </div>
+                    <div class="filter-option" onclick="toggleFilter('subject', 'physics')">
+                        <div class="filter-checkbox" id="subject-physics"></div>
+                        <span class="filter-option-text">Physics</span>
+                    </div>
+                    <div class="filter-option" onclick="toggleFilter('subject', 'chemistry')">
+                        <div class="filter-checkbox" id="subject-chemistry"></div>
+                        <span class="filter-option-text">Chemistry</span>
+                    </div>
+                    <div class="filter-option" onclick="toggleFilter('subject', 'biology')">
+                        <div class="filter-checkbox" id="subject-biology"></div>
+                        <span class="filter-option-text">Biology</span>
+                    </div>
+                    <div class="filter-option" onclick="toggleFilter('subject', 'history')">
+                        <div class="filter-checkbox" id="subject-history"></div>
+                        <span class="filter-option-text">History</span>
+                    </div>
+                    <div class="filter-option" onclick="toggleFilter('subject', 'geography')">
+                        <div class="filter-checkbox" id="subject-geography"></div>
+                        <span class="filter-option-text">Geography</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Boards Section -->
+    <section class="boards-section">
+        <div class="boards-container">
+            <h2 class="section-title">Explore Teachers by Board</h2>
+            
+            <div class="boards-grid">
+                <div class="board-card" onclick="exploreBoard('wbbse')">
+                    <div class="board-icon">WB</div>
+                    <h3>WBBSE</h3>
+                    <p>West Bengal Board of Secondary Education - Find expert teachers for Bengali medium and English medium schools following WBBSE curriculum.</p>
+                </div>
+                
+                <div class="board-card" onclick="exploreBoard('cbse')">
+                    <div class="board-icon">CB</div>
+                    <h3>CBSE</h3>
+                    <p>Central Board of Secondary Education - Connect with qualified tutors specializing in CBSE syllabus and NCERT textbooks.</p>
+                </div>
+                
+                <div class="board-card" onclick="exploreBoard('icse')">
+                    <div class="board-icon">IC</div>
+                    <h3>ICSE</h3>
+                    <p>Indian Certificate of Secondary Education - Discover teachers experienced in ICSE curriculum and comprehensive subject knowledge.</p>
+                </div>
+                
+                <div class="board-card" onclick="exploreBoard('ise')">
+                    <div class="board-icon">IS</div>
+                    <h3>ISE</h3>
+                    <p>Indian School Examination - Find dedicated educators familiar with ISE board requirements and assessment patterns.</p>
+                </div>
+                
+                <div class="board-card" onclick="exploreBoard('wbcshe')">
+                    <div class="board-icon">WC</div>
+                    <h3>WBCSHE</h3>
+                    <p>West Bengal Council of Secondary and Higher Education - Connect with teachers for higher secondary education in West Bengal.</p>
+                </div>
+                
+                <div class="board-card" onclick="exploreBoard('others')">
+                    <div class="board-icon">+</div>
+                    <h3>Other Boards</h3>
+                    <p>State boards, international curricula, and specialized programs - Find tutors for various educational systems and competitive exams.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>DooarsTutors</h4>
+                <p>Connecting students with qualified teachers across India. Excellence in education, delivered personally.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#become-tutor">Become a Tutor</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Boards</h4>
+                <ul>
+                    <li><a href="#wbbse">WBBSE</a></li>
+                    <li><a href="#cbse">CBSE</a></li>
+                    <li><a href="#icse">ICSE</a></li>
+                    <li><a href="#ise">ISE</a></li>
+                    <li><a href="#wbcshe">WBCSHE</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#help">Help Center</a></li>
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                    <li><a href="#terms">Terms of Service</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 DooarsTutors. All rights reserved. Made by DooarsTutors.</p>
+        </div>
+    </footer>
+
+    <script src="./js/script.js"></script>
+</body>
+</html>
