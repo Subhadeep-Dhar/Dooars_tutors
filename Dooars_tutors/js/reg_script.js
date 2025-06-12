@@ -55,20 +55,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const cityLandmarks = {
             "Alipurduar": [
-                { name: "Alipurduar Railway Station", lat: 26.4918, lng: 89.5289, type: "transport", icon: "🚉" },
-                { name: "Alipurduar Court", lat: 26.4925, lng: 89.5305, type: "government", icon: "🏛️" },
-                { name: "Alipurduar District Hospital", lat: 26.4912, lng: 89.5298, type: "hospital", icon: "🏥" },
-                { name: "Alipurduar College", lat: 26.4895, lng: 89.5275, type: "education", icon: "🎓" },
-                { name: "Buxa Tiger Reserve Office", lat: 26.4878, lng: 89.5245, type: "office", icon: "🏢" },
-                { name: "Alipurduar Bus Stand", lat: 26.4932, lng: 89.5312, type: "transport", icon: "🚌" },
-                { name: "Alipurduar Town Hall", lat: 26.4908, lng: 89.5285, type: "government", icon: "🏛️" },
-                { name: "Alipurduar High School", lat: 26.4885, lng: 89.5265, type: "education", icon: "🏫" },
-                { name: "Alipurduar Police Station", lat: 26.4915, lng: 89.5295, type: "government", icon: "👮" },
-                { name: "Alipurduar Market", lat: 26.4928, lng: 89.5302, type: "market", icon: "🛒" },
-                { name: "Ward 1 Office", lat: 26.4888, lng: 89.5255, type: "ward", icon: "🏛️" },
-                { name: "Ward 2 Office", lat: 26.4905, lng: 89.5275, type: "ward", icon: "🏛️" },
-                { name: "Ward 3 Office", lat: 26.4922, lng: 89.5295, type: "ward", icon: "🏛️" },
-                { name: "Ward 4 Office", lat: 26.4938, lng: 89.5315, type: "ward", icon: "🏛️" },
+                { name: "New Alipurduar Railway Station", lat: 26.486342, lng: 89.541450, type: "transport", icon: "🚉" },
+                { name: "Alipurduar Court Station", lat: 26.501588, lng: 89.527886, type: "transport", icon: "🚉" },
+                { name: "Alipurduar Station", lat: 26.478928, lng: 89.521043, type: "transport", icon: "🚉" }, // Changed
+                { name: "Alipurduar Junction Railway Station", lat: 26.523268, lng: 89.533703, type: "transport", icon: "🚉" },
+                { name: "Alipurduar District Hospital", lat: 26.484184, lng: 89.523363, type: "office", icon: "🏢" },
+                // { name: "Alipurduar Bus Stand", lat: 26.4932, lng: 89.5312, type: "transport", icon: "🚌" },
+                // { name: "Alipurduar Town Hall", lat: 26.4908, lng: 89.5285, type: "government", icon: "🏛️" },
+                // { name: "Alipurduar High School", lat: 26.4885, lng: 89.5265, type: "education", icon: "🏫" },
+                // { name: "Alipurduar Police Station", lat: 26.4915, lng: 89.5295, type: "government", icon: "👮" },
+                // { name: "Alipurduar Market", lat: 26.4928, lng: 89.5302, type: "market", icon: "🛒" },
+                // { name: "Ward 1 Office", lat: 26.4888, lng: 89.5255, type: "ward", icon: "🏛️" },
+                // { name: "Ward 2 Office", lat: 26.4905, lng: 89.5275, type: "ward", icon: "🏛️" },
+                // { name: "Ward 3 Office", lat: 26.4922, lng: 89.5295, type: "ward", icon: "🏛️" },
+                // { name: "Ward 4 Office", lat: 26.4938, lng: 89.5315, type: "ward", icon: "🏛️" },
                 { name: "Parade Ground", lat: 26.500870, lng: 89.532598, type: "ground", icon: "🏏" },
                 { name: "Indoor Stadium", lat: 26.503662, lng: 89.530517, type: "stadium", icon: "🏟" }
             ],
@@ -108,18 +108,18 @@ document.addEventListener('DOMContentLoaded', function () {
         };
 
         const landmarkColors = {
-            "transport": "#FF6B6B",
-            "education": "#4ECDC4",
-            "government": "#45B7D1",
-            "hospital": "#96CEB4",
-            "market": "#FFEAA7",
-            "heritage": "#DDA0DD",
-            "religious": "#F39C12",
-            "sports": "#E17055",
-            "office": "#6C5CE7",
-            "ward": "#A29BFE",
-            "ground": "#C9E4CA",
-            "stadium": "#FFC107",
+            "transport": "#c2c1a5",
+            "education": "#c2c1a5",
+            "government": "#c2c1a5",
+            "hospital": "#c2c1a5",
+            "market": "#c2c1a5",
+            "heritage": "#c2c1a5",
+            "religious": "#c2c1a5",
+            "sports": "#c2c1a5",
+            "office": "#c2c1a5",
+            "ward": "#c2c1a5",
+            "ground": "#c2c1a5",
+            "stadium": "#c2c1a5",
         };
 
         let map, marker = null, landmarkMarkers = [], cityBoundaryRect = null;
