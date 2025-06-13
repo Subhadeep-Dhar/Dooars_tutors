@@ -1116,41 +1116,138 @@ $conn->close();
     </section>
 </div>
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <section class="all-tutors-map">
+  <h2>All Tutors on Map</h2>
+  <div id="tutorMap" style="height: 500px; width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"></div>
+  <!-- <div id="mapStats" style="margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 5px; font-size: 14px; color: #666;">
+    Loading tutors...
+  </div> -->
+</section>
 
-    <?php
-        $conn = new mysqli("localhost:3307", "root", "", "dooars_tutors");
-        if ($conn->connect_error) die("DB connection failed");
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-        $sql = "SELECT name, latitude, `longitude`, address FROM tutors WHERE status = 'active' AND latitude IS NOT NULL AND `longitude` IS NOT NULL";
-        $result = $conn->query($sql);
+<?php
+$conn = new mysqli("localhost:3307", "root", "", "dooars_tutors");
+if ($conn->connect_error) die("DB connection failed: " . $conn->connect_error);
 
-        $tutor_locations = [];
-        while ($row = $result->fetch_assoc()) {
-            $tutor_locations[] = $row;
+$sql = "SELECT name, latitude, longitude, address FROM tutors WHERE status = 'active' AND latitude IS NOT NULL AND longitude IS NOT NULL";
+$result = $conn->query($sql);
+
+if (!$result) {
+    die("Query failed: " . $conn->error);
+}
+
+$tutor_locations = [];
+while ($row = $result->fetch_assoc()) {
+    $tutor_locations[] = $row;
+}
+$conn->close();
+?>
+
+<script>
+  const tutorLocations = <?php echo json_encode($tutor_locations); ?>;
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const mapElement = document.getElementById('tutorMap');
+    const statsElement = document.getElementById('mapStats');
+    
+    // Check if map element exists
+    if (!mapElement) {
+        console.error("Map element not found");
+        return;
+    }
+    
+    // Check if tutor data is available
+    if (!tutorLocations || tutorLocations.length === 0) {
+        statsElement.innerHTML = '<span style="color: #dc3545;">No active tutors with locations found.</span>';
+        
+        // Still initialize map for empty state
+        const map = L.map('tutorMap').setView([26.48, 89.53], 12);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+        return;
+    }
+    
+    // Initialize map
+    const map = L.map('tutorMap').setView([26.48, 89.53], 10);
+    
+    // Add tile layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+        maxZoom: 18
+    }).addTo(map);
+    
+    // Store all markers for bounds calculation
+    const markers = [];
+    let validTutors = 0;
+    let invalidTutors = 0;
+    
+    // Add markers for each tutor
+    tutorLocations.forEach((tutor) => {
+        if (tutor.latitude && tutor.longitude) {
+            try {
+                const lat = parseFloat(tutor.latitude);
+                const lng = parseFloat(tutor.longitude);
+                
+                // Validate coordinates
+                if (isNaN(lat) || isNaN(lng) || lat < -90 || lat > 90 || lng < -180 || lng > 180) {
+                    invalidTutors++;
+                    return;
+                }
+                
+                const marker = L.marker([lat, lng]).addTo(map);
+                marker.bindPopup(`
+                    <div style="font-family: Arial, sans-serif;">
+                        <strong style="color: #2c3e50; font-size: 16px;">${tutor.name}</strong><br>
+                        <span style="color: #666; font-size: 14px;">📍 ${tutor.address || 'No address'}</span>
+                    </div>
+                `);
+                
+                markers.push(marker);
+                validTutors++;
+                
+            } catch (error) {
+                console.error(`Error adding marker for ${tutor.name}:`, error);
+                invalidTutors++;
+            }
+        } else {
+            invalidTutors++;
         }
-    ?>
-
-    <script> const tutorLocations = <?php echo json_encode($tutor_locations); ?>; </script>
-
-    <script> const tutorLocations = <?php echo json_encode($tutor_locations); ?>; </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const map = L.map('tutorMap').setView([26.4922, 89.5320], 10); // Default center (adjust as needed)
-
-            // Add OpenStreetMap tile layer
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors'
-            }).addTo(map);
-
-            // Add markers
-            tutorLocations.forEach(tutor => {
-                const marker = L.marker([tutor.latitude, tutor.longitude]).addTo(map);
-                marker.bindPopup(`<strong>${tutor.name}</strong><br>${tutor.address}`);
-            });
-        });
-    </script>
+    });
+    
+    // Update stats
+    // statsElement.innerHTML = `
+    //     <strong>${validTutors}</strong> active tutors displayed on map
+    //     ${invalidTutors > 0 ? 
+    //         `<span style="color: #dc3545;"> (${invalidTutors} tutors have invalid/missing coordinates)</span>` : 
+    //         '<span style="color: #28a745;"> ✓</span>'
+    //     }
+    // `;
+    
+    // Auto-fit map to show all markers
+    if (markers.length > 0) {
+        try {
+            const group = new L.featureGroup(markers);
+            const bounds = group.getBounds();
+            
+            if (bounds.isValid()) {
+                map.fitBounds(bounds, { 
+                    padding: [20, 20],
+                    maxZoom: 15 
+                });
+            }
+        } catch (error) {
+            console.error("Error fitting bounds:", error);
+        }
+    }
+});
+</script>
 
 
 
