@@ -37,6 +37,11 @@
                             <input type="email" id="email" name="email" placeholder="your.email@example.com">
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label for="name">Experience </label>
+                        <input type="text" id="experience" name="experience" required placeholder="Years of Experience">
+                    </div>
                 </div>
 
                 <div class="form-section">
@@ -226,40 +231,6 @@
                         </div>
                     </div>
 
-                    <!-- <div class="form-section">
-                        <h2 class="section-title">Sports & Health</h2>
-
-                        <div class="two-column">
-                            <div class="form-group">
-                                <label>Teaching Mode</label>
-                                <div class="checkbox-grid">
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="mode[]" value="Online" id="online">
-                                        <label for="online">Online</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="mode[]" value="Offline" id="offline">
-                                        <label for="offline">Offline</label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Preferred Location</label>
-                                <div class="checkbox-grid">
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="preferred_location[]" value="Home" id="home">
-                                        <label for="home">At Home</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="preferred_location[]" value="Away" id="away">
-                                        <label for="away">Travel to Student</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-
                     <div class="form-section">
                         <h2 class="section-title">Teaching Preferences</h2>
 
@@ -310,8 +281,7 @@
 
                             <div class="form-group">
                                 <label for="addressInput">Address *</label>
-                                <input type="text" id="addressInput" name="address" required
-                                    placeholder="e.g., Ward 4, XYZ Road">
+                                <input type="text" id="addressInput" name="address" required readonly placeholder="Select your location on Map">
                             </div>
                         </div>
 
@@ -333,7 +303,7 @@
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-control-photon"></script>
-    <script src="./js/reg_script.js">
+    <script src="./js/reg_script.js"></script>
         
     </script>
 
