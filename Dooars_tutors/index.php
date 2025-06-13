@@ -1073,7 +1073,7 @@ $conn->close();
         <div class="views-container">
             <div class="views-card">
                 <h2 class="views-title">Community Reach</h2>
-                <p class="views-label">Total Views</p>
+                <p class="views-label">Total Welcomes</p>
                 <?php
                     // Database connection
                     require_once 'db.php';
