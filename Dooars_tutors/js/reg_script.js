@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 { name: "Alipurduar Station", lat: 26.478928, lng: 89.521043, type: "transport", icon: "🚉" }, // Changed
                 { name: "Alipurduar Junction Railway Station", lat: 26.523268, lng: 89.533703, type: "transport", icon: "🚉" },
                 { name: "Alipurduar District Hospital", lat: 26.484184, lng: 89.523363, type: "hospital", icon: "🏥" },
-                { name: "Greenland Nursing Home", lat: 26.481430, lng: 89.524179, type: "hospital", icon: "🏥" },
+                // { name: "Greenland Nursing Home", lat: 26.481430, lng: 89.524179, type: "hospital", icon: "🏥" },
                 { name: "Alipurduar College Ground", lat: 26.500812, lng: 89.535945, type: "ground", icon: "🏏" },
                 { name: "Alipurduar University", lat: 26.50138, lng: 89.53870, type: "education", icon: "🎓" },
                 { name: "Jamai Dokan", lat: 26.49677, lng: 89.53594, type: "market", icon: "JD" },
@@ -81,7 +81,25 @@ document.addEventListener('DOMContentLoaded', function () {
                 { name: "Madhyapara Housing Complex", lat: 26.495397, lng: 89.536300, type: "hotel", icon: "HC" },
                 { name: "Kanchenjungha Apartment", lat: 26.49206, lng: 89.53626, type: "hotel", icon: "KA" },
                 { name: "Parade Ground", lat: 26.500870, lng: 89.532598, type: "ground", icon: "PG" },
-                { name: "Indoor Stadium", lat: 26.503662, lng: 89.530517, type: "stadium", icon: "🏟" }
+                { name: "Indoor Stadium", lat: 26.503662, lng: 89.530517, type: "stadium", icon: "🏟" },
+                
+                { name: "Alipurduar Lions Eye Hospital", lat: 26.482253, lng: 89.527947, type: "hospital", icon: "🏥" },
+                { name: "Maa Seva Ashram", lat: 26.485506, lng: 89.524575, type: "hospital", icon: "🏥" },
+                { name: "Yashoda Hospitals Medical Information Centre", lat: 26.486204, lng: 89.523746, type: "hospital", icon: "🏥" },
+                { name: "Divisional Railway Hospital", lat: 26.524767, lng: 89.536621, type: "hospital", icon: "🏥" },
+                { name: "AYUSH Hospital", lat: 26.505319, lng: 89.433257, type: "hospital", icon: "🏥" },
+                { name: "Greenland Nursing Home Pvt Ltd", lat: 26.481429, lng: 89.524212, type: "hospital", icon: "🏥" },
+                { name: "St Mary's Nursing Home", lat: 26.481961, lng: 89.527297, type: "hospital", icon: "🏥" },
+                { name: "Shree Krishna Nursing Home", lat: 26.483569, lng: 89.524710, type: "hospital", icon: "🏥" },
+                { name: "Pulse Sanjivani Nursing Home", lat: 26.483972, lng: 89.526435, type: "hospital", icon: "🏥" },
+                { name: "JD Healthcare Nursing Home & Diagnostic Centre", lat: 26.485248, lng: 89.525230, type: "hospital", icon: "🏥" },
+                { name: "ALIPURDUAR MISTI AAYA CENTRE & HOME CARE NURSING", lat: 26.520909, lng: 89.555695, type: "hospital", icon: "🏥" },
+                { name: "New Sri Krishna Nursing Home", lat: 26.484533, lng: 89.525876, type: "hospital", icon: "🏥" },
+                { name: "Alipurduar Aya Service Centre", lat: 26.525635, lng: 89.556233, type: "hospital", icon: "🏥" },
+                { name: "Alipurduar District Hospital Nursing Training School", lat: 26.483112, lng: 89.522342, type: "education", icon: "🏫" },
+                { name: "Shivam Health Care & Diagnostic Centre", lat: 26.483604, lng: 89.524665, type: "hospital", icon: "🏥" }
+                
+
             ],
             "Coochbehar": [
                 { name: "Coochbehar Palace", lat: 26.3244, lng: 89.4492, type: "heritage", icon: "🏰" },
