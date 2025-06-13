@@ -43,7 +43,7 @@ try {
         $longitude = floatval($_POST['longitude'] ?? 0);
         
         // Default values for missing fields
-        $experience = ''; // Not in form, you might want to add this field
+        $experience = $_POST['experience']; // Not in form, you might want to add this field
         $plan = 'basic'; // Default plan since no payment gateway
         $status = 'active'; // Default status
         $type = 'tutor'; // Default type
