@@ -12,7 +12,6 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-
 $search = $_POST['search'] ?? '';
 $sql = "SELECT * FROM tutors WHERE 
            subjects LIKE ? OR 

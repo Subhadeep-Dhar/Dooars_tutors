@@ -285,8 +285,8 @@
                             </div>
                         </div>
 
-                        <button type="button" class="btn btn-secondary" onclick="searchLocation()">📍 Search on
-                            Map</button>
+                        <!-- <button type="button" class="btn btn-secondary" onclick="searchLocation()">📍 Search on
+                            Map</button> -->
 
                         <input type="hidden" name="latitude" id="latitude">
                         <input type="hidden" name="longitude" id="longitude">

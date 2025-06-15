@@ -162,8 +162,53 @@ const cityLandmarks = {
         {name: "Hotel Maa international", lat: 26.480844400000002, lng: 89.5352623646206,type: "hotel",icon: "🏢"},
         {name: "OYO Hotel Chitra", lat: 26.48308699773781, lng: 89.5266125711847,type: "hotel",icon: "🏢"},
         {name: "Hotel Sinchula", lat: 26.482976562994327, lng: 89.52726166577771,type: "hotel",icon: "🏢"},
-        {name: "OYO 62896 Hotel Ridhi Sidhi", lat: 26.47966800330245, lng: 89.52219836013936,type: "hotel",icon: "🏢"}
+        {name: "OYO 62896 Hotel Ridhi Sidhi", lat: 26.47966800330245, lng: 89.52219836013936,type: "hotel",icon: "🏢"},
 
+        { name: "Mc William Higher Secondary School", lat: 26.4963004758017, lng: 89.52689884103808, type: "education", icon: "🏫" },
+        { name: "EuroKids - Alipurduar School", lat: 26.496842332960806, lng: 89.53199410878166, type: "education", icon: "🏫" },
+        { name: "Stepping Stone Model School", lat: 26.492361899859887, lng: 89.52620445288488, type: "education", icon: "🏫" },
+        { name: "MOUNT LITERA ZEE SCHOOL ALIPURDUAR", lat: 26.496884499650488, lng: 89.530341070539, type: "education", icon: "🏫" },
+        { name: "Netaji Vidyapith Higher Secondary School", lat: 26.513684100259013, lng: 89.53288891348001, type: "education", icon: "🏫" },
+        { name: "Little Flowers English School", lat: 26.489553900309584, lng: 89.4835567410912, type: "education", icon: "🏫" },
+        { name: "Alipurduar New Town Girl's High School", lat: 26.487184999665757, lng: 89.52382109998678, type: "education", icon: "🏫" },
+        { name: "Alipurduar Govinda High School (H.S)", lat: 26.49192649957282, lng: 89.53332369998678, type: "education", icon: "🏫" },
+        { name: "SANTIDEBI HIGH SCHOOL (H.S)", lat: 26.479252600208557, lng: 89.5362329999868, type: "education", icon: "🏫" },
+        { name: "Jitpur High School (H.S)", lat: 26.517352199980827, lng: 89.52854259998678, type: "education", icon: "🏫" },
+        { name: "Little Flowers English School (primary)", lat: 26.5028572, lng: 89.53446637053898, type: "education", icon: "🏫" },
+        { name: "Alipurduar Girls' High School", lat: 26.475811104077554, lng: 89.52087259998675, type: "education", icon: "🏫" },
+        { name: "ALIPURDUAR HINDI MADHYAMIK VIDYALAYA", lat: 26.480949783436643, lng: 89.52967529998678, type: "education", icon: "🏫" },
+        { name: "KIDZEE ,ALIPURDUAR", lat: 26.49210600084879, lng: 89.52446960182334, type: "education", icon: "🏫" },
+        { name: "OAKLAND PUBLIC SCHOOL", lat: 26.51984560026596, lng: 89.5342677343446, type: "education", icon: "🏫" },
+        { name: "PADMESWARI HIGH SCHOOL (H.S)", lat: 26.47099739949678, lng: 89.56408935888231, type: "education", icon: "🏫" },
+        { name: "SIP ABACUS ALIPURDUAR", lat: 26.491998099857984, lng: 89.52704945888232, type: "education", icon: "🏫" },
+        { name: "CHILDREN'S PARADISE", lat: 26.498869199787727, lng: 89.52747022943453, type: "education", icon: "🏫" },
+        { name: "Alipurduar collegiate english medium high school", lat: 26.499892298992126, lng: 89.53672441348002, type: "education", icon: "🏫" },
+        { name: "LebuBagan Primary school", lat: 26.494741399616927, lng: 89.52504379998678, type: "education", icon: "🏫" },
+        { name: "Uttarpara GSF Primary School", lat: 26.477741899350722, lng: 89.52773799998677, type: "education", icon: "🏫" },
+        { name: "Alipurduar College Of Visual & Performing Arts", lat: 26.48436610145501, lng: 89.52854837053899, type: "education", icon: "🏫" },
+        { name: "Banchukamari No.1 BFP School", lat: 26.52604260068106, lng: 89.48379782207569, type: "education", icon: "🏫" },
+        { name: "Kanuram valika vidyalaya High School", lat: 26.47082850303019, lng: 89.56338499385232, type: "education", icon: "🏫" },
+        { name: "Arabindanagar No 2 N P School", lat: 26.505409598920505, lng: 89.52364477974686, type: "education", icon: "🏫" },
+        { name: "Shyama Prashad Vidyamandir School (H.S)", lat: 26.53644100018035, lng: 89.54026872943453, type: "education", icon: "🏫" },
+        { name: "Junction Colony R.R. Primary School", lat: 26.513586601408832, lng: 89.53301628219563, type: "education", icon: "🏫" },
+        { name: "DATM", lat: 26.488778299841155, lng: 89.53990082943453, type: "education", icon: "🏫" },
+        { name: "Alipurduar Mahila Maha Vidyalaya", lat: 26.492425999720446, lng: 89.53139171164341, type: "education", icon: "🏫" },
+        { name: "Balika Siksha Mandir (HS)", lat: 26.490094099544134, lng: 89.52448339998676, type: "education", icon: "🏫" },
+        { name: "Techno India Group Public School", lat: 26.499923802114115, lng: 89.46559068219567, type: "education", icon: "🏫" },
+        { name: "Vivekananda College", lat: 26.481608499803766, lng: 89.514303270539, type: "education", icon: "🏫" },
+        { name: "St. Xavier's School", lat: 26.540887000226864, lng: 89.57091669998675, type: "education", icon: "🏫" },
+        { name: "Alokdyut english medium primary school", lat: 26.474080692935498, lng: 89.52265410797027, type: "education", icon: "🏫" },
+        { name: "S.T. Joseph's High School", lat: 26.52631230003722, lng: 89.54389434109122, type: "education", icon: "🏫" },
+        { name: "Santinagar RR Primary School ( English Medium)", lat: 26.49099989985277, lng: 89.52891898833009, type: "education", icon: "🏫" },
+        { name: "Navodaya Nursery School", lat: 26.509853499902444, lng: 89.53249972943452, type: "education", icon: "🏫" },
+        { name: "Mc. William R.R. Primary School", lat: 26.497634599999998, lng: 89.52625862391228, type: "education", icon: "🏫" },
+        { name: "Kendriya Vidyalaya Sangathan, Alipurduar Junction", lat: 26.54860020015377, lng: 89.53185897053896, type: "education", icon: "🏫" },
+        { name: "Kalakakoli Adarsha Shishu Vidyalaya", lat: 26.494289499869936, lng: 89.53008069998678, type: "education", icon: "🏫" },
+        { name: "Ananda Marga Primary School", lat: 26.47857019957579, lng: 89.53972919998677, type: "education", icon: "🏫" },
+        { name: "Alipurduar University", lat: 26.501649585858285, lng: 89.53722350547476, type: "education", icon: "🏫" },
+        { name: "Alipurduar Government Engineering and Management College", lat: 26.495841853400783, lng: 89.69984256341935, type: "education", icon: "🏫" },
+        { name: "Alipurduar (Damanpur) Government Polytechnic", lat: 26.493447647864308, lng: 89.5404262078703, type: "education", icon: "🏫" },
+        { name: "Government ITI Alipurduar", lat: 26.479617727942117, lng: 89.49846640445882, type: "education", icon: "🏫" }
 
     ],
     "Coochbehar": [
@@ -476,7 +521,7 @@ function showAlert(message, type) {
     const mapSection = document.querySelector('.map-section');
     mapSection.insertBefore(alert, mapSection.firstChild);
 
-    setTimeout(() => alert.remove(), 5000);
+    // setTimeout(() => alert.remove(), 5000);
 }
 
 // Handle "Others" option for classes
