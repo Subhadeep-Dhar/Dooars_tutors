@@ -2,7 +2,24 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            
         }
+
+        button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button:focus,
+button:focus-visible,
+button:active {
+    outline: none;
+    box-shadow: none;
+}
+.mobile-menu-btn,
+.mobile-menu-btn span {
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+}
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;

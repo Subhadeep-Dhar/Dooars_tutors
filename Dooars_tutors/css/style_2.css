@@ -7,6 +7,18 @@
         min-height: 100vh;
     }
 
+    button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button:focus,
+button:focus-visible,
+button:active {
+    outline: none;
+    box-shadow: none;
+}
+
+
     .tutors-section h2 {
         text-align: center;
         font-size: 2.5rem;

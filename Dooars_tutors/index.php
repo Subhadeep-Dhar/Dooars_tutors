@@ -545,49 +545,106 @@ $result = $stmt->get_result();
             });
 
             // Touch/Mouse swipe controls
-            container.addEventListener('mousedown', handleStart);
-            container.addEventListener('touchstart', handleStart);
-            container.addEventListener('mousemove', handleMove);
-            container.addEventListener('touchmove', handleMove);
-            container.addEventListener('mouseup', handleEnd);
-            container.addEventListener('touchend', handleEnd);
-            container.addEventListener('mouseleave', handleEnd);
+// Touch/Mouse swipe controls
+let initialY = 0;
+let isVerticalScroll = false;
+let autoPlayTimeout; // Add this to track restart timeout
 
-            function handleStart(e) {
-                isDragging = true;
-                startX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
-                container.style.transition = 'none';
-            }
+container.addEventListener('mousedown', handleStart);
+container.addEventListener('touchstart', handleStart);
+container.addEventListener('mousemove', handleMove);
+container.addEventListener('touchmove', handleMove, { passive: false });
+container.addEventListener('mouseup', handleEnd);
+container.addEventListener('touchend', handleEnd);
+container.addEventListener('mouseleave', handleEnd);
 
-            function handleMove(e) {
-                if (!isDragging) return;
-                
-                e.preventDefault();
-                currentX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
-                const diffX = currentX - startX;
-                const translateX = -currentIndex * 100 + (diffX / container.offsetWidth) * 100;
-                container.style.transform = `translateX(${translateX}%)`;
-            }
+function handleStart(e) {
+    isDragging = true;
+    isVerticalScroll = false;
+    startX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
+    initialY = e.type === 'mousedown' ? e.clientY : e.touches[0].clientY;
+    container.style.transition = 'none';
+    
+    // Stop auto-play and clear any pending restart
+    stopAutoPlay();
+    clearTimeout(autoPlayTimeout);
+}
 
-            function handleEnd(e) {
-                if (!isDragging) return;
-                
-                isDragging = false;
-                container.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-                
-                const diffX = currentX - startX;
-                const threshold = container.offsetWidth * 0.2;
-                
-                if (Math.abs(diffX) > threshold) {
-                    if (diffX > 0) {
-                        prevSlide();
-                    } else {
-                        nextSlide();
-                    }
-                } else {
-                    updateCarousel();
-                }
-            }
+function handleMove(e) {
+    if (!isDragging) return;
+    
+    currentX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
+    const currentY = e.type === 'mousemove' ? e.clientY : e.touches[0].clientY;
+    
+    const diffX = currentX - startX;
+    const diffY = currentY - initialY;
+    
+    // Determine if this is a vertical scroll
+    if (!isVerticalScroll && Math.abs(diffY) > Math.abs(diffX) && Math.abs(diffY) > 10) {
+        isVerticalScroll = true;
+        isDragging = false;
+        container.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        updateCarousel();
+        return;
+    }
+    
+    // Only prevent default and handle horizontal drag if it's not vertical scroll
+    if (!isVerticalScroll && Math.abs(diffX) > 10) {
+        e.preventDefault();
+        const translateX = -currentIndex * 100 + (diffX / container.offsetWidth) * 100;
+        container.style.transform = `translateX(${translateX}%)`;
+    }
+}
+
+function handleEnd(e) {
+    if (!isDragging || isVerticalScroll) {
+        isDragging = false;
+        isVerticalScroll = false;
+        return;
+    }
+    
+    isDragging = false;
+    container.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+    
+    const diffX = currentX - startX;
+    const threshold = container.offsetWidth * 0.2;
+    
+    if (Math.abs(diffX) > threshold) {
+        if (diffX > 0) {
+            prevSlide();
+        } else {
+            nextSlide();
+        }
+    } else {
+        updateCarousel();
+    }
+    
+    // Clear any existing timeout and restart auto-play after user interaction ends
+    clearTimeout(autoPlayTimeout);
+    autoPlayTimeout = setTimeout(() => {
+        startAutoPlay();
+    }, 3000); // 3 second delay before restarting auto-play
+}
+
+// // Auto-play functions with safeguards
+// function startAutoPlay() {
+//     // Always clear existing interval first
+//     clearInterval(autoPlayInterval);
+    
+//     autoPlayInterval = setInterval(() => {
+//         if (currentIndex < totalCards - 1) {
+//             nextSlide();
+//         } else {
+//             currentIndex = 0;
+//             updateCarousel();
+//         }
+//     }, 5000);
+// }
+
+// function stopAutoPlay() {
+//     clearInterval(autoPlayInterval);
+//     autoPlayInterval = null;
+// }
 
             // Auto-play (optional)
             let autoPlayInterval;
@@ -634,7 +691,7 @@ $result = $stmt->get_result();
     <!-- Boards Section -->
     <section class="boards-section">
         <div class="boards-container">
-            <h2 class="section-title">Explore Teachers by Board</h2>
+            <h2 class="section-title" style="color:white;">Explore Teachers by Board</h2>
             
             <div class="boards-grid">
                 <div class="board-card" onclick="exploreBoard('wbbse')">
