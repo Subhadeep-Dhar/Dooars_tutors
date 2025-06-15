@@ -472,152 +472,152 @@ $result = $stmt->get_result();
     </section>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const container = document.getElementById('tutorContainer');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const counter = document.getElementById('counter');
-        const indicators = document.querySelectorAll('.indicator');
-        const progressFill = document.getElementById('progressFill');
-        const totalCards = <?php echo count($tutors); ?>;
-        const useIndicators = totalCards <= 10;
-        let currentIndex = 0;
-        let startX = 0;
-        let currentX = 0;
-        let isDragging = false;
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('tutorContainer');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const counter = document.getElementById('counter');
+            const indicators = document.querySelectorAll('.indicator');
+            const progressFill = document.getElementById('progressFill');
+            const totalCards = <?php echo count($tutors); ?>;
+            const useIndicators = totalCards <= 10;
+            let currentIndex = 0;
+            let startX = 0;
+            let currentX = 0;
+            let isDragging = false;
 
-        function updateCarousel() {
-            const translateX = -currentIndex * 100;
-            container.style.transform = `translateX(${translateX}%)`;
-            
-            // Update counter
-            counter.textContent = `${currentIndex + 1} / ${totalCards}`;
-            
-            if (useIndicators) {
-                // Update indicators for small numbers
-                indicators.forEach((indicator, index) => {
-                    indicator.classList.toggle('active', index === currentIndex);
-                });
-            } else {
-                // Update progress bar for large numbers
-                const progressPercent = ((currentIndex + 1) / totalCards) * 100;
-                progressFill.style.width = `${progressPercent}%`;
-            }
-            
-            // Update buttons
-            prevBtn.disabled = currentIndex === 0;
-            nextBtn.disabled = currentIndex === totalCards - 1;
-        }
-
-        function nextSlide() {
-            if (currentIndex < totalCards - 1) {
-                currentIndex++;
-                updateCarousel();
-            }
-        }
-
-        function prevSlide() {
-            if (currentIndex > 0) {
-                currentIndex--;
-                updateCarousel();
-            }
-        }
-
-        function goToSlide(index) {
-            currentIndex = index;
-            updateCarousel();
-        }
-
-        // Button controls
-        nextBtn.addEventListener('click', nextSlide);
-        prevBtn.addEventListener('click', prevSlide);
-
-        // Indicator controls (only if using indicators)
-        if (useIndicators) {
-            indicators.forEach((indicator, index) => {
-                indicator.addEventListener('click', () => goToSlide(index));
-            });
-        }
-
-        // Keyboard controls
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'ArrowLeft') prevSlide();
-            if (e.key === 'ArrowRight') nextSlide();
-        });
-
-        // Touch/Mouse swipe controls
-        container.addEventListener('mousedown', handleStart);
-        container.addEventListener('touchstart', handleStart);
-        container.addEventListener('mousemove', handleMove);
-        container.addEventListener('touchmove', handleMove);
-        container.addEventListener('mouseup', handleEnd);
-        container.addEventListener('touchend', handleEnd);
-        container.addEventListener('mouseleave', handleEnd);
-
-        function handleStart(e) {
-            isDragging = true;
-            startX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
-            container.style.transition = 'none';
-        }
-
-        function handleMove(e) {
-            if (!isDragging) return;
-            
-            e.preventDefault();
-            currentX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
-            const diffX = currentX - startX;
-            const translateX = -currentIndex * 100 + (diffX / container.offsetWidth) * 100;
-            container.style.transform = `translateX(${translateX}%)`;
-        }
-
-        function handleEnd(e) {
-            if (!isDragging) return;
-            
-            isDragging = false;
-            container.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-            
-            const diffX = currentX - startX;
-            const threshold = container.offsetWidth * 0.2;
-            
-            if (Math.abs(diffX) > threshold) {
-                if (diffX > 0) {
-                    prevSlide();
+            function updateCarousel() {
+                const translateX = -currentIndex * 100;
+                container.style.transform = `translateX(${translateX}%)`;
+                
+                // Update counter
+                counter.textContent = `${currentIndex + 1} / ${totalCards}`;
+                
+                if (useIndicators) {
+                    // Update indicators for small numbers
+                    indicators.forEach((indicator, index) => {
+                        indicator.classList.toggle('active', index === currentIndex);
+                    });
                 } else {
-                    nextSlide();
+                    // Update progress bar for large numbers
+                    const progressPercent = ((currentIndex + 1) / totalCards) * 100;
+                    progressFill.style.width = `${progressPercent}%`;
                 }
-            } else {
-                updateCarousel();
+                
+                // Update buttons
+                prevBtn.disabled = currentIndex === 0;
+                nextBtn.disabled = currentIndex === totalCards - 1;
             }
-        }
 
-        // Auto-play (optional)
-        let autoPlayInterval;
-        
-        function startAutoPlay() {
-            autoPlayInterval = setInterval(() => {
+            function nextSlide() {
                 if (currentIndex < totalCards - 1) {
-                    nextSlide();
-                } else {
-                    currentIndex = 0;
+                    currentIndex++;
                     updateCarousel();
                 }
-            }, 5000);
-        }
+            }
 
-        function stopAutoPlay() {
-            clearInterval(autoPlayInterval);
-        }
+            function prevSlide() {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    updateCarousel();
+                }
+            }
 
-        // Start auto-play
-        startAutoPlay();
+            function goToSlide(index) {
+                currentIndex = index;
+                updateCarousel();
+            }
 
-        // Pause auto-play on hover
-        container.addEventListener('mouseenter', stopAutoPlay);
-        container.addEventListener('mouseleave', startAutoPlay);
+            // Button controls
+            nextBtn.addEventListener('click', nextSlide);
+            prevBtn.addEventListener('click', prevSlide);
 
-        // Initialize
-        updateCarousel();
-    });
+            // Indicator controls (only if using indicators)
+            if (useIndicators) {
+                indicators.forEach((indicator, index) => {
+                    indicator.addEventListener('click', () => goToSlide(index));
+                });
+            }
+
+            // Keyboard controls
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowLeft') prevSlide();
+                if (e.key === 'ArrowRight') nextSlide();
+            });
+
+            // Touch/Mouse swipe controls
+            container.addEventListener('mousedown', handleStart);
+            container.addEventListener('touchstart', handleStart);
+            container.addEventListener('mousemove', handleMove);
+            container.addEventListener('touchmove', handleMove);
+            container.addEventListener('mouseup', handleEnd);
+            container.addEventListener('touchend', handleEnd);
+            container.addEventListener('mouseleave', handleEnd);
+
+            function handleStart(e) {
+                isDragging = true;
+                startX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
+                container.style.transition = 'none';
+            }
+
+            function handleMove(e) {
+                if (!isDragging) return;
+                
+                e.preventDefault();
+                currentX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
+                const diffX = currentX - startX;
+                const translateX = -currentIndex * 100 + (diffX / container.offsetWidth) * 100;
+                container.style.transform = `translateX(${translateX}%)`;
+            }
+
+            function handleEnd(e) {
+                if (!isDragging) return;
+                
+                isDragging = false;
+                container.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                
+                const diffX = currentX - startX;
+                const threshold = container.offsetWidth * 0.2;
+                
+                if (Math.abs(diffX) > threshold) {
+                    if (diffX > 0) {
+                        prevSlide();
+                    } else {
+                        nextSlide();
+                    }
+                } else {
+                    updateCarousel();
+                }
+            }
+
+            // Auto-play (optional)
+            let autoPlayInterval;
+            
+            function startAutoPlay() {
+                autoPlayInterval = setInterval(() => {
+                    if (currentIndex < totalCards - 1) {
+                        nextSlide();
+                    } else {
+                        currentIndex = 0;
+                        updateCarousel();
+                    }
+                }, 5000);
+            }
+
+            function stopAutoPlay() {
+                clearInterval(autoPlayInterval);
+            }
+
+            // Start auto-play
+            startAutoPlay();
+
+            // Pause auto-play on hover
+            container.addEventListener('mouseenter', stopAutoPlay);
+            container.addEventListener('mouseleave', startAutoPlay);
+
+            // Initialize
+            updateCarousel();
+        });
     </script>
 
     <?php else: ?>
