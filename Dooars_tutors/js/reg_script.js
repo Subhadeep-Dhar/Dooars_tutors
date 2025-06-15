@@ -111,7 +111,7 @@ const cityLandmarks = {
         {name: "Alipurduar Bus Stand",lat: 26.479864652335255,lng: 89.53551890411389,type: "transport",icon: "🚌"},
         {name: "Alipurduar-Cochbehar Bus Stand",lat: 26.519487823039068,lng: 89.20291890001343,type: "transport",icon: "🚌"},
         
-        { name: "Alipurduar College Ground", lat: 26.500812, lng: 89.535945, type: "ground", icon: "🌲" },
+        {name: "Alipurduar College Ground", lat: 26.500812, lng: 89.535945, type: "ground", icon: "🌲" },
         {name: "Surya Nagar Ground",lat: 26.497193612374762,lng: 89.52292890008374,type: "ground",icon: "🌲"},
         {name: "Town Club Ground",lat: 26.476205696409306,lng: 89.5235520680222,type: "ground",icon: "🌲"},
         {name: "DRM GROUND",lat: 26.534929698684024,lng: 89.5378923000209,type: "ground",icon: "🌲"},
@@ -129,7 +129,7 @@ const cityLandmarks = {
         {name: "Netaji PARK",lat: 26.496715049500697,lng: 89.5272949495227,type: "park",icon: "🛝"},
         {name: "Gol Park",lat: 26.532053354559768,lng: 89.53765747779273,type: "park",icon: "🛝"},
         {name: "Choto Gol Park",lat: 26.533456305659172,lng: 89.53830860752493,type: "ground",icon: "🌲"},
-        { name: "Parade Ground", lat: 26.500870, lng: 89.532598, type: "ground", icon: "PG" },
+        {name: "Parade Ground", lat: 26.500870, lng: 89.532598, type: "ground", icon: "PG" },
         {name: "Maa Paradise World",lat: 26.51663989968116,lng: 89.5701440246104,type: "park",icon: "🛝"},
 
         {name: "Alipurduar Super Market", lat: 26.48060585729641, lng: 89.52714132731707,type: "market",icon: "🛒"},

@@ -1,0 +1,390 @@
+<section class="hero">
+        <div class="hero-container">
+            <h1>Find Your Perfect Tutor</h1>
+            <p>Connect with qualified teachers across all boards and subjects. Excellence in education, delivered personally.</p>
+            
+            <!-- Search Section -->
+            <div class="search-section">
+                <div class="search-container">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search by teacher name, subject, or class...">
+                    <select class="location-select" id="locationSelect">
+                        <option value="">Select Place</option>
+                        <option value="Alipurduar">Alipurduar</option>
+                        <option value="Coochbehar">Coochbehar</option>
+                    </select>
+                    <button class="search-btn" onclick="performSearch()">Search</button>
+                </div>
+                
+                <div class="filters">
+                    <div class="filter-group">
+                        <div class="filter-label" onclick="toggleDropdown('class')">
+                            Class 
+                            <span class="selected-count" id="class-count">0 selected</span>
+                        </div>
+                        <div class="filter-dropdown" id="class-dropdown">
+                            <div class="filter-option" onclick="toggleFilter('class', '1')">
+                                <div class="filter-checkbox" id="class-1"></div>
+                                <span class="filter-option-text">Class 1</span>
+                            </div>
+                            <div class="filter-option" onclick="toggleFilter('class', '2')">
+                                <div class="filter-checkbox" id="class-2"></div>
+                                <span class="filter-option-text">Class 2</span>
+                            </div>
+                            <div class="filter-option" onclick="toggleFilter('class', '3')">
+                                <div class="filter-checkbox" id="class-3"></div>
+                                <span class="filter-option-text">Class 3</span>
+                            </div>
+                            <div class="filter-option" onclick="toggleFilter('class', '4')">
+                                <div class="filter-checkbox" id="class-4"></div>
+                                <span class="filter-option-text">Class 4</span>
+                            </div>
+                            <div class="filter-option" onclick="toggleFilter('class', '5')">
+                                <div class="filter-checkbox" id="class-5"></div>
+                                <span class="filter-option-text">Class 5</span>
+                            </div>
+                            <div class="filter-option" onclick="toggleFilter('class', '6')">
+                                <div class="filter-checkbox" id="class-6"></div>
+                                <span class="filter-option-text">Class 6</span>
+                            </div>
+                            <div class="filter-option" onclick="toggleFilter('class', '7')">
+                                <div class="filter-checkbox" id="class-7"></div>
+                                <span class="filter-option-text">Class 7</span>
+                            </div>
+                            <div class="filter-option" onclick="toggleFilter('class', '8')">
+                                <div class="filter-checkbox" id="class-8"></div>
+                                <span class="filter-option-text">Class 8</span>
+                            </div>
+                            <div class="filter-option" onclick="toggleFilter('class', '9')">
+                                <div class="filter-checkbox" id="class-9"></div>
+                                <span class="filter-option-text">Class 9</span>
+                            </div>
+                            <div class="filter-option" onclick="toggleFilter('class', '10')">
+                                <div class="filter-checkbox" id="class-10"></div>
+                                <span class="filter-option-text">Class 10</span>
+                            </div>
+                            <div class="filter-option" onclick="toggleFilter('class', '11')">
+                                <div class="filter-checkbox" id="class-11"></div>
+                                <span class="filter-option-text">Class 11</span>
+                            </div>
+                            <div class="filter-option" onclick="toggleFilter('class', '12')">
+                                <div class="filter-checkbox" id="class-12"></div>
+                                <span class="filter-option-text">Class 12</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <div class="filter-label" onclick="toggleDropdown('board')">
+                            Board 
+                            <span class="selected-count" id="board-count">0 selected</span>
+                        </div>
+                        <div class="filter-dropdown" id="board-dropdown">
+                            <div class="filter-option" onclick="toggleFilter('board', 'wbbse')">
+                                <div class="filter-checkbox" id="board-wbbse"></div>
+                                <span class="filter-option-text">WBBSE</span>
+                            </div>
+                            <div class="filter-option" onclick="toggleFilter('board', 'cbse')">
+                                <div class="filter-checkbox" id="board-cbse"></div>
+                                <span class="filter-option-text">CBSE</span>
+                            </div>
+                            <div class="filter-option" onclick="toggleFilter('board', 'icse')">
+                                <div class="filter-checkbox" id="board-icse"></div>
+                                <span class="filter-option-text">ICSE</span>
+                            </div>
+                            <div class="filter-option" onclick="toggleFilter('board', 'ise')">
+                                <div class="filter-checkbox" id="board-ise"></div>
+                                <span class="filter-option-text">ISE</span>
+                            </div>
+                            <div class="filter-option" onclick="toggleFilter('board', 'wbcshe')">
+                                <div class="filter-checkbox" id="board-wbcshe"></div>
+                                <span class="filter-option-text">WBCSHE</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <div class="filter-label" onclick="toggleDropdown('subject')">
+                            Subject 
+                            <span class="selected-count" id="subject-count">0 selected</span>
+                        </div>
+                        <div class="filter-dropdown" id="subject-dropdown">
+                            <div class="filter-option" onclick="toggleFilter('subject', 'english')">
+                                <div class="filter-checkbox" id="subject-english"></div>
+                                <span class="filter-option-text">English</span>
+                            </div>
+                            <div class="filter-option" onclick="toggleFilter('subject', 'bengali')">
+                                <div class="filter-checkbox" id="subject-bengali"></div>
+                                <span class="filter-option-text">Bengali</span>
+                            </div>
+                            <div class="filter-option" onclick="toggleFilter('subject', 'mathematics')">
+                                <div class="filter-checkbox" id="subject-mathematics"></div>
+                                <span class="filter-option-text">Mathematics</span>
+                            </div>
+                            <div class="filter-option" onclick="toggleFilter('subject', 'physics')">
+                                <div class="filter-checkbox" id="subject-physics"></div>
+                                <span class="filter-option-text">Physics</span>
+                            </div>
+                            <div class="filter-option" onclick="toggleFilter('subject', 'chemistry')">
+                                <div class="filter-checkbox" id="subject-chemistry"></div>
+                                <span class="filter-option-text">Chemistry</span>
+                            </div>
+                            <div class="filter-option" onclick="toggleFilter('subject', 'biology')">
+                                <div class="filter-checkbox" id="subject-biology"></div>
+                                <span class="filter-option-text">Biology</span>
+                            </div>
+                            <div class="filter-option" onclick="toggleFilter('subject', 'history')">
+                                <div class="filter-checkbox" id="subject-history"></div>
+                                <span class="filter-option-text">History</span>
+                            </div>
+                            <div class="filter-option" onclick="toggleFilter('subject', 'geography')">
+                                <div class="filter-checkbox" id="subject-geography"></div>
+                                <span class="filter-option-text">Geography</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Teachers Section -->
+    <section class="teachers-section">
+        <div class="teachers-container">
+            <div class="section-header">
+                <h2>Available Teachers</h2>
+                <div class="results-info" id="resultsInfo">
+                    Showing all teachers
+                </div>
+            </div>
+            
+            <div class="teachers-grid" id="teachersGrid">
+                <!-- Teachers will be dynamically loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Global variables
+        let allTutors = [];
+        let filteredTutors = [];
+
+        // Filter state
+        let selectedFilters = {
+            class: [],
+            board: [],
+            subject: []
+        };
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTutorsFromDatabase();
+            setupEventListeners();
+        });
+
+        // Load tutors from database
+        async function loadTutorsFromDatabase() {
+            try {
+                // Show loading message
+                document.getElementById('resultsInfo').textContent = 'Loading tutors...';
+                document.getElementById('teachersGrid').innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; color: white; padding: 2rem;">
+                        <h3>Loading tutors...</h3>
+                        <p>Please wait while we fetch the latest data</p>
+                    </div>
+                `;
+
+                const response = await fetch('get_tutors.php');
+                const data = await response.json();
+                
+                if (data.success) {
+                    allTutors = data.tutors;
+                    filteredTutors = [...allTutors];
+                    displayTeachers(filteredTutors);
+                    updateResultsInfo(filteredTutors.length);
+                } else {
+                    throw new Error(data.message || 'Failed to load tutors');
+                }
+            } catch (error) {
+                console.error('Error loading tutors:', error);
+                document.getElementById('teachersGrid').innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; color: white; padding: 2rem;">
+                        <h3>Error Loading Tutors</h3>
+                        <p>${error.message}</p>
+                        <button onclick="loadTutorsFromDatabase()" style="padding: 10px 20px; margin-top: 1rem; background: white; color: #667eea; border: none; border-radius: 5px; cursor: pointer;">
+                            Try Again
+                        </button>
+                    </div>
+                `;
+                document.getElementById('resultsInfo').textContent = 'Error loading tutors';
+            }
+        }
+        // Set up event listeners
+        function setupEventListeners() {
+            // Search input events
+            document.getElementById('searchInput').addEventListener('input', performSearch);
+            document.getElementById('locationSelect').addEventListener('change', performSearch);
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.filter-group')) {
+                    closeAllDropdowns();
+                }
+            });
+        }
+
+        // Toggle dropdown visibility
+        function toggleDropdown(filterType) {
+            const dropdown = document.getElementById(filterType + '-dropdown');
+            const isVisible = dropdown.classList.contains('show');
+            
+            // Close all dropdowns first
+            closeAllDropdowns();
+            
+            // Toggle the clicked dropdown
+            if (!isVisible) {
+                dropdown.classList.add('show');
+                document.getElementById(filterType + '-dropdown').parentElement
+                    .querySelector('.filter-label').classList.add('active');
+            }
+        }
+
+        // Close all dropdowns
+        function closeAllDropdowns() {
+            document.querySelectorAll('.filter-dropdown').forEach(dropdown => {
+                dropdown.classList.remove('show');
+            });
+            document.querySelectorAll('.filter-label').forEach(label => {
+                label.classList.remove('active');
+            });
+        }
+
+        // Toggle filter selection
+        function toggleFilter(filterType, value) {
+            const checkbox = document.getElementById(filterType + '-' + value);
+            
+            if (selectedFilters[filterType].includes(value)) {
+                // Remove from selection
+                selectedFilters[filterType] = selectedFilters[filterType].filter(item => item !== value);
+                checkbox.classList.remove('checked');
+            } else {
+                // Add to selection
+                selectedFilters[filterType].push(value);
+                checkbox.classList.add('checked');
+            }
+            
+            // Update count display
+            updateFilterCount(filterType);
+            
+            // Perform search with new filters
+            performSearch();
+        }
+
+        // Update filter count display
+        function updateFilterCount(filterType) {
+            const count = selectedFilters[filterType].length;
+            const countElement = document.getElementById(filterType + '-count');
+            countElement.textContent = count === 0 ? '0 selected' : count + ' selected';
+        }
+
+        // Main search function
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const selectedLocation = document.getElementById('locationSelect').value;
+            
+            filteredTutors = allTutors.filter(tutor => {
+                // Text search
+                const matchesSearch = !searchTerm || 
+                    tutor.name.toLowerCase().includes(searchTerm) ||
+                    (tutor.subjects && tutor.subjects.toLowerCase().includes(searchTerm)) ||
+                    (tutor.classes && tutor.classes.includes(searchTerm));
+                
+                // Location filter
+                const matchesLocation = !selectedLocation || tutor.address === selectedLocation;
+                
+                // Class filter
+                const matchesClass = selectedFilters.class.length === 0 ||
+                    (tutor.classes && selectedFilters.class.some(cls => tutor.classes.includes(cls)));
+                
+                // Board filter
+                const matchesBoard = selectedFilters.board.length === 0 ||
+                    (tutor.boards && selectedFilters.board.some(board => 
+                        tutor.boards.toLowerCase().includes(board.toLowerCase())
+                    ));
+                
+                // Subject filter
+                const matchesSubject = selectedFilters.subject.length === 0 ||
+                    (tutor.subjects && selectedFilters.subject.some(subject => 
+                        tutor.subjects.toLowerCase().includes(subject.toLowerCase())
+                    ));
+                
+                return matchesSearch && matchesLocation && matchesClass && matchesBoard && matchesSubject;
+            });
+            
+            displayTeachers(filteredTutors);
+            updateResultsInfo(filteredTutors.length);
+        }
+
+        // Display teachers in the grid
+        function displayTeachers(tutors) {
+            const grid = document.getElementById('teachersGrid');
+            
+            if (tutors.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; color: white; padding: 2rem;">
+                        <h3>No tutors found</h3>
+                        <p>Try adjusting your search criteria</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            grid.innerHTML = tutors.map(tutor => `
+                <div class="teacher-card">
+                    <div class="teacher-name">${tutor.name || 'Name not provided'}</div>
+                    <div class="teacher-info">
+                        <span><strong>Location:</strong> ${tutor.location || 'Not specified'}</span>
+                        <span><strong>Experience:</strong> ${tutor.experience || 'Not specified'}</span>
+                        <span><strong>Subjects:</strong> ${tutor.subjects || 'Not specified'}</span>
+                        <span><strong>Classes:</strong> ${tutor.classes || 'Not specified'}</span>
+                        <span><strong>Boards:</strong> ${tutor.boards || 'Not specified'}</span>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">${generateStars(tutor.rating || 0)}</span>
+                        <span>${tutor.rating || 0}/5 ${tutor.review_count ? `(${tutor.review_count} reviews)` : '(No reviews)'}</span>
+                    </div>
+                    <button class="contact-btn" onclick="contactTeacher(${tutor.id})">
+                        Contact Tutor
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // Generate star rating display
+        function generateStars(rating) {
+            const fullStars = Math.floor(rating);
+            const emptyStars = 5 - fullStars;
+            return '★'.repeat(fullStars) + '☆'.repeat(emptyStars);
+        }
+
+        // Update results information
+        function updateResultsInfo(count) {
+            const resultsInfo = document.getElementById('resultsInfo');
+            if (count === allTutors.length) {
+                resultsInfo.textContent = 'Showing all tutors';
+            } else {
+                resultsInfo.textContent = `Found ${count} tutor${count !== 1 ? 's' : ''}`;
+            }
+        }
+
+        // Contact teacher function
+        function contactTeacher(tutorId) {
+            const tutor = allTutors.find(t => t.id === tutorId);
+            if (tutor) {
+                const contactInfo = `Contact ${tutor.name}:\n`;
+                const phone = tutor.phone ? `Phone: ${tutor.phone}\n` : '';
+                const email = tutor.email ? `Email: ${tutor.email}` : '';
+                alert(contactInfo + phone + email);
+                // In a real application, this would open a contact form or initiate contact
+            }
+        }
+    </script>

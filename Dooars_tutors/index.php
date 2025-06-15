@@ -127,7 +127,7 @@ $result = $stmt->get_result();
     }
 
     .tutor-header {
-        margin-bottom: 30px;
+        margin-bottom: 0px;
     }
 
     .tutor-info h3 {
@@ -146,7 +146,7 @@ $result = $stmt->get_result();
         border-radius: 20px;
         font-size: 0.9rem;
         font-weight: 600;
-        margin-bottom: 20px;
+        margin-bottom: 0px;
     }
 
     .tutor-details {
@@ -487,6 +487,675 @@ $result = $stmt->get_result();
 
 
 
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-top: 8rem;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #38a3a5 0%, #22577a 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        .search-content {
+            padding: 40px 30px;
+        }
+
+        .universal-search {
+            margin-bottom: 30px;
+        }
+
+        .search-wrapper {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 18px 50px 18px 20px;
+            font-size: 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 50px;
+            outline: none;
+            transition: all 0.3s ease;
+            background: #f9fafb;
+        }
+
+        .search-input:focus {
+            border-color: #4f46e5;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+            font-size: 20px;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 40px 0;
+            gap: 20px;
+        }
+
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #d1d5db, transparent);
+        }
+
+        .divider-text {
+            color: #6b7280;
+            font-weight: 500;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .advanced-filters {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .filters-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-input,
+        .form-select {
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .form-select {
+            cursor: pointer;
+        }
+
+        .search-button-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .search-button {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .search-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+        }
+
+        .search-button:active {
+            transform: translateY(0);
+        }
+
+        .quick-filters {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .quick-filters-title {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .quick-filter-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .quick-tag {
+            background: #e0e7ff;
+            color: #4f46e5;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .quick-tag:hover {
+            background: #4f46e5;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 16px;
+                margin-top: 8rem;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .main-title {
+                font-size: 2rem;
+            }
+
+            .search-content {
+                padding: 30px 20px;
+            }
+
+            .advanced-filters {
+                padding: 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .quick-filter-tags {
+                gap: 8px;
+            }
+
+            .quick-tag {
+                font-size: 11px;
+                padding: 6px 12px;
+            }
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            color: #6b7280;
+            margin-top: 20px;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 50%;
+            border-top-color: #4f46e5;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+
+
+
+
+
+
+
+
+
+
+                /* Results Container */
+        /* Results Container */
+#results {
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* Loading, Error, No Results States */
+.loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #e2e8f0;
+    border-top: 3px solid #3b82f6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 16px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+    color: #64748b;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.error-state {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.no-results {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.no-results-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.6;
+}
+
+.no-results-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 8px;
+}
+
+.no-results-text {
+    color: #64748b;
+    font-size: 16px;
+}
+
+/* Results Section */
+.results-section {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.results-header {
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 20px 24px;
+}
+
+.results-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.results-count {
+    background: #3b82f6;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Horizontal Swipeable Container */
+.teachers-container {
+    padding: 20px 0;
+    position: relative;
+}
+
+.teachers-scroll {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 0 24px 20px 24px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.teachers-scroll::-webkit-scrollbar {
+    height: 8px;
+}
+
+.teachers-scroll::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 4px;
+}
+
+.teachers-scroll::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+.teachers-scroll::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Teacher Card - Horizontal Layout */
+.teacher-profile {
+    flex: 0 0 320px; /* Increased width to accommodate longer text */
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    cursor: pointer;
+}
+
+
+.contact-wrapper {
+    margin-top: 15px;
+    text-align: right;
+}
+
+.contact-button {
+    display: inline-block;
+    padding: 10px 16px;
+    text-align: center;
+    color: #fff;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+
+.teacher-profile:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    border-color: #3b82f6;
+}
+
+/* Profile Picture */
+.profile-picture {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 20px;
+    margin: 0 auto 12px auto;
+    border: 3px solid #e2e8f0;
+}
+
+/* Teacher Info */
+.teacher-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+    text-align: center;
+    margin-bottom: 8px;
+    line-height: 1.2;
+}
+
+.rating-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.rating-stars .star {
+    color: #fbbf24;
+    font-size: 14px;
+}
+
+.rating-value {
+    font-weight: 600;
+    color: #1e293b;
+    font-size: 14px;
+}
+
+.rating-reviews {
+    color: #64748b;
+    font-size: 12px;
+}
+
+/* Compact Details */
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* Increased gap for better spacing */
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column; /* Changed to column layout */
+    align-items: flex-start; /* Align to start */
+    padding: 8px 0;
+    border-bottom: 1px solid #f1f5f9;
+    gap: 4px; /* Add gap between label and content */
+}
+
+.detail-item:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.detail-content {
+    font-size: 12px;
+    font-weight: 500;
+    color: #1e293b;
+    line-height: 1.4; /* Better line height for multiple lines */
+    word-wrap: break-word; /* Allow word wrapping */
+    width: 100%; /* Take full width */
+    /* Removed text-overflow: ellipsis and white-space: nowrap */
+}
+
+/* Special styling for subjects and modes to handle multiple items better */
+.detail-content[title*=","] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+/* Contact Button */
+.contact-button {
+    margin-top: 16px;
+    padding: 10px;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+}
+
+.contact-button:hover {
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+    transform: translateY(-1px);
+}
+
+/* Scroll Navigation Buttons */
+.scroll-nav {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: 0 24px 20px 24px;
+}
+
+.scroll-btn {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #e2e8f0;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #64748b;
+}
+
+.scroll-btn:hover {
+    background: #f8fafc;
+    border-color: #3b82f6;
+    color: #3b82f6;
+}
+
+.scroll-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #results {
+        padding: 0 12px;
+        margin: 12px auto;
+    }
+    
+    .teachers-scroll {
+        padding: 0 12px 20px 12px;
+    }
+    
+    .teacher-profile {
+        flex: 0 0 300px; /* Adjusted for mobile */
+        padding: 16px;
+    }
+    
+    .results-header {
+        padding: 16px;
+    }
+    
+    .scroll-nav {
+        padding: 0 12px 16px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .teacher-profile {
+        flex: 0 0 280px; /* Adjusted for small mobile */
+        padding: 14px;
+    }
+    
+    .profile-picture {
+        width: 50px;
+        height: 50px;
+        font-size: 18px;
+    }
+    
+    .teacher-name {
+        font-size: 16px;
+    }
+}
+
     </style>
 </head>
 <body>  
@@ -498,7 +1167,7 @@ $result = $stmt->get_result();
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About Us</a></li>
                 <li class="dropdown">
-                    <a href="#skills">Skills</a>
+                    <a href="#skills">Arts & Culture</a>
                     <ul class="dropdown-menu">
                         <li><a href="#music">Music</a></li>
                         <li><a href="#dance">Dance</a></li>
@@ -542,7 +1211,7 @@ $result = $stmt->get_result();
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About Us</a></li>
                 <li class="dropdown">
-                    <a href="#skills">Skills</a>
+                    <a href="#skills">Arts & Culture</a>
                     <ul class="dropdown-menu">
                         <li><a href="#music">Music</a></li>
                         <li><a href="#dance">Dance</a></li>
@@ -570,155 +1239,247 @@ $result = $stmt->get_result();
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-container">
-            <h1>Find Your Perfect Tutor</h1>
-            <p>Connect with qualified teachers across all boards and subjects. Excellence in education, delivered personally.</p>
-            
-            <!-- Search Section -->
-            <div class="search-section">
-                <div class="search-container">
-                    <input type="text" class="search-input" placeholder="Search by teacher name, subject, or class...">
-                    <select class="location-select">
-                        <option value="">Select Place</option>
-                        <option value="Alipurduar">Alipurduar</option>
-                        <option value="Coochbehar">Coochbehar</option>
-                    </select>
-                    <button class="search-btn">Search</button>
-                </div>
-                
-                <div class="filters">
-                    <div class="filter-group">
-                        <div class="filter-label" onclick="toggleDropdown('class')">
-                            Class 
-                            <span class="selected-count" id="class-count">0 selected</span>
-                        </div>
-                        <div class="filter-dropdown" id="class-dropdown">
-                            <div class="filter-option" onclick="toggleFilter('class', '1')">
-                                <div class="filter-checkbox" id="class-1"></div>
-                                <span class="filter-option-text">Class 1</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('class', '2')">
-                                <div class="filter-checkbox" id="class-2"></div>
-                                <span class="filter-option-text">Class 2</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('class', '3')">
-                                <div class="filter-checkbox" id="class-3"></div>
-                                <span class="filter-option-text">Class 3</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('class', '4')">
-                                <div class="filter-checkbox" id="class-4"></div>
-                                <span class="filter-option-text">Class 4</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('class', '5')">
-                                <div class="filter-checkbox" id="class-5"></div>
-                                <span class="filter-option-text">Class 5</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('class', '6')">
-                                <div class="filter-checkbox" id="class-6"></div>
-                                <span class="filter-option-text">Class 6</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('class', '7')">
-                                <div class="filter-checkbox" id="class-7"></div>
-                                <span class="filter-option-text">Class 7</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('class', '8')">
-                                <div class="filter-checkbox" id="class-8"></div>
-                                <span class="filter-option-text">Class 8</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('class', '9')">
-                                <div class="filter-checkbox" id="class-9"></div>
-                                <span class="filter-option-text">Class 9</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('class', '10')">
-                                <div class="filter-checkbox" id="class-10"></div>
-                                <span class="filter-option-text">Class 10</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('class', '11')">
-                                <div class="filter-checkbox" id="class-11"></div>
-                                <span class="filter-option-text">Class 11</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('class', '12')">
-                                <div class="filter-checkbox" id="class-12"></div>
-                                <span class="filter-option-text">Class 12</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="filter-group">
-                        <div class="filter-label" onclick="toggleDropdown('board')">
-                            Board 
-                            <span class="selected-count" id="board-count">0 selected</span>
-                        </div>
-                        <div class="filter-dropdown" id="board-dropdown">
-                            <div class="filter-option" onclick="toggleFilter('board', 'wbbse')">
-                                <div class="filter-checkbox" id="board-wbbse"></div>
-                                <span class="filter-option-text">WBBSE</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('board', 'cbse')">
-                                <div class="filter-checkbox" id="board-cbse"></div>
-                                <span class="filter-option-text">CBSE</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('board', 'icse')">
-                                <div class="filter-checkbox" id="board-icse"></div>
-                                <span class="filter-option-text">ICSE</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('board', 'ise')">
-                                <div class="filter-checkbox" id="board-ise"></div>
-                                <span class="filter-option-text">ISE</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('board', 'wbcshe')">
-                                <div class="filter-checkbox" id="board-wbcshe"></div>
-                                <span class="filter-option-text">WBCSHE</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="filter-group">
-                        <div class="filter-label" onclick="toggleDropdown('subject')">
-                            Subject 
-                            <span class="selected-count" id="subject-count">0 selected</span>
-                        </div>
-                        <div class="filter-dropdown" id="subject-dropdown">
-                            <div class="filter-option" onclick="toggleFilter('subject', 'english')">
-                                <div class="filter-checkbox" id="subject-english"></div>
-                                <span class="filter-option-text">English</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('subject', 'bengali')">
-                                <div class="filter-checkbox" id="subject-bengali"></div>
-                                <span class="filter-option-text">Bengali</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('subject', 'mathematics')">
-                                <div class="filter-checkbox" id="subject-mathematics"></div>
-                                <span class="filter-option-text">Mathematics</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('subject', 'physics')">
-                                <div class="filter-checkbox" id="subject-physics"></div>
-                                <span class="filter-option-text">Physics</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('subject', 'chemistry')">
-                                <div class="filter-checkbox" id="subject-chemistry"></div>
-                                <span class="filter-option-text">Chemistry</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('subject', 'biology')">
-                                <div class="filter-checkbox" id="subject-biology"></div>
-                                <span class="filter-option-text">Biology</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('subject', 'history')">
-                                <div class="filter-checkbox" id="subject-history"></div>
-                                <span class="filter-option-text">History</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('subject', 'geography')">
-                                <div class="filter-checkbox" id="subject-geography"></div>
-                                <span class="filter-option-text">Geography</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    
+
+
+
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <h1 class="main-title">Find Your Ideal Teacher</h1>
+                <p class="subtitle">Discover qualified educators for personalized learning</p>
             </div>
         </div>
-    </section>
+
+        <div class="search-content">
+            
+
+            <!-- Advanced Filters -->
+            <div class="advanced-filters">
+                <!-- <h3 class="filters-title">Advanced Search Filters</h3> -->
+                <form id="searchForm">
+                    <div class="form-group">
+                        <label for="teacherName" class="form-label">Teacher Name</label>
+                        <input 
+                            type="text" 
+                            id="teacherName" 
+                            name="teacherName" 
+                            class="form-input" 
+                            placeholder="Enter teacher's full name"
+                        >
+                    </div><br>
+                    <div class="form-grid">
+
+                    
+
+                        <div class="form-group">
+                            <label for="board" class="form-label">Educational Board</label>
+                            <select id="board" name="board" class="form-select">
+                                <option value="">Select Board</option>
+                                <option value="WB">West Bengal Board</option>
+                                <option value="CBSE">CBSE</option>
+                                <option value="ICSE">ICSE</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="city" class="form-label">Location</label>
+                            <select id="city" name="city" class="form-select">
+                                <option value="">Select Location</option>
+                                <option value="Alipurduar">Alipurduar</option>
+                                <option value="Coochbehar">Coochbehar</option>
+                                <option value="Falakata">Falakata</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="classGrade" class="form-label">Class/Grade</label>
+                            <input 
+                                type="text" 
+                                id="classGrade" 
+                                name="classGrade" 
+                                class="form-input" 
+                                placeholder="Class 5, Class 10, Class 12, Madhyamik"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subject" class="form-label">Subject</label>
+                            <input 
+                                type="text" 
+                                id="subject" 
+                                name="subject" 
+                                class="form-input" 
+                                placeholder="Mathematics, Physics, English, Bengali"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="search-button-container">
+                        <button type="submit" class="search-button">
+                            Search Teachers
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- <div class="loading" id="loadingIndicator">
+                    <div class="spinner"></div>
+                    Searching for teachers...
+                </div> -->
+            </div>
+            
+        </div>
+    </div>
+<div id="results"></div>
+            
+        <!-- </div>
+    </div> --> 
+
+    <script>
+
+
+        
+
+
+
+
+
+
+        // Advanced search form functionality
+        document.getElementById('searchForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const resultsDiv = document.getElementById('results');
+            
+            // Show loading state
+            resultsDiv.innerHTML = `
+                <div class="loading-state">
+                    <div class="loading-spinner"></div>
+                    <div class="loading-text">Searching with advanced filters...</div>
+                </div>
+            `;
+            
+            // Send AJAX request
+            fetch('search_teachers.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                displayResults(data, 'Advanced Search Results');
+            })
+            .catch(error => {
+                resultsDiv.innerHTML = `<div class="error-state">Search Error: ${error.message}</div>`;
+            });
+        });
+
+
+
+        
+        // Replace your displayResults function with this version
+function displayResults(teachers, searchType = 'Search Results') {
+    const resultsDiv = document.getElementById('results');
+    
+    if (teachers.length === 0) {
+        resultsDiv.innerHTML = `
+            <div class="no-results">
+                <div class="no-results-icon">🔍</div>
+                <div class="no-results-title">No Teachers Found</div>
+                <div class="no-results-text">Try adjusting your search criteria or use different keywords</div>
+            </div>
+        `;
+        return;
+    }
+    
+    let html = `
+        <div class="results-section">
+            <div class="results-header">
+                <div class="results-title">
+                    ${searchType}
+                    <span class="results-count">${teachers.length}</span>
+                </div>
+            </div>
+            <div class="teachers-container">
+                <div class="teachers-scroll" id="teachersScroll">
+    `;
+    
+    teachers.forEach(teacher => {
+        const stars = '★'.repeat(Math.floor(teacher.rating)) + '☆'.repeat(5 - Math.floor(teacher.rating));
+        const initials = teacher.name.split(' ').map(n => n[0]).join('').toUpperCase();
+        
+        html += `
+            <div class="teacher-profile">
+    <div class="profile-picture">${initials}</div>
+    <div class="teacher-name">${teacher.name}</div>
+
+    <div class="rating-section">
+        <div class="rating-stars">
+            <span class="star">${stars}</span>
+        </div>
+        <span class="rating-value">${teacher.rating}/5</span>
+        <span class="rating-reviews">(${teacher.rating_count})</span>
+    </div>
+
+    <div class="profile-details">
+        <div class="detail-item">
+            <span class="detail-label">Subjects</span>
+            <span class="detail-content" title="${teacher.subjects}">${teacher.subjects}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Classes</span>
+            <span class="detail-content">${teacher.classes}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Location</span>
+            <span class="detail-content">${teacher.city}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Experience</span>
+            <span class="detail-content">${teacher.experience} Years</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Mode</span>
+            <span class="detail-content" title="${teacher.teaching_preferences}">${teacher.teaching_preferences}</span>
+        </div>
+    </div>
+
+    <!-- Fixed Call Now Button -->
+    <div class="contact-wrapper">
+        <a href="tel:${teacher.phone}" class="contact-button">Call now</a>
+    </div>
+</div>
+
+        `;
+    });
+    
+    html += `
+                </div>
+                
+            </div>
+        </div>
+    `;
+    
+    resultsDiv.innerHTML = html;
+}
+
+// Scroll navigation functions
+function scrollTeachers(direction) {
+    const container = document.getElementById('teachersScroll');
+    const scrollAmount = 300;
+    
+    if (direction === 'left') {
+        container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    } else {
+        container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+}
+    </script>
+
+
+
+
+
 
     <?php
     // Connect to database
@@ -764,7 +1525,7 @@ $result = $stmt->get_result();
     $ratingCount = isset($row['rating_count']) ? intval($row['rating_count']) : 0;
     ?>
     
-    <div class="rating-section">
+    <div class="rating-section" style ="justify-content: left;">
         <?php if ($rating > 0): ?>
             <div class="stars-container">
                 <?php 
