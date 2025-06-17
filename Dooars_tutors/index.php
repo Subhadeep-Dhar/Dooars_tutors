@@ -38,7 +38,7 @@ $result = $stmt->get_result();
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 </head>
-<body>  
+<body style="background:#e2e8f0;">  
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
@@ -120,7 +120,7 @@ $result = $stmt->get_result();
     </nav>
 
     <div class="container">
-        <div class="header">
+        <div class="header" style="background: #01427a">
             <div class="header-content">
                 <h1 class="main-title">Find Your Ideal Teacher</h1>
                 <p class="subtitle">Discover qualified educators for personalized learning</p>
@@ -345,8 +345,8 @@ $result = $stmt->get_result();
     ?>
 
     <section class="tutors-section">
-        <h2>Our Expert Tutors</h2>
-        <p class="section-subtitle">Meet our qualified and experienced tutors who are passionate about helping students achieve their academic goals.</p>
+        <h2 style="color:#12181e">Our Expert Tutors</h2>
+        <p class="section-subtitle" style="color:#12181e">Meet our qualified and experienced tutors who are passionate about helping students achieve their academic goals.</p>
         
         <div class="tutor-carousel">
             <div class="tutor-card-container" id="tutorContainer">
@@ -427,19 +427,16 @@ $result = $stmt->get_result();
 
                         <div class="map-container">
                             <iframe
-                                src="https://www.openstreetmap.org/export/embed.html?bbox=<?php 
-                                    echo $row['longitude'] - 0.01; ?>,<?php 
-                                    echo $row['latitude'] - 0.01; ?>,<?php 
-                                    echo $row['longitude'] + 0.01; ?>,<?php 
-                                    echo $row['latitude'] + 0.01; ?>&layer=mapnik&marker=<?php 
-                                    echo $row['latitude']; ?>,<?php echo $row['longitude']; ?>"
-                                width="100%" 
-                                height="180" 
+                                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDTy16l_Zhg8IgEWj2nu_MnBJjCRg_SrB8&q=<?php echo $row['latitude']; ?>,<?php echo $row['longitude']; ?>&zoom=15"
+                                width="100%"
+                                height="180"
+                                style="border:0;"
+                                allowfullscreen=""
                                 loading="lazy">
                             </iframe>
-                            <a href="https://www.openstreetmap.org/?mlat=<?php echo $row['latitude']; ?>&mlon=<?php echo $row['longitude']; ?>#map=15/<?php echo $row['latitude']; ?>/<?php echo $row['longitude']; ?>" 
+                            <a href="https://www.google.com/maps?q=<?php echo $row['latitude']; ?>,<?php echo $row['longitude']; ?>&z=15"
                             target="_blank" class="map-link">
-                                📍 View Location on Map
+                                📍 View Location on Google Maps
                             </a>
                         </div>
                     </div>
@@ -691,7 +688,7 @@ function handleEnd(e) {
     <!-- Boards Section -->
     <section class="boards-section">
         <div class="boards-container">
-            <h2 class="section-title" style="color:white;">Explore Teachers by Board</h2>
+            <h2 class="section-title" style="color:#12181e">Explore Teachers by Board</h2>
             
             <div class="boards-grid">
                 <div class="board-card" onclick="exploreBoard('wbbse')">
@@ -783,132 +780,168 @@ function handleEnd(e) {
     </div>
 
     <section class="all-tutors-map">
-        <h2>All Tutors on Map</h2>
-        <div id="tutorMap" style="height: 500px; width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"></div>
-    </section>
+    <h2>All Tutors on Map</h2>
+    <div id="tutorMap" style="height: 500px; width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"></div>
+</section>
 
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<?php
+    $conn = new mysqli("localhost:3307", "root", "", "dooars_tutors");
+    if ($conn->connect_error) die("DB connection failed: " . $conn->connect_error);
 
-    <?php
-        $conn = new mysqli("localhost:3307", "root", "", "dooars_tutors");
-        if ($conn->connect_error) die("DB connection failed: " . $conn->connect_error);
+    $sql = "SELECT name, latitude, longitude, address FROM tutors WHERE status = 'active' AND latitude IS NOT NULL AND longitude IS NOT NULL";
+    $result = $conn->query($sql);
 
-        $sql = "SELECT name, latitude, longitude, address FROM tutors WHERE status = 'active' AND latitude IS NOT NULL AND longitude IS NOT NULL";
-        $result = $conn->query($sql);
+    if (!$result) {
+        die("Query failed: " . $conn->error);
+    }
 
-        if (!$result) {
-            die("Query failed: " . $conn->error);
+    $tutor_locations = [];
+    while ($row = $result->fetch_assoc()) {
+        $tutor_locations[] = $row;
+    }
+    $conn->close();
+?>
+
+<script>
+    const tutorLocations = <?php echo json_encode($tutor_locations); ?>;
+    
+    let map;
+    let infoWindow;
+    
+    function initTutorMap() {
+        const mapElement = document.getElementById('tutorMap');
+        const statsElement = document.getElementById('mapStats');
+        
+        // Check if map element exists
+        if (!mapElement) {
+            console.error("Map element not found");
+            return;
         }
-
-        $tutor_locations = [];
-        while ($row = $result->fetch_assoc()) {
-            $tutor_locations[] = $row;
-        }
-        $conn->close();
-    ?>
-
-    <script> const tutorLocations = <?php echo json_encode($tutor_locations); ?>; </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const mapElement = document.getElementById('tutorMap');
-            const statsElement = document.getElementById('mapStats');
-            
-            // Check if map element exists
-            if (!mapElement) {
-                console.error("Map element not found");
-                return;
-            }
-            
-            // Check if tutor data is available
-            if (!tutorLocations || tutorLocations.length === 0) {
+        
+        // Check if tutor data is available
+        if (!tutorLocations || tutorLocations.length === 0) {
+            if (statsElement) {
                 statsElement.innerHTML = '<span style="color: #dc3545;">No active tutors with locations found.</span>';
-                
-                // Still initialize map for empty state
-                const map = L.map('tutorMap').setView([26.48, 89.53], 12);
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '© OpenStreetMap contributors'
-                }).addTo(map);
-                return;
             }
             
-            // Initialize map
-            const map = L.map('tutorMap').setView([26.48, 89.53], 10);
-            
-            // Add tile layer
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors',
-                maxZoom: 18
-            }).addTo(map);
-            
-            // Store all markers for bounds calculation
-            const markers = [];
-            let validTutors = 0;
-            let invalidTutors = 0;
-            
-            // Add markers for each tutor
-            tutorLocations.forEach((tutor) => {
-                if (tutor.latitude && tutor.longitude) {
-                    try {
-                        const lat = parseFloat(tutor.latitude);
-                        const lng = parseFloat(tutor.longitude);
-                        
-                        // Validate coordinates
-                        if (isNaN(lat) || isNaN(lng) || lat < -90 || lat > 90 || lng < -180 || lng > 180) {
-                            invalidTutors++;
-                            return;
-                        }
-                        
-                        const marker = L.marker([lat, lng]).addTo(map);
-                        marker.bindPopup(`
-                            <div style="font-family: Arial, sans-serif;">
-                                <strong style="color: #2c3e50; font-size: 16px;">${tutor.name}</strong><br>
-                                <span style="color: #666; font-size: 14px;">📍 ${tutor.address || 'No address'}</span>
-                            </div>
-                        `);
-                        
-                        markers.push(marker);
-                        validTutors++;
-                        
-                    } catch (error) {
-                        console.error(`Error adding marker for ${tutor.name}:`, error);
+            // Still initialize map for empty state
+            map = new google.maps.Map(mapElement, {
+                center: { lat: 26.48, lng: 89.53 },
+                zoom: 12,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+            return;
+        }
+        
+        // Initialize map
+        map = new google.maps.Map(mapElement, {
+            center: { lat: 26.48, lng: 89.53 },
+            zoom: 10,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+        
+        infoWindow = new google.maps.InfoWindow();
+        
+        // Store all markers for bounds calculation
+        const markers = [];
+        let validTutors = 0;
+        let invalidTutors = 0;
+        
+        // Add markers for each tutor
+        tutorLocations.forEach((tutor) => {
+            if (tutor.latitude && tutor.longitude) {
+                try {
+                    const lat = parseFloat(tutor.latitude);
+                    const lng = parseFloat(tutor.longitude);
+                    
+                    // Validate coordinates
+                    if (isNaN(lat) || isNaN(lng) || lat < -90 || lat > 90 || lng < -180 || lng > 180) {
                         invalidTutors++;
+                        return;
                     }
-                } else {
+                    
+                    const marker = new google.maps.Marker({
+                        position: { lat: lat, lng: lng },
+                        map: map,
+                        title: tutor.name,
+                        icon: {
+                            url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+                                <svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="16" cy="16" r="14" fill="#4285f4" stroke="white" stroke-width="2"/>
+                                    <text x="16" y="21" text-anchor="middle" font-size="16" fill="white">📚</text>
+                                </svg>
+                            `),
+                            scaledSize: new google.maps.Size(32, 32),
+                            anchor: new google.maps.Point(16, 16)
+                        }
+                    });
+                    
+                    const contentString = `
+                        <div style="font-family: Arial, sans-serif; min-width: 200px;">
+                            <strong style="color: #2c3e50; font-size: 16px;">${tutor.name}</strong><br>
+                            <span style="color: #666; font-size: 14px;">📍 ${tutor.address || 'No address'}</span>
+                        </div>
+                    `;
+                    
+                    marker.addListener('click', () => {
+                        infoWindow.setContent(contentString);
+                        infoWindow.open(map, marker);
+                    });
+                    
+                    markers.push(marker);
+                    validTutors++;
+                    
+                } catch (error) {
+                    console.error(`Error adding marker for ${tutor.name}:`, error);
                     invalidTutors++;
                 }
-            });
-            
-            // Update stats
-            // statsElement.innerHTML = `
-            //     <strong>${validTutors}</strong> active tutors displayed on map
-            //     ${invalidTutors > 0 ? 
-            //         `<span style="color: #dc3545;"> (${invalidTutors} tutors have invalid/missing coordinates)</span>` : 
-            //         '<span style="color: #28a745;"> ✓</span>'
-            //     }
-            // `;
-            
-            // Auto-fit map to show all markers
-            if (markers.length > 0) {
-                try {
-                    const group = new L.featureGroup(markers);
-                    const bounds = group.getBounds();
-                    
-                    if (bounds.isValid()) {
-                        map.fitBounds(bounds, { 
-                            padding: [20, 20],
-                            maxZoom: 15 
-                        });
-                    }
-                } catch (error) {
-                    console.error("Error fitting bounds:", error);
-                }
+            } else {
+                invalidTutors++;
             }
         });
-    </script>
+        
+        // Update stats (uncomment if you have statsElement)
+        // if (statsElement) {
+        //     statsElement.innerHTML = `
+        //         <strong>${validTutors}</strong> active tutors displayed on map
+        //         ${invalidTutors > 0 ? 
+        //             `<span style="color: #dc3545;"> (${invalidTutors} tutors have invalid/missing coordinates)</span>` : 
+        //             '<span style="color: #28a745;"> ✓</span>'
+        //         }
+        //     `;
+        // }
+        
+        // Auto-fit map to show all markers
+        if (markers.length > 0) {
+            try {
+                const bounds = new google.maps.LatLngBounds();
+                markers.forEach(marker => {
+                    bounds.extend(marker.getPosition());
+                });
+                
+                map.fitBounds(bounds);
+                
+                // Set maximum zoom level
+                google.maps.event.addListenerOnce(map, 'bounds_changed', function() {
+                    if (map.getZoom() > 15) {
+                        map.setZoom(15);
+                    }
+                });
+                
+            } catch (error) {
+                console.error("Error fitting bounds:", error);
+            }
+        }
+    }
+    
+    // Initialize when DOM is loaded
+    document.addEventListener('DOMContentLoaded', initTutorMap);
+</script>
+
+<!-- Load Google Maps API -->
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTy16l_Zhg8IgEWj2nu_MnBJjCRg_SrB8&callback=initTutorMap">
+</script>
 
 
 

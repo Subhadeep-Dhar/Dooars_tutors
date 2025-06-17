@@ -24,7 +24,8 @@ button:active {
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             line-height: 1.6;
-            background: linear-gradient(135deg, #22577a 0%, #38a3a5 50%, #57cc99 100%);
+            /* background: linear-gradient(135deg, #22577a 0%, #38a3a5 50%, #57cc99 100%); */
+            background: #8aafdf;
             min-height: 100vh;
         }
 
@@ -85,7 +86,7 @@ button:active {
         }
 
         .nav-links a:hover {
-            background: linear-gradient(45deg, #667eea, #764ba2);
+            background: #01427a;
             color: white;
             transform: translateY(-2px);
         }
@@ -190,7 +191,7 @@ button:active {
         .mobile-nav-header {
             padding: 20px;
             border-bottom: 1px solid #eee;
-            background: linear-gradient(45deg, #667eea, #764ba2);
+            background: #e2e8f0;
             color: white;
         }
 

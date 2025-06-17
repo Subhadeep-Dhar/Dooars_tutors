@@ -281,7 +281,7 @@
 
                             <div class="form-group">
                                 <label for="addressInput">Address *</label>
-                                <input type="text" id="addressInput" name="address" required readonly placeholder="Enter your address or select location on map">
+                                <input type="text" id="addressInput" name="address" required placeholder="Enter your address or select location on map">
                             </div>
                         </div>
 
@@ -301,8 +301,9 @@
         </div>
     </div>
 
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet-control-photon"></script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTy16l_Zhg8IgEWj2nu_MnBJjCRg_SrB8&libraries=geometry&callback=initializeMap">
+    </script>
     <script src="./js/reg_script.js"></script>
     
     <script>

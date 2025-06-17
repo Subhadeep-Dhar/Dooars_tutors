@@ -472,7 +472,7 @@ button:active {
         }
 
         .header {
-            background: linear-gradient(135deg, #38a3a5 0%, #22577a 100%);
+            background: #01427a;
             color: white;
             padding: 40px 30px;
             text-align: center;
