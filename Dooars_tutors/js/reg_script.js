@@ -71,7 +71,7 @@ let geocoder;
 
 function initializeMap() {
     // Default location (Siliguri area)
-    const defaultLocation = { lat: 26.7271, lng: 88.3953 };
+    const defaultLocation = { lat: 26.4922, lng: 89.5320 };
     
     // Initialize the map
     map = new google.maps.Map(document.getElementById('map'), {

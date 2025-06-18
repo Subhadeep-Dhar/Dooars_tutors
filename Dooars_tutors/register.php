@@ -5,6 +5,7 @@
     <title>DooarsTutors - Become a tutor</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="./favicon_io/favicon.ico">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- <link rel="stylesheet" href="./css/reg_style.css"> -->
@@ -566,6 +567,143 @@ button:active {
   mix-blend-mode: screen;
   filter: brightness(1) contrast(10);
 }
+
+
+
+
+.dropdown-section {
+    margin-bottom: 20px;
+    border: 2px solid #e0e6ed;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.dropdown-section:hover {
+    /* border-color: #57cc99; */
+    box-shadow: 0 4px 15px rgba(87, 204, 153, 0.1);
+}
+
+.dropdown-header {
+    padding: 16px 20px;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    color: #003153;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.dropdown-header:hover {
+    background: #003153;
+    color: white;
+}
+
+.dropdown-arrow {
+    transition: transform 0.3s ease;
+    font-size: 14px;
+}
+
+.dropdown-section.active .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.dropdown-content {
+    padding: 0 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.dropdown-section.active .dropdown-content {
+    max-height: 500px;
+    padding: 20px;
+}
+
+.dropdown-section.active .dropdown-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.checkbox-item input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+}
+
+.checkbox-item label {
+    margin: 0;
+    cursor: pointer;
+    font-weight: normal;
+}
+
+.selection-summary {
+    margin-left: 10px;
+    font-size: 12px;
+    color: #003153;
+    font-weight: normal;
+}
+
+@media (max-width: 768px) {
+    .two-column {
+        grid-template-columns: 1fr;
+    }
+    
+    .checkbox-grid {
+        grid-template-columns: 1fr;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+    
+    .dropdown-content {
+        padding: 0 16px;
+    }
+    
+    .dropdown-section.active .dropdown-content {
+        padding: 16px;
+        max-height: 350px;
+    }
+}
+
+.form-group label {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: bold;
+        }
+
+.form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+.conditional-section {
+            display: none;
+            margin-top: 20px;
+            padding: 16px;
+            background: #f9f9f9;
+            border-radius: 6px;
+        }
+        
+        .conditional-section.active {
+            display: block;
+        }
      </style>
 </head>
 
@@ -597,265 +735,538 @@ button:active {
                         </div>
                     </div>
 
+                    <!-- Profession Dropdown -->
+                    <div class="dropdown-section" id="profession-section">
+                        <div class="dropdown-header" onclick="toggleDropdown('profession-section')">
+                            <span>Profession <span class="selection-summary" id="profession-summary"></span></span>
+                            <span class="dropdown-arrow">▼</span>
+                        </div>
+                        <div class="dropdown-content">
+                            <div class="checkbox-grid">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" name="profession[]" value="Tutor" id="tutor" onchange="handleProfessionChange()">
+                                    <label for="tutor">Tutor</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" name="profession[]" value="Sports Coach" id="sports-coach" onchange="handleProfessionChange()">
+                                    <label for="sports-coach">Sports Coach</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" name="profession[]" value="Trainer" id="trainer" onchange="handleProfessionChange()">
+                                    <label for="trainer">Trainer</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" name="profession[]" value="Dance Teacher" id="dance-teacher" onchange="handleProfessionChange()">
+                                    <label for="dance-teacher">Dance Teacher</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" name="profession[]" value="Music Teacher" id="music-teacher" onchange="handleProfessionChange()">
+                                    <label for="music-teacher">Music Teacher</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" name="profession[]" value="Singing Teacher" id="singing-teacher" onchange="handleProfessionChange()">
+                                    <label for="singing-teacher">Singing Teacher</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" name="profession[]" value="Art Teacher" id="art-teacher" onchange="handleProfessionChange()">
+                                    <label for="art-teacher">Art Teacher</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" name="profession[]" value="others" id="profession-others" onchange="handleProfessionChange()">
+                                    <label for="profession-others">Others</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+
                     <div class="form-group">
                         <label for="experience">Experience </label>
                         <input type="text" id="experience" name="experience" required placeholder="Enter teaching experience">
                     </div>
+                
+
+                    <div class="conditional-section" id="tutor-section">
+                        <h3>Teaching Credentials</h3>
+                        <div class="dropdown-section" id="boards-section">
+                            <div class="dropdown-header" onclick="toggleDropdown('boards-section')">
+                                <span>Education Boards <span class="selection-summary" id="boards-summary"></span></span>
+                                <span class="dropdown-arrow">▼</span>
+                            </div>
+                            <div class="dropdown-content">
+                                <div class="checkbox-grid">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="boards[]" value="WB" id="wb">
+                                        <label for="wb">West Bengal</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="boards[]" value="CBSE" id="cbse">
+                                        <label for="cbse">CBSE</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="boards[]" value="ICSE" id="icse">
+                                        <label for="icse">ICSE</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Classes Dropdown -->
+                        <div class="dropdown-section" id="classes-section">
+                            <div class="dropdown-header" onclick="toggleDropdown('classes-section')">
+                                <span>Classes <span class="selection-summary" id="classes-summary"></span></span>
+                                <span class="dropdown-arrow">▼</span>
+                            </div>
+                            <div class="dropdown-content">
+                                <div class="checkbox-grid">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="classes[]" value="1" id="class-1" onchange="updateSummary('classes')">
+                                        <label for="class-1">Class 1</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="classes[]" value="2" id="class-2" onchange="updateSummary('classes')">
+                                        <label for="class-2">Class 2</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="classes[]" value="3" id="class-3" onchange="updateSummary('classes')">
+                                        <label for="class-3">Class 3</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="classes[]" value="4" id="class-4" onchange="updateSummary('classes')">
+                                        <label for="class-4">Class 4</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="classes[]" value="5" id="class-5" onchange="updateSummary('classes')">
+                                        <label for="class-5">Class 5</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="classes[]" value="6" id="class-6" onchange="updateSummary('classes')">
+                                        <label for="class-6">Class 6</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="classes[]" value="7" id="class-7" onchange="updateSummary('classes')">
+                                        <label for="class-7">Class 7</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="classes[]" value="8" id="class-8" onchange="updateSummary('classes')">
+                                        <label for="class-8">Class 8</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="classes[]" value="9" id="class-9" onchange="updateSummary('classes')">
+                                        <label for="class-9">Class 9</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="classes[]" value="10" id="class-10" onchange="updateSummary('classes')">
+                                        <label for="class-10">Class 10</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="classes[]" value="11" id="class-11" onchange="updateSummary('classes')">
+                                        <label for="class-11">Class 11</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="classes[]" value="12" id="class-12" onchange="updateSummary('classes')">
+                                        <label for="class-12">Class 12</label>
+                                    </div>
+                                
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="classes[]" value="others" id="class-others" onchange="toggleOtherClass(); updateSummary('classes')">
+                                        <label for="class-others">Others</label>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="other-class-group" style="display: none; margin-top: 16px;">
+                                    <label for="other-class">Please specify:</label>
+                                    <input type="text" id="other-class" name="other_class" placeholder="Enter other class details">
+                                </div>
+                            </div>
+                        </div>
+                            
+
+                            
+                        <div class="dropdown-section" id="subjects-section">
+                            <div class="dropdown-header" onclick="toggleDropdown('subjects-section')">
+                                <span>Subjects <span class="selection-summary" id="subjects-summary"></span></span>
+                                <span class="dropdown-arrow">▼</span>
+                            </div>
+                            <div class="dropdown-content">
+                                <div class="checkbox-grid">
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="subjects[]" value="English" id="english">
+                                        <label for="english">English</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="subjects[]" value="Hindi" id="hindi">
+                                        <label for="hindi">Hindi</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="subjects[]" value="Bengali" id="bengali">
+                                        <label for="bengali">Bengali</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="subjects[]" value="Mathematics" id="mathematics" onchange="updateSummary('subjects')">
+                                        <label for="mathematics">Mathematics</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="subjects[]" value="Physics" id="physics" onchange="updateSummary('subjects')">
+                                        <label for="physics">Physics</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="subjects[]" value="Chemistry" id="chemistry" onchange="updateSummary('subjects')">
+                                        <label for="chemistry">Chemistry</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="subjects[]" value="Biology" id="biology" onchange="updateSummary('subjects')">
+                                        <label for="biology">Biology</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="subjects[]" value="General Science" id="general-science" onchange="updateSummary('subjects')">
+                                        <label for="general-science">General Science</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="subjects[]" value="EVS" id="evs" onchange="updateSummary('subjects')">
+                                        <label for="evs">EVS</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="subjects[]" value="Computer Science" id="computer-science" onchange="updateSummary('subjects')">
+                                        <label for="computer-science">Computer Science</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="subjects[]" value="History" id="history" onchange="updateSummary('subjects')">
+                                        <label for="history">History</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="subjects[]" value="Geography" id="geography" onchange="updateSummary('subjects')">
+                                        <label for="geography">Geography</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="subjects[]" value="Economics" id="economics" onchange="updateSummary('subjects')">
+                                        <label for="economics">Economics</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="subjects[]" value="Accountancy" id="accountancy" onchange="updateSummary('subjects')">
+                                        <label for="accountancy">Accountancy</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="subjects[]" value="Business Studies" id="business-studies" onchange="updateSummary('subjects')">
+                                        <label for="business-studies">Business Studies</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="subjects[]" value="Education" id="education" onchange="updateSummary('subjects')">
+                                        <label for="education">Education</label>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="subjects[]" value="Philosophy" id="philosophy" onchange="updateSummary('subjects')">
+                                        <label for="philosophy">Philosophy</label>
+                                    </div>
+                
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" name="subjects[]" value="Others" id="others" onchange="toggleOtherSubject(); updateSummary('subjects')">
+                                        <label for="others">Others</label>
+                                    </div>
+                                </div>
+                                <div class="other-specification" id="other-specification" style="display: none; margin-top: 16px;">
+                                    <label for="other-subject">Please specify other subject:</label>
+                                    <input type="text" name="other_subject" id="other-subject" placeholder="Enter subject name">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sports Coach Section -->
+                    <div class="conditional-section" id="sports-coach-section">
+                        <h3>Sports Coaching Details</h3>
+                        <div class="form-group">
+                            <label for="sports-type">Sports:</label>
+                            <select id="sports-type" name="sports_type">
+                                <option value="">Select Sport</option>
+                                <option value="Football">Football</option>
+                                <option value="Cricket">Cricket</option>
+                                <option value="Basketball">Basketball</option>
+                                <option value="Tennis">Tennis</option>
+                                <option value="Badminton">Badminton</option>
+                                <option value="Swimming">Swimming</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="sports-gender">For which gender:</label>
+                            <select id="sports-gender" name="sports_gender">
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Both">Both</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="sports-days">Coaching days in a week:</label>
+                            <select id="sports-days" name="sports_days">
+                                <option value="">Select Days</option>
+                                <option value="1">1 Day</option>
+                                <option value="2">2 Days</option>
+                                <option value="3">3 Days</option>
+                                <option value="4">4 Days</option>
+                                <option value="5">5 Days</option>
+                                <option value="6">6 Days</option>
+                                <option value="7">7 Days</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Trainer Section -->
+                    <div class="conditional-section" id="trainer-section">
+                        <h3>Training Details</h3>
+                        <div class="form-group">
+                            <label for="training-type">Training Type:</label>
+                            <select id="training-type" name="training_type">
+                                <option value="">Select Type</option>
+                                <option value="Gym">Gym</option>
+                                <option value="Yoga">Yoga</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="training-gender">For which gender:</label>
+                            <select id="training-gender" name="training_gender">
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Both">Both</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="training-days">Training days in a week:</label>
+                            <select id="training-days" name="training_days">
+                                <option value="">Select Days</option>
+                                <option value="1">1 Day</option>
+                                <option value="2">2 Days</option>
+                                <option value="3">3 Days</option>
+                                <option value="4">4 Days</option>
+                                <option value="5">5 Days</option>
+                                <option value="6">6 Days</option>
+                                <option value="7">7 Days</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Dance Teacher Section -->
+                    <div class="conditional-section" id="dance-teacher-section">
+                        <h3>Dance Teaching Details</h3>
+                        <div class="form-group">
+                            <label for="dance-type">Dance Type:</label>
+                            <select id="dance-type" name="dance_type">
+                                <option value="">Select Type</option>
+                                <option value="Eastern/Classical">Eastern/Classical</option>
+                                <option value="Western">Western</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="dance-gender">For which gender:</label>
+                            <select id="dance-gender" name="dance_gender">
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Both">Both</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="dance-days">Coaching days in a week:</label>
+                            <select id="dance-days" name="dance_days">
+                                <option value="">Select Days</option>
+                                <option value="1">1 Day</option>
+                                <option value="2">2 Days</option>
+                                <option value="3">3 Days</option>
+                                <option value="4">4 Days</option>
+                                <option value="5">5 Days</option>
+                                <option value="6">6 Days</option>
+                                <option value="7">7 Days</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Music Teacher Section -->
+                    <div class="conditional-section" id="music-teacher-section">
+                        <h3>Music Teaching Details</h3>
+                        <div class="form-group">
+                            <label for="music-type">Music Type:</label>
+                            <select id="music-type" name="music_type">
+                                <option value="">Select Type</option>
+                                <option value="Eastern/Classical">Eastern/Classical</option>
+                                <option value="Western">Western</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="music-gender">For which gender:</label>
+                            <select id="music-gender" name="music_gender">
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Both">Both</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="music-days">Learning days in a week:</label>
+                            <select id="music-days" name="music_days">
+                                <option value="">Select Days</option>
+                                <option value="1">1 Day</option>
+                                <option value="2">2 Days</option>
+                                <option value="3">3 Days</option>
+                                <option value="4">4 Days</option>
+                                <option value="5">5 Days</option>
+                                <option value="6">6 Days</option>
+                                <option value="7">7 Days</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Singing Teacher Section -->
+                    <div class="conditional-section" id="singing-teacher-section">
+                        <h3>Singing Teaching Details</h3>
+                        <div class="form-group">
+                            <label for="singing-type">Singing Type:</label>
+                            <select id="singing-type" name="singing_type">
+                                <option value="">Select Type</option>
+                                <option value="Eastern/Classical">Eastern/Classical</option>
+                                <option value="Western">Western</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="singing-gender">For which gender:</label>
+                            <select id="singing-gender" name="singing_gender">
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Both">Both</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="singing-days">Learning days in a week:</label>
+                            <select id="singing-days" name="singing_days">
+                                <option value="">Select Days</option>
+                                <option value="1">1 Day</option>
+                                <option value="2">2 Days</option>
+                                <option value="3">3 Days</option>
+                                <option value="4">4 Days</option>
+                                <option value="5">5 Days</option>
+                                <option value="6">6 Days</option>
+                                <option value="7">7 Days</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Art Teacher Section -->
+                    <div class="conditional-section" id="art-teacher-section">
+                        <h3>Art Teaching Details</h3>
+                        <div class="form-group">
+                            <label for="art-days">Learning days in a week:</label>
+                            <select id="art-days" name="art_days">
+                                <option value="">Select Days</option>
+                                <option value="1">1 Day</option>
+                                <option value="2">2 Days</option>
+                                <option value="3">3 Days</option>
+                                <option value="4">4 Days</option>
+                                <option value="5">5 Days</option>
+                                <option value="6">6 Days</option>
+                                <option value="7">7 Days</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Others Section -->
+                    <div class="conditional-section" id="others-section">
+                        <h3>Other Profession Details</h3>
+                        <div class="form-group">
+                            <label for="other-profession-name">Profession Name:</label>
+                            <input type="text" id="other-profession-name" name="other_profession_name" placeholder="Enter your profession">
+                        </div>
+                        <div class="form-group">
+                            <label for="other-gender">For which gender:</label>
+                            <select id="other-gender" name="other_gender">
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Both">Both</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="other-days">Coaching days in a week:</label>
+                            <select id="other-days" name="other_days">
+                                <option value="">Select Days</option>
+                                <option value="1">1 Day</option>
+                                <option value="2">2 Days</option>
+                                <option value="3">3 Days</option>
+                                <option value="4">4 Days</option>
+                                <option value="5">5 Days</option>
+                                <option value="6">6 Days</option>
+                                <option value="7">7 Days</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-section">
-                    <h2 class="section-title">Teaching Credentials</h2>
+                    <h2 class="section-title">Teaching Preferences</h2>
 
-                    <div class="form-group">
-                        <label>Education Boards</label>
-                        <div class="checkbox-grid">
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="boards[]" value="WB" id="wb">
-                                <label for="wb">West Bengal</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="boards[]" value="CBSE" id="cbse">
-                                <label for="cbse">CBSE</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="boards[]" value="ICSE" id="icse">
-                                <label for="icse">ICSE</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Classes</label>
-                        <div class="checkbox-grid">
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="classes[]" value="1" id="class-1">
-                                <label for="class-1">Class 1</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="classes[]" value="2" id="class-2">
-                                <label for="class-2">Class 2</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="classes[]" value="3" id="class-3">
-                                <label for="class-3">Class 3</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="classes[]" value="4" id="class-4">
-                                <label for="class-4">Class 4</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="classes[]" value="5" id="class-5">
-                                <label for="class-5">Class 5</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="classes[]" value="6" id="class-6">
-                                <label for="class-6">Class 6</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="classes[]" value="7" id="class-7">
-                                <label for="class-7">Class 7</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="classes[]" value="8" id="class-8">
-                                <label for="class-8">Class 8</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="classes[]" value="9" id="class-9">
-                                <label for="class-9">Class 9</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="classes[]" value="10" id="class-10">
-                                <label for="class-10">Class 10</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="classes[]" value="11" id="class-11">
-                                <label for="class-11">Class 11</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="classes[]" value="12" id="class-12">
-                                <label for="class-12">Class 12</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="classes[]" value="others" id="class-others">
-                                <label for="class-others">Others</label>
-                            </div>
-                        </div>
-                        <div class="form-group" id="other-class-group" style="display: none; margin-top: 16px;">
-                            <label for="other-class">Please specify:</label>
-                            <input type="text" id="other-class" name="other_class"
-                                placeholder="Enter other class details">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Subjects</label>
-                        <div class="checkbox-grid">
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value=" English " id=" english ">
-                                <label for=" english ">English</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value=" Hindi " id=" hindi ">
-                                <label for=" hindi ">Hindi</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value=" Bengali " id=" bengali ">
-                                <label for=" bengali ">Bengali</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value=" Sanskrit " id=" sanskrit ">
-                                <label for=" sanskrit ">Sanskrit</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value=" Mathematics " id=" mathematics ">
-                                <label for=" mathematics ">Mathematics</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value=" Physics " id=" physics ">
-                                <label for=" physics ">Physics</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value=" Chemistry " id=" chemistry ">
-                                <label for=" chemistry ">Chemistry</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value=" Biology " id=" biology ">
-                                <label for=" biology ">Biology</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value=" General Science " id=" general-science ">
-                                <label for=" general-science ">General Science</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value="EVS" id="evs">
-                                <label for="evs">EVS</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value ="Computer Science " id=" computer-science ">
-                                <label for=" computer-science ">Computer Science</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value=" IT " id=" it ">
-                                <label for=" it ">IT</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value=" AI " id=" ai ">
-                                <label for=" ai ">AI</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value=" History " id=" history ">
-                                <label for=" history ">History</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value=" Geography " id=" geography ">
-                                <label for=" geography ">Geography</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value=" Political Science "
-                                    id=" political-science ">
-                                <label for=" political-science ">Political Science</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value=" Civics " id=" civics ">
-                                <label for=" civics ">Civics</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value=" Economics " id=" economics ">
-                                <label for=" economics ">Economics</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value=" Social Studies " id=" social-studies ">
-                                <label for=" social-studies ">Social Studies</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value=" Accountancy " id=" accountancy ">
-                                <label for=" accountancy ">Accountancy</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value=" Business Studies " id=" business-studies ">
-                                <label for=" business-studies ">Business Studies</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value=" Philosophy " id=" philosophy ">
-                                <label for=" philosophy ">Philosophy</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value="Others" id="others">
-                                <label for="others">Others</label>
-                            </div>
-                        </div>
-                        <div class="other-specification" id="other-specification" style="display: none;">
-                            <label for="other-subject">Please specify other subject:</label>
-                            <input type="text" name="other_subject" id="other-subject" placeholder="Enter subject name">
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <h2 class="section-title">Teaching Preferences</h2>
-
-                        <div class="two-column">
-                            <div class="form-group">
-                                <label>Teaching Mode</label>
-                                <div class="checkbox-grid">
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="mode[]" value="Online" id="online">
-                                        <label for="online">Online</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="mode[]" value="Offline" id="offline">
-                                        <label for="offline">Offline</label>
-                                    </div>
+                    <div class="two-column">
+                        <div class="form-group">
+                            <label>Teaching Mode</label>
+                            <div class="checkbox-grid">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" name="mode[]" value="Online" id="online">
+                                    <label for="online">Online</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" name="mode[]" value="Offline" id="offline">
+                                    <label for="offline">Offline</label>
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="form-group">
-                                <label>Preferred Location</label>
-                                <div class="checkbox-grid">
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="preferred_location[]" value="Home" id="home">
-                                        <label for="home">At Home</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="preferred_location[]" value="Away" id="away">
-                                        <label for="away">Travel to Student</label>
-                                    </div>
+                        <div class="form-group">
+                            <label>Preferred Location</label>
+                            <div class="checkbox-grid">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" name="preferred_location[]" value="Home" id="home">
+                                    <label for="home">At Home</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" name="preferred_location[]" value="Away" id="away">
+                                    <label for="away">Travel to Student</label>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="form-section">
-                        <h2 class="section-title">Location Details</h2>
+                <div class="form-section">
+                    <h2 class="section-title">Location Details</h2>
 
-                        <div class="two-column">
-                            <div class="form-group">
-                                <label for="citySelect">Select City *</label>
-                                <select id="citySelect" name="city" required>
-                                    <option value="">-- Select City --</option>
-                                    <option value="Alipurduar">Alipurduar</option>
-                                    <option value="Coochbehar">Coochbehar</option>
-                                    <option value="Falakata">Falakata</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="addressInput">Address *</label>
-                                <input type="text" id="addressInput" name="address" required readonly placeholder="Enter your address or select location on map">
-                            </div>
+                    <div class="two-column">
+                        <div class="form-group">
+                            <label for="citySelect">Select City *</label>
+                            <select id="citySelect" name="city" required>
+                                <option value="">-- Select City --</option>
+                                <option value="Alipurduar">Alipurduar</option>
+                                <option value="Coochbehar">Coochbehar</option>
+                                <option value="Falakata">Falakata</option>
+                            </select>
                         </div>
 
-                        <!-- <button type="button" class="btn btn-secondary" onclick="searchLocation()">📍 Search on
-                            Map</button> -->
-
-                        <input type="hidden" name="latitude" id="latitude">
-                        <input type="hidden" name="longitude" id="longitude">
-
-                        <div class="map-section">
-                            <div id="map"></div>
+                        <div class="form-group">
+                            <label for="addressInput">Address *</label>
+                            <input type="text" id="addressInput" name="address" required readonly placeholder="Kindly select your location on map">
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-submit">Complete Registration</button>
+                    <!-- <button type="button" class="btn btn-secondary" onclick="searchLocation()">📍 Search on
+                        Map</button> -->
+
+                    <input type="hidden" name="latitude" id="latitude">
+                    <input type="hidden" name="longitude" id="longitude">
+                    <input type="hidden" name="user_type" value="individual">
+
+                    <div class="map-section">
+                        <div id="map"></div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-submit">Complete Registration</button>
             </form>
         </div>
     </div>
@@ -866,6 +1277,71 @@ button:active {
     <script src="./js/reg_script.js"></script>
     
     <script>
+
+        function handleProfessionChange() {
+    const checkboxes = document.querySelectorAll('input[name="profession[]"]');
+    const selectedProfessions = [];
+    
+    checkboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+            selectedProfessions.push(checkbox.value);
+        }
+    });
+    
+    // Hide all conditional sections first
+    const allSections = document.querySelectorAll('.conditional-section');
+    allSections.forEach(section => {
+        section.classList.remove('active');
+    });
+    
+    // Show sections based on selected professions
+    selectedProfessions.forEach(profession => {
+        let sectionId = '';
+        
+        switch(profession) {
+            case 'Tutor':
+                sectionId = 'tutor-section';
+                break;
+            case 'Sports Coach':
+                sectionId = 'sports-coach-section';
+                break;
+            case 'Trainer':
+                sectionId = 'trainer-section';
+                break;
+            case 'Dance Teacher':
+                sectionId = 'dance-teacher-section';
+                break;
+            case 'Music Teacher':
+                sectionId = 'music-teacher-section';
+                break;
+            case 'Singing Teacher':
+                sectionId = 'singing-teacher-section';
+                break;
+            case 'Art Teacher':
+                sectionId = 'art-teacher-section';
+                break;
+            case 'others':
+                sectionId = 'others-section';
+                break;
+        }
+        
+        if (sectionId) {
+            document.getElementById(sectionId).classList.add('active');
+        }
+    });
+    
+    // Update profession summary
+    updateProfessionSummary(selectedProfessions);
+}
+function updateProfessionSummary(selectedProfessions) {
+    const summary = document.getElementById('profession-summary');
+    if (selectedProfessions.length > 0) {
+        summary.textContent = `(${selectedProfessions.length} selected)`;
+    } else {
+        summary.textContent = '';
+    }
+}
+
         // Handle form submission
         document.getElementById('tutorForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -906,6 +1382,51 @@ button:active {
         document.getElementById('others').addEventListener('change', function() {
             const otherSpecification = document.getElementById('other-specification');
             otherSpecification.style.display = this.checked ? 'block' : 'none';
+        });
+
+        function toggleOtherProfession() {
+            const checkbox = document.getElementById('profession-others');
+            const otherProfessionGroup = document.getElementById('other-profession-group');
+            otherProfessionGroup.style.display = checkbox.checked ? 'block' : 'none';
+        }
+
+
+
+        function toggleDropdown(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.classList.toggle('active');
+        }
+
+        function updateSummary(type) {
+            const checkboxes = document.querySelectorAll(`input[name="${type}[]"]:checked`);
+            const summaryElement = document.getElementById(`${type}-summary`);
+            const count = checkboxes.length;
+            
+            if (count > 0) {
+                summaryElement.textContent = `(${count} selected)`;
+                summaryElement.style.color = '#57cc99';
+            } else {
+                summaryElement.textContent = '';
+            }
+        }
+
+        function toggleOtherClass() {
+            const otherCheckbox = document.getElementById('class-others');
+            const otherGroup = document.getElementById('other-class-group');
+            otherGroup.style.display = otherCheckbox.checked ? 'block' : 'none';
+        }
+
+        function toggleOtherSubject() {
+            const otherCheckbox = document.getElementById('others');
+            const otherSpecification = document.getElementById('other-specification');
+            otherSpecification.style.display = otherCheckbox.checked ? 'block' : 'none';
+        }
+
+        // Initialize summaries on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateSummary('boards');
+            updateSummary('classes');
+            updateSummary('subjects');
         });
 
     </script>

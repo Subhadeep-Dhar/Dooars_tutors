@@ -75,6 +75,7 @@ $stars_html = str_repeat('★', $full_stars) . str_repeat('☆', $empty_stars);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($teacher['name']); ?> - Teacher Profile</title>
+    <link rel="icon" type="image/x-icon" href="./favicon_io/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
@@ -489,46 +490,83 @@ $stars_html = str_repeat('★', $full_stars) . str_repeat('☆', $empty_stars);
             background: #cbd5e1;
         }
 
-        .reviews-list {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
+        .reviews-container {
+    max-height: 500px; /* Adjust this height as needed */
+    overflow-y: auto;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    background: #f8fafc;
+    padding: 8px;
+}
 
-        .review-item {
-            background: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 20px;
-        }
+.reviews-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-right: 4px; /* Small padding to account for scrollbar */
+}
 
-        .review-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 12px;
-        }
+.review-item {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    flex-shrink: 0; /* Prevent items from shrinking */
+}
 
-        .review-author {
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 4px;
-        }
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
 
-        .review-rating {
-            color: #fbbf24;
-            font-size: 16px;
-        }
+.review-author {
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 4px;
+}
 
-        .review-date {
-            color: #64748b;
-            font-size: 13px;
-        }
+.review-rating {
+    color: #fbbf24;
+    font-size: 16px;
+}
 
-        .review-text {
-            color: #475569;
-            line-height: 1.6;
-        }
+.review-date {
+    color: #64748b;
+    font-size: 13px;
+}
+
+.review-text {
+    color: #475569;
+    line-height: 1.6;
+}
+
+/* Custom scrollbar styling */
+.reviews-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.reviews-container::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 3px;
+}
+
+.reviews-container::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+}
+
+.reviews-container::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* For better mobile experience */
+@media (max-width: 768px) {
+    .reviews-container {
+        max-height: 400px;
+    }
+}
 
         @media (max-width: 1024px) {
             .main-grid {
@@ -732,32 +770,34 @@ $stars_html = str_repeat('★', $full_stars) . str_repeat('☆', $empty_stars);
                     </form>
                 </div>
 
-                <!-- Reviews List -->
-                <div class="reviews-list">
-                    <?php if (empty($reviews)): ?>
-                        <div class="review-item">
-                            <p style="text-align: center; color: #64748b;">No reviews yet. Be the first to review this teacher!</p>
-                        </div>
-                    <?php else: ?>
-                        <?php foreach ($reviews as $review): ?>
-                        <div class="review-item">
-                            <div class="review-header">
-                                <div>
-                                    <div class="review-author"><?php echo htmlspecialchars($review['student_name']); ?></div>
-                                    <div class="review-rating">
-                                        <?php echo str_repeat('★', $review['rating']) . str_repeat('☆', 5 - $review['rating']); ?>
+                <!-- Reviews List with Scrollable Container -->
+                <div class="reviews-container">
+                    <div class="reviews-list">
+                        <?php if (empty($reviews)): ?>
+                            <div class="review-item">
+                                <p style="text-align: center; color: #64748b;">No reviews yet. Be the first to review this teacher!</p>
+                            </div>
+                        <?php else: ?>
+                            <?php foreach ($reviews as $review): ?>
+                            <div class="review-item">
+                                <div class="review-header">
+                                    <div>
+                                        <div class="review-author"><?php echo htmlspecialchars($review['student_name']); ?></div>
+                                        <div class="review-rating">
+                                            <?php echo str_repeat('★', $review['rating']) . str_repeat('☆', 5 - $review['rating']); ?>
+                                        </div>
+                                    </div>
+                                    <div class="review-date">
+                                        <?php echo date('M j, Y', strtotime($review['created_at'])); ?>
                                     </div>
                                 </div>
-                                <div class="review-date">
-                                    <?php echo date('M j, Y', strtotime($review['created_at'])); ?>
+                                <div class="review-text">
+                                    <?php echo htmlspecialchars($review['review_text']); ?>
                                 </div>
                             </div>
-                            <div class="review-text">
-                                <?php echo htmlspecialchars($review['review_text']); ?>
-                            </div>
-                        </div>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
                 </div>
             </div>
         </div>

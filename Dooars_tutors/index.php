@@ -33,6 +33,7 @@ $result = $stmt->get_result();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DooarsTutors - Find Your Perfect Tutor</title>  
+    <link rel="icon" type="image/x-icon" href="./favicon_io/favicon.ico">
     <!-- <link rel="stylesheet" href="./css/style.css"> -->
     <link rel="stylesheet" href="./css/style_1.css">
     <!-- <link rel="stylesheet" href="./css/style_2.css"> -->
@@ -989,7 +990,7 @@ button:active {
 
     .progress-fill {
         height: 100%;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: #003153;
         border-radius: 2px;
         transition: width 0.4s ease;
     }
@@ -1891,11 +1892,11 @@ button:active {
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About Us</a></li>
-                <li><a href="#organization">Organization</a></li>
+                <li><a href="#Centres">Centres</a></li>
                 <li class="dropdown">
                     <a href="#skills">Arts & Culture</a>
                     <ul class="dropdown-menu">
-                        <li><a href="#music">Music</a></li>
+                        <li><a href="#music/singing">Music/Singing</a></li>
                         <li><a href="#dance">Dance</a></li>
                         <li><a href="#arts">Arts</a></li>
                     </ul>
@@ -1937,11 +1938,11 @@ button:active {
             <ul>
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About Us</a></li>
-                <li><a href="#organization">Organization</a></li>
+                <li><a href="#Centres">Centres</a></li>
                 <li class="dropdown">
                     <a href="#skills">Arts & Culture</a>
                     <ul class="dropdown-menu">
-                        <li><a href="#music">Music</a></li>
+                        <li><a href="#music/singing">Music/Singing</a></li>
                         <li><a href="#dance">Dance</a></li>
                         <li><a href="#arts">Arts</a></li>
                     </ul>
@@ -2016,7 +2017,7 @@ button:active {
                         </div>
 
                         <div class="form-group">
-                            <label for="classGrade" class="form-label">Class/Grade</label>
+                            <label for="classGrade" class="form-label">Class/Course</label>
                             <input 
                                 type="text" 
                                 id="classGrade" 
@@ -2033,7 +2034,7 @@ button:active {
                                 id="subject" 
                                 name="subject" 
                                 class="form-input" 
-                                placeholder="Mathematics, Physics, English, Bengali"
+                                placeholder="Search for subject"
                             >
                         </div>
                     </div>
@@ -2805,7 +2806,7 @@ function handleEnd(e) {
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-section">
-                <h4>DooarsTutors</h4>
+                <img src="DOOARS TUTORS (7)_page-0001 (1) (1).jpg" class="logo-blend" alt="Logo">
                 <p>Connecting students with qualified teachers across India. Excellence in education, delivered personally.</p>
             </div>
             
