@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- <link rel="stylesheet" href="./css/reg_style.css"> -->
      <style>
+
         * {
             margin: 0;
             padding: 0;
@@ -566,13 +567,416 @@ button:active {
   mix-blend-mode: screen;
   filter: brightness(1) contrast(10);
 }
+
+
+
+
+.dropdown-section {
+    margin-bottom: 20px;
+    border: 2px solid #e0e6ed;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.dropdown-section:hover {
+    /* border-color: #57cc99; */
+    box-shadow: 0 4px 15px rgba(87, 204, 153, 0.1);
+}
+
+.dropdown-header {
+    padding: 16px 20px;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    color: #003153;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.dropdown-header:hover {
+    background: #003153;
+    color: white;
+}
+
+.dropdown-arrow {
+    transition: transform 0.3s ease;
+    font-size: 14px;
+}
+
+.dropdown-section.active .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.dropdown-content {
+    padding: 0 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.dropdown-section.active .dropdown-content {
+    max-height: 500px;
+    padding: 20px;
+}
+
+.dropdown-section.active .dropdown-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.checkbox-item input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+}
+
+.checkbox-item label {
+    margin: 0;
+    cursor: pointer;
+    font-weight: normal;
+}
+
+.selection-summary {
+    margin-left: 10px;
+    font-size: 12px;
+    color: #003153;
+    font-weight: normal;
+}
+
+@media (max-width: 768px) {
+    .two-column {
+        grid-template-columns: 1fr;
+    }
+    
+    .checkbox-grid {
+        grid-template-columns: 1fr;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+    
+    .dropdown-content {
+        padding: 0 16px;
+    }
+    
+    .dropdown-section.active .dropdown-content {
+        padding: 16px;
+        max-height: 350px;
+    }
+}
+
+.form-group label {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: bold;
+        }
+
+.form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+.conditional-section {
+            display: none;
+            margin-top: 20px;
+            padding: 16px;
+            background: #f9f9f9;
+            border-radius: 6px;
+        }
+        
+        .conditional-section.active {
+            display: block;
+        }
+
+
+
+
+        /* Subject-Class Container Styles */
+#subject-class-container {
+    margin-bottom: 24px;
+}
+
+.subject-class-group {
+    padding: 20px;
+    margin-bottom: 16px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border: 2px solid #e0e6ed;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.subject-class-group:hover {
+    border-color: #003153;
+    box-shadow: 0 4px 15px rgba(87, 204, 153, 0.1);
+    transform: translateY(-2px);
+}
+
+.subject-class-group label {
+    display: block;
+    font-weight: 600;
+    color: #003153;
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+
+.subject-select {
+    width: 100%;
+    padding: 16px 20px;
+    border: 2px solid #e0e6ed;
+    border-radius: 12px;
+    font-size: 15px;
+    font-family: inherit;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+}
+
+.subject-select:focus {
+    outline: none;
+    border-color: #003153;
+    box-shadow: 0 0 0 4px rgba(87, 204, 153, 0.15);
+    transform: translateY(-2px);
+    background: white;
+}
+
+.other-subject {
+    margin-top: 8px;
+}
+
+.other-subject input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e0e6ed;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.other-subject input:focus {
+    outline: none;
+    border-color: #003153;
+    box-shadow: 0 0 0 3px rgba(87, 204, 153, 0.1);
+    background: white;
+}
+
+.class-checkboxes {
+    margin-top: 12px;
+    padding: 16px;
+    background: linear-gradient(135deg, rgba(87, 204, 153, 0.05), rgba(56, 163, 165, 0.05));
+    border-radius: 8px;
+    border: 1px solid rgba(87, 204, 153, 0.2);
+}
+
+.class-checkboxes label {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 16px;
+    margin-bottom: 8px;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.class-checkboxes label:hover {
+    background: #003153;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(87, 204, 153, 0.3);
+}
+
+.class-checkboxes input[type="checkbox"] {
+    margin-right: 8px;
+    width: 16px;
+    height: 16px;
+    accent-color: #003153;
+    cursor: pointer;
+}
+
+.class-checkboxes label:has(input:checked) {
+    background: #003153;
+    color: white;
+    border-color: #003153;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(56, 163, 165, 0.4);
+}
+
+/* Add Subject Button */
+button[onclick="addSubjectGroup()"] {
+    padding: 12px 24px;
+    background: #003153;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-top: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+button[onclick="addSubjectGroup()"]::before {
+    content: '+';
+    font-size: 18px;
+    font-weight: bold;
+}
+
+button[onclick="addSubjectGroup()"]:hover {
+    background: #003153;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(87, 204, 153, 0.4);
+}
+
+button[onclick="addSubjectGroup()"] {
+    position: relative;
+    overflow: hidden;
+}
+
+button[onclick="addSubjectGroup()"]::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    transform: translate(-50%, -50%);
+}
+
+button[onclick="addSubjectGroup()"]:hover::after {
+    width: 200px;
+    height: 200px;
+}
+
+.subject-class-group:not(:first-child):hover::after {
+    opacity: 1;
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(255, 107, 107, 0.4);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .subject-class-group {
+        padding: 16px;
+        margin-bottom: 12px;
+    }
+    
+    .class-checkboxes {
+        padding: 12px;
+    }
+    
+    .class-checkboxes label {
+        margin-right: 12px;
+        margin-bottom: 6px;
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+    
+    button[onclick="addSubjectGroup()"] {
+        width: 100%;
+        justify-content: center;
+        padding: 14px 24px;
+    }
+}
+
+/* Animation for new groups */
+@keyframes slideInGroup {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.subject-class-group:last-child {
+    animation: slideInGroup 0.3s ease-out;
+}
+
+
+
+.remove-subject-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(220, 53, 69, 0.2);
+}
+
+.remove-subject-btn:hover {
+  background-color: #c82333;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+}
+
+.remove-subject-btn:active {
+  background-color: #bd2130;
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(220, 53, 69, 0.2);
+}
+
+.remove-subject-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.25);
+}
+
+/* Alternative subtle style */
+.remove-subject-btn.subtle {
+  background-color: #f8f9fa;
+  color: #6c757d;
+  border: 1px solid #dee2e6;
+}
+
+.remove-subject-btn.subtle:hover {
+  background-color: #e9ecef;
+  color: #495057;
+  border-color: #adb5bd;
+}
      </style>
 </head>
 
 <body>
     <div class="container">
         <div class="header">
-            <h1>DooarsTutors</h1>
+            <img src="DOOARS TUTORS (7)_page-0001 (1) (1).jpg" class="logo-blend" alt="Logo">
             <p>Join our community of dedicated educators and add value to the society</p>
         </div>
 
@@ -580,12 +984,16 @@ button:active {
             <form action="save_teacher.php" method="POST" id="tutorForm">
                 <div class="form-section">
                     <h2 class="section-title">Organization Information</h2>
-
-                    <div class="form-group">
-                        <label for="name">Full Name *</label>
-                        <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                    <div class="two-column">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label for="experience">Experience </label>
+                            <input type="text" id="experience" name="experience" required placeholder="Enter teaching experience">
+                        </div>
                     </div>
-
                     <div class="two-column">
                         <div class="form-group">
                             <label for="phone">Contact Number *</label>
@@ -597,182 +1005,511 @@ button:active {
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="experience">Experience </label>
-                        <input type="text" id="experience" name="experience" required placeholder="Enter teaching experience">
+                    <!-- Organization Dropdown -->
+                    <div class="dropdown-section" id="profession-section">
+                        <div class="dropdown-header" onclick="toggleDropdown('profession-section')">
+                            <span>Type of organization <span class="selection-summary" id="profession-summary"></span></span>
+                            <span class="dropdown-arrow">▼</span>
+                        </div>
+                        <div class="dropdown-content">
+                            <div class="checkbox-grid">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" name="profession[]" value="Educational Coaching Centre" id="educational cc" onchange="handleProfessionChange()">
+                                    <label for="educational cc">Educational Coaching Centre</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" name="profession[]" value="Computer Centre" id="computer cc" onchange="handleProfessionChange()">
+                                    <label for="computer cc">Computer Centre</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" name="profession[]" value="Sports Coaching Centre" id="sports cc" onchange="handleProfessionChange()">
+                                    <label for="sports cc">Sports Coaching Centre</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" name="profession[]" value="Gym & Yoga" id="gym&yoga" onchange="handleProfessionChange()">
+                                    <label for="gym&yoga">Gym & Yoga</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" name="profession[]" value="Dance School" id="dance-school" onchange="handleProfessionChange()">
+                                    <label for="dance-school">Dance School</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" name="profession[]" value="Music School" id="music-school" onchange="handleProfessionChange()">
+                                    <label for="music-school">Music School</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" name="profession[]" value="Singing School" id="singing-school" onchange="handleProfessionChange()">
+                                    <label for="singing-school">Singing School</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" name="profession[]" value="Abriti School" id="abriti-school" onchange="handleProfessionChange()">
+                                    <label for="abriti-school">Abriti School</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" name="profession[]" value="Visual Arts" id="VS school" onchange="handleProfessionChange()">
+                                    <label for="VS school">Visual Arts</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" name="profession[]" value="Abacus Centre" id="abacus_centre" onchange="handleProfessionChange()">
+                                    <label for="abacus_centre">Abacus Centre</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Educational cc Section -->
+                    <div class="conditional-section" id="educational-cc">
+                        <h3>Educational Coaching Centre Details</h3>
+                        <div class="form-group">
+                            <label for="edu-course-type">Courses:</label>
+                            <select id="edu-course-type" name="edu_course_type">
+                                <option value="">Select Course</option>
+                                <option value="JEE (Main/Advanced)">JEE (Main/Advanced)</option>
+                                <option value="NEET">NEET</option>
+                                <option value="CUET">CUET</option>
+                                <option value="WBJEE">WBJEE</option>                                
+                                <option value="SSC">SSC</option>
+                                <option value="Banking">Banking</option>
+                                <option value="Railways">Railways</option>
+                                <option value="TET/CTET">TET/CTET</option>
+                                <option value="WBCS">WBCS</option>
+                                <option value="UPSC">UPSC</option>
+                                <option value="MBA Entrance">MBA Entrance</option>
+                                <option value="Mca Entrance">Mca Entrance</option>
+                                <option value="Law Entrance">Law Entrance</option>
+                                <option value="Police/Defence Exams">Police/Defence Exams</option>
+                                <option value="Spoken English">Spoken English</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="edu-course-days">Coaching days in a week:</label>
+                            <select id="edu-course-days" name="edu_course_days">
+                                <option value="">Select Days</option>
+                                <option value="1">1 Day</option>
+                                <option value="2">2 Days</option>
+                                <option value="3">3 Days</option>
+                                <option value="4">4 Days</option>
+                                <option value="5">5 Days</option>
+                                <option value="6">6 Days</option>
+                                <option value="7">7 Days</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Computer cc Section -->
+                    <div class="conditional-section" id="computer-cc">
+                        <h3>Computer Coaching Course Details</h3>
+                        <div class="form-group">
+                            <label for="comp-course-type">Cources:</label>
+                            <select id="comp-course-type" name="comp_course_type">
+                                <option value="">Select Course</option>
+                                <option value="Fundamentals of Computers">Fundamentals of Computers</option>
+                                <option value="MS Office">MS Office</option>
+                                <option value="Typing Skills">Typing Skills</option>
+                                <option value="Tally + GST">Tally + GST</option>
+                                <option value="DCA">DCA</option>
+                                <option value="ADCA">ADCA</option>
+                                <option value="Programming languages">Programming languages</option>
+                                <option value="Web Development">Web Development</option>
+                                <option value="Mobile App Development">Mobile App Development</option>
+                                <option value="SQL / MySQL / Database">SQL / MySQL / Database</option>
+                                <option value="Graphic Design">Graphic Design</option>
+                                <option value="Video Editing / Animation">Video Editing / Animation</option>
+                                <option value="Full Stack Development">Full Stack Development</option>
+                                <option value="Data Science">Data Science</option>
+                                <option value="AI/ML">AI/ML</option>
+                                <option value="Cyber Security">Cyber Security</option>
+                                <option value="Cloud Computing">Cloud Computing</option>
+                                <option value="DOEACC/NIELIT Courses">DOEACC/NIELIT Courses</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="comp-course-days">Coaching days in a week:</label>
+                            <select id="comp-course-days" name="comp_course_days">
+                                <option value="">Select Days</option>
+                                <option value="1">1 Day</option>
+                                <option value="2">2 Days</option>
+                                <option value="3">3 Days</option>
+                                <option value="4">4 Days</option>
+                                <option value="5">5 Days</option>
+                                <option value="6">6 Days</option>
+                                <option value="7">7 Days</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Sports Coach Section -->
+                    <div class="conditional-section" id="sports-cc">
+                        <h3>Sports Coaching Details</h3>
+                        <div class="form-group">
+                            <label for="sports-cc-type">Sports:</label>
+                            <select id="sports-cc-type" name="sports_cc_type">
+                                <option value="">Select Sport</option>
+                                <option value="Cricket">Cricket</option>
+                                <option value="Football">Football</option>
+                                <option value="Volleyball">Volleyball</option>
+                                <option value="Badminton">Badminton</option>
+                                <option value="Table Tennis">Table Tennis</option>
+                                <option value="Chess">Chess</option>
+                                <option value="Basketball">Basketball</option>
+                                <option value="Lawn Tennis">Lawn Tennis</option>
+                                <option value="Karate">Karate</option>
+                                <option value="Skating">Skating</option>
+                                <option value="Swimming">Swimming</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="sports-cc-gender">For which gender:</label>
+                            <select id="sports-cc-gender" name="sports_cc_gender">
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Both">Both</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="sports-cc-days">Coaching days in a week:</label>
+                            <select id="sports-cc-days" name="sports_cc_days">
+                                <option value="">Select Days</option>
+                                <option value="1">1 Day</option>
+                                <option value="2">2 Days</option>
+                                <option value="3">3 Days</option>
+                                <option value="4">4 Days</option>
+                                <option value="5">5 Days</option>
+                                <option value="6">6 Days</option>
+                                <option value="7">7 Days</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Trainer Section -->
+                    <div class="conditional-section" id="gym-yoga">
+                        <h3>Training Details</h3>
+                        <div class="form-group">
+                            <label for="gym-yoga-type">Training Type:</label>
+                            <select id="gym-yoga-type" name="gym_yoga_type">
+                                <option value="">Select Type</option>
+                                <option value="Gym">Gym</option>
+                                <option value="Yoga">Yoga</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="gym-yoga-gender">For which gender:</label>
+                            <select id="gym-yoga-gender" name="gym_yoga_gender">
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Both">Both</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="gym-yoga-days">Training days in a week:</label>
+                            <select id="gym-yoga-days" name="gym_yoga_days">
+                                <option value="">Select Days</option>
+                                <option value="1">1 Day</option>
+                                <option value="2">2 Days</option>
+                                <option value="3">3 Days</option>
+                                <option value="4">4 Days</option>
+                                <option value="5">5 Days</option>
+                                <option value="6">6 Days</option>
+                                <option value="7">7 Days</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Dance Teacher Section -->
+                    <div class="conditional-section" id="dance--school">
+                        <h3>Dance Teaching Details</h3>
+                        <div class="form-group">
+                            <label for="dance--school-type">Dance Type:</label>
+                            <select id="dance--school-type" name="dance__school_type">
+                                <option value="">Select Type</option>
+                                <option value="Eastern/Classical">Eastern/Classical</option>
+                                <option value="Western">Western</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="dance--school-gender">For which gender:</label>
+                            <select id="dance--school-gender" name="dance__school_gender">
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Both">Both</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="dance--school-days">Coaching days in a week:</label>
+                            <select id="dance--school-days" name="dance__school_days">
+                                <option value="">Select Days</option>
+                                <option value="1">1 Day</option>
+                                <option value="2">2 Days</option>
+                                <option value="3">3 Days</option>
+                                <option value="4">4 Days</option>
+                                <option value="5">5 Days</option>
+                                <option value="6">6 Days</option>
+                                <option value="7">7 Days</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Music Teacher Section -->
+                    <div class="conditional-section" id="music--school">
+                        <h3>Music Teaching Details</h3>
+                        <div class="form-group">
+                            <label for="music--school-type">Music Type:</label>
+                            <select id="music--school-type" name="music__school_type">
+                                <option value="">Select Type</option>
+                                <option value="Eastern/Classical">Eastern/Classical</option>
+                                <option value="Western">Western</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="music--school-instrument">For which instrument:</label> <!-- New -->
+                            <select id="music--school-instrument" name="music__school_instrument">
+                                <option value="">Select Instrument</option>
+                                <option value="Guitar">Guitar</option>
+                                <option value="Harmonium">Harmonium</option>
+                                <option value="Ukulele">Ukulele</option>
+                                <option value="Flute">Flute</option>
+                                <option value="Mouth Organ (Harmonica)">Mouth Organ (Harmonica)</option>
+                                <option value="Violin">Violin</option>
+                                <option value="Sitar">Sitar</option>
+                                <option value="Sarod">Sarod</option>
+                                <option value="Mandolin">Mandolin</option>
+                                <option value="Tabla">Tabla</option>
+                                <option value="Ektara">Ektara</option>
+                                <option value="Dotara">Dotara</option>
+                                <option value="Cajón">Cajón</option>
+                                <option value="Drum Set">Drum Set</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="music--school-days">Learning days in a week:</label>
+                            <select id="music--school-days" name="music__school_days">
+                                <option value="">Select Days</option>
+                                <option value="1">1 Day</option>
+                                <option value="2">2 Days</option>
+                                <option value="3">3 Days</option>
+                                <option value="4">4 Days</option>
+                                <option value="5">5 Days</option>
+                                <option value="6">6 Days</option>
+                                <option value="7">7 Days</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Abriti Teacher Section -->
+                    <div class="conditional-section" id="abriti--school">
+                        <h3>Abriti Teaching Details</h3>
+                        <!-- <div class="form-group">
+                            <label for="abriti--school-type">Singing Type:</label>
+                            <select id="abriti--school-type" name="abriti__school_type">
+                                <option value="">Select Type</option>
+                                <option value="Eastern/Classical">Eastern/Classical</option>
+                                <option value="Western">Western</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="singing-gender">For which gender:</label>
+                            <select id="singing-gender" name="singing_gender">
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Both">Both</option>
+                            </select>
+                        </div> -->
+                        <div class="form-group">
+                            <label for="abriti--school-days">Learning days in a week:</label>
+                            <select id="abriti--school-days" name="abriti__school_days">
+                                <option value="">Select Days</option>
+                                <option value="1">1 Day</option>
+                                <option value="2">2 Days</option>
+                                <option value="3">3 Days</option>
+                                <option value="4">4 Days</option>
+                                <option value="5">5 Days</option>
+                                <option value="6">6 Days</option>
+                                <option value="7">7 Days</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Singing Teacher Section -->
+                    <div class="conditional-section" id="singing--school">
+                        <h3>Singing Teaching Details</h3>
+                        <div class="form-group">
+                            <label for="singing--school-type">Singing Type:</label>
+                            <select id="singing--school-type" name="singing__school_type">
+                                <option value="">Select Type</option>
+                                <option value="Eastern/Classical">Eastern/Classical</option>
+                                <option value="Western">Western</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="singing--school-gender">For which gender:</label>
+                            <select id="singing--school-gender" name="singing__school_gender">
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Both">Both</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="singing--school-days">Learning days in a week:</label>
+                            <select id="singing--school-days" name="singing__school_days">
+                                <option value="">Select Days</option>
+                                <option value="1">1 Day</option>
+                                <option value="2">2 Days</option>
+                                <option value="3">3 Days</option>
+                                <option value="4">4 Days</option>
+                                <option value="5">5 Days</option>
+                                <option value="6">6 Days</option>
+                                <option value="7">7 Days</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Art Teacher Section -->
+                    <div class="conditional-section" id="VS-school">
+                        <h3>Visual Arts Details</h3>
+                        <div class="form-group">
+                            <label for="VS-school-type">Type:</label>
+                            <select id="VS-school-type" name="VS_school_type">
+                                <option value="">Select Type</option>
+                                <option value="Sketching">Sketching</option>
+                                <option value="Painting">Painting</option>
+                                <option value="Drawing">Drawing</option>
+                                <option value="Arts & Crafts">Arts & Crafts</option>
+                                
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="VS-school-gender">For which gender:</label>
+                            <select id="VS-school-gender" name="VS_school_gender">
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Both">Both</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="VS-school-days">Learning days in a week:</label>
+                            <select id="VS-school-days" name="VS_school_days">
+                                <option value="">Select Days</option>
+                                <option value="1">1 Day</option>
+                                <option value="2">2 Days</option>
+                                <option value="3">3 Days</option>
+                                <option value="4">4 Days</option>
+                                <option value="5">5 Days</option>
+                                <option value="6">6 Days</option>
+                                <option value="7">7 Days</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Abacus Centre Section -->
+                    <div class="conditional-section" id="abacus-centre-section">
+                        <h3>Abacus Centre Details</h3>
+                        <div class="form-group">
+                            <label for="abacus-org-section-name">Course Type:</label>
+                            <select id="abacus-org-section-name" name="abacus_org_section_name">
+                                <option value="">Select Course Type</option>
+                                <option value="Basic Abacus">Basic Abacus</option>
+                                <option value="Complete Abacus Program">Complete Abacus Program</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="abacus-org-section-gender">For which gender:</label>
+                            <select id="abacus-org-section-gender" name="abacus_org_section_gender">
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Both">Both</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="abacus-org-section-days">Coaching days in a week:</label>
+                            <select id="abacus-org-section-days" name="abacus_org_section_days">
+                                <option value="">Select Days</option>
+                                <option value="1">1 Day</option>
+                                <option value="2">2 Days</option>
+                                <option value="3">3 Days</option>
+                                <option value="4">4 Days</option>
+                                <option value="5">5 Days</option>
+                                <option value="6">6 Days</option>
+                                <option value="7">7 Days</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
                 <div class="form-section">
-                    <h2 class="section-title">Organization Credentials</h2>
+                    <h2 class="section-title">Teaching Preferences</h2>
 
-                    <div class="form-group">
-                        <label>Coaching / Arts & Culture</label>
-                        <div class="checkbox-grid">
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value="Cooching Centre" id="cooching centre">
-                                <label for="cooching centre">Cooching Centre (Educational)</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value="Abacus" id="abacus">
-                                <label for="abacus">Abacus</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value="Dance School" id="dance school">
-                                <label for="dance school">Dance School</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value="Art School" id="art school">
-                                <label for="art school">Art School</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value="Singing School" id="singing school">
-                                <label for="singing school">Singing School</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value="Computer Centre" id="computer center">
-                                <label for="computer center">Computer Centre</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value="Abriti School" id="abriti">
-                                <label for="abriti">Abriti School</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value="others" id="class-others">
-                                <label for="class-others">Others</label>
+                    <div class="two-column">
+                        <div class="form-group">
+                            <label>Teaching Mode</label>
+                            <div class="checkbox-grid">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" name="mode[]" value="Online" id="online">
+                                    <label for="online">Online</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" name="mode[]" value="Offline" id="offline">
+                                    <label for="offline">Offline</label>
+                                </div>
                             </div>
                         </div>
-                        <div class="other-specification" id="other-specification" style="display: none;">
-                            <label for="other-subject">Please specify others:</label>
-                            <input type="text" name="other_subject" id="other-subject" placeholder="Enter subject name">
-                        </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label>Sports & Health</label>
-                        <div class="checkbox-grid">
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value="GYM" id="gym">
-                                <label for="gym">Gym</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value="Cricket" id="cricket">
-                                <label for="cricket">Cricket</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value="Football" id="football">
-                                <label for="football">Football</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value="Badminton" id="badminton">
-                                <label for="badminton">Badminton</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value="Table Tennis" id="tt">
-                                <label for="tt">Table Tennis</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value="Chess" id="chess">
-                                <label for="chess">Chess</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value="Running" id="running">
-                                <label for="running">Running</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value="Swimming" id="swimming">
-                                <label for="swimming">Swimming</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value="Skating" id="skating">
-                                <label for="skating">Skating</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value="Karate" id="karate">
-                                <label for="karate">Karate</label>
-                            </div>
-                            <div class="checkbox-item">
-                                <input type="checkbox" name="subjects[]" value="others" id="class-others">
-                                <label for="class-others">Others</label>
-                            </div>
-                        </div>
-                        <div class="other-specification" id="other-specification" style="display: none;">
-                            <label for="other-subject">Please specify others:</label>
-                            <input type="text" name="other_subject" id="other-subject" placeholder="Enter subject name">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Coaching days in a week</label>
-                        <div class="radio-grid">
-                            <div class="radio-item" required>
-                                <input type="radio" name="classes[]" value="1" id="1">
-                                <label for="1">1</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" name="classes[]" value="2" id="2">
-                                <label for="2">2</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" name="classes[]" value="3" id="3">
-                                <label for="3">3</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" name="classes[]" value="4" id="4">
-                                <label for="4">4</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" name="classes[]" value="5" id="5">
-                                <label for="5">5</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" name="classes[]" value="6" id="6">
-                                <label for="6">6</label>
-                            </div>
-                            <div class="radio-item">
-                                <input type="radio" name="classes[]" value="7" id="7">
-                                <label for="7">7</label>
+                        <div class="form-group">
+                            <label>Preferred Location</label>
+                            <div class="checkbox-grid">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" name="preferred_location[]" value="Home" id="home">
+                                    <label for="home">At Coaching Centre</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" name="preferred_location[]" value="Away" id="away">
+                                    <label for="away">Travel to Student</label>
+                                </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    
+                <div class="form-section">
+                    <h2 class="section-title">Location Details</h2>
 
-                    
-
-                    <div class="form-section">
-                        <h2 class="section-title">Location Details</h2>
-
-                        <div class="two-column">
-                            <div class="form-group">
-                                <label for="citySelect">Select City *</label>
-                                <select id="citySelect" name="city" required>
-                                    <option value="">-- Select City --</option>
-                                    <option value="Alipurduar">Alipurduar</option>
-                                    <option value="Coochbehar">Coochbehar</option>
-                                    <option value="Falakata">Falakata</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="addressInput">Address *</label>
-                                <input type="text" id="addressInput" name="address" required readonly placeholder="Select location on map">
-                            </div>
+                    <div class="two-column">
+                        <div class="form-group">
+                            <label for="citySelect">Select City *</label>
+                            <select id="citySelect" name="city" required>
+                                <option value="">-- Select City --</option>
+                                <option value="Alipurduar">Alipurduar</option>
+                                <option value="Coochbehar">Coochbehar</option>
+                                <option value="Falakata">Falakata</option>
+                                <option value="Sonapur">Sonapur</option>
+                            </select>
                         </div>
 
-                        <!-- <button type="button" class="btn btn-secondary" onclick="searchLocation()">📍 Search on
-                            Map</button> -->
-
-                        <input type="hidden" name="latitude" id="latitude">
-                        <input type="hidden" name="longitude" id="longitude">
-                        <input type="hidden" name="user_type" value="organization">
-
-                        <div class="map-section">
-                            <div id="map"></div>
+                        <div class="form-group">
+                            <label for="addressInput">Address *</label>
+                            <input type="text" id="addressInput" name="address" required readonly placeholder="Kindly select your location on map">
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-submit">Complete Registration</button>
+                    <!-- <button type="button" class="btn btn-secondary" onclick="searchLocation()">📍 Search on
+                        Map</button> -->
+
+                    <input type="hidden" name="latitude" id="latitude">
+                    <input type="hidden" name="longitude" id="longitude">
+                    <input type="hidden" name="user_type" value="organisation">
+
+                    <div class="map-section">
+                        <div id="map"></div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-submit">Complete Registration</button>
             </form>
         </div>
     </div>
@@ -783,6 +1520,78 @@ button:active {
     <script src="./js/reg_script.js"></script>
     
     <script>
+
+        function handleProfessionChange() {
+    const checkboxes = document.querySelectorAll('input[name="profession[]"]');
+    const selectedProfessions = [];
+    
+    checkboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+            selectedProfessions.push(checkbox.value);
+        }
+    });
+    
+    
+    // Hide all conditional sections first
+    const allSections = document.querySelectorAll('.conditional-section');
+    allSections.forEach(section => {
+        section.classList.remove('active');
+    });
+    
+    // Show sections based on selected professions
+    selectedProfessions.forEach(profession => {
+        let sectionId = '';
+        
+        switch(profession) {
+            case 'Educational Coaching Centre':
+                sectionId = 'educational-cc';
+                break;
+            case 'Computer Centre':
+                sectionId = 'computer-cc';
+                break;
+            case 'Sports Coaching Centre':
+                sectionId = 'sports-cc';
+                break;
+            case 'Gym & Yoga':
+                sectionId = 'gym-yoga';
+                break;
+            case 'Dance School':
+                sectionId = 'dance--school';
+                break;
+            case 'Music School':
+                sectionId = 'music--school';
+                break;
+            case 'Singing School':
+                sectionId = 'singing--school';
+                break;
+            case 'Abriti School':
+                sectionId = 'abriti--school';
+                break;
+            case 'Visual Arts':
+                sectionId = 'VS-school';
+                break;
+            case 'Abacus Centre':
+                sectionId = 'abacus-centre-section';
+                break;
+        }
+        
+        if (sectionId) {
+            document.getElementById(sectionId).classList.add('active');
+        }
+    });
+    
+    // Update profession summary
+    updateProfessionSummary(selectedProfessions);
+}
+function updateProfessionSummary(selectedProfessions) {
+    const summary = document.getElementById('profession-summary');
+    if (selectedProfessions.length > 0) {
+        summary.textContent = `(${selectedProfessions.length} selected)`;
+    } else {
+        summary.textContent = '';
+    }
+}
+
         // Handle form submission
         document.getElementById('tutorForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -824,6 +1633,52 @@ button:active {
             const otherSpecification = document.getElementById('other-specification');
             otherSpecification.style.display = this.checked ? 'block' : 'none';
         });
+
+        function toggleOtherProfession() {
+            const checkbox = document.getElementById('profession-others');
+            const otherProfessionGroup = document.getElementById('other-profession-group');
+            otherProfessionGroup.style.display = checkbox.checked ? 'block' : 'none';
+        }
+
+
+
+        function toggleDropdown(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.classList.toggle('active');
+        }
+
+        function updateSummary(type) {
+            const checkboxes = document.querySelectorAll(`input[name="${type}[]"]:checked`);
+            const summaryElement = document.getElementById(`${type}-summary`);
+            const count = checkboxes.length;
+            
+            if (count > 0) {
+                summaryElement.textContent = `(${count} selected)`;
+                summaryElement.style.color = '#57cc99';
+            } else {
+                summaryElement.textContent = '';
+            }
+        }
+
+        function toggleOtherClass() {
+            const otherCheckbox = document.getElementById('class-others');
+            const otherGroup = document.getElementById('other-class-group');
+            otherGroup.style.display = otherCheckbox.checked ? 'block' : 'none';
+        }
+
+        function toggleOtherSubject() {
+            const otherCheckbox = document.getElementById('others');
+            const otherSpecification = document.getElementById('other-specification');
+            otherSpecification.style.display = otherCheckbox.checked ? 'block' : 'none';
+        }
+
+        // Initialize summaries on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateSummary('boards');
+            updateSummary('classes');
+            updateSummary('subjects');
+        });
+
     </script>
 
 </body>

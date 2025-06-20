@@ -1,612 +1,260 @@
-<section class="hero">
-        <div class="hero-container">
-            <h1>Find Your Perfect Tutor</h1>
-            <p>Connect with qualified teachers across all boards and subjects. Excellence in education, delivered personally.</p>
-            
-            <!-- Search Section -->
-            <div class="search-section">
-                <div class="search-container">
-                    <input type="text" class="search-input" id="searchInput" placeholder="Search by teacher name, subject, or class...">
-                    <select class="location-select" id="locationSelect">
-                        <option value="">Select Place</option>
-                        <option value="Alipurduar">Alipurduar</option>
-                        <option value="Coochbehar">Coochbehar</option>
-                    </select>
-                    <button class="search-btn" onclick="performSearch()">Search</button>
-                </div>
-                
-                <div class="filters">
-                    <div class="filter-group">
-                        <div class="filter-label" onclick="toggleDropdown('class')">
-                            Class 
-                            <span class="selected-count" id="class-count">0 selected</span>
-                        </div>
-                        <div class="filter-dropdown" id="class-dropdown">
-                            <div class="filter-option" onclick="toggleFilter('class', '1')">
-                                <div class="filter-checkbox" id="class-1"></div>
-                                <span class="filter-option-text">Class 1</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('class', '2')">
-                                <div class="filter-checkbox" id="class-2"></div>
-                                <span class="filter-option-text">Class 2</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('class', '3')">
-                                <div class="filter-checkbox" id="class-3"></div>
-                                <span class="filter-option-text">Class 3</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('class', '4')">
-                                <div class="filter-checkbox" id="class-4"></div>
-                                <span class="filter-option-text">Class 4</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('class', '5')">
-                                <div class="filter-checkbox" id="class-5"></div>
-                                <span class="filter-option-text">Class 5</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('class', '6')">
-                                <div class="filter-checkbox" id="class-6"></div>
-                                <span class="filter-option-text">Class 6</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('class', '7')">
-                                <div class="filter-checkbox" id="class-7"></div>
-                                <span class="filter-option-text">Class 7</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('class', '8')">
-                                <div class="filter-checkbox" id="class-8"></div>
-                                <span class="filter-option-text">Class 8</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('class', '9')">
-                                <div class="filter-checkbox" id="class-9"></div>
-                                <span class="filter-option-text">Class 9</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('class', '10')">
-                                <div class="filter-checkbox" id="class-10"></div>
-                                <span class="filter-option-text">Class 10</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('class', '11')">
-                                <div class="filter-checkbox" id="class-11"></div>
-                                <span class="filter-option-text">Class 11</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('class', '12')">
-                                <div class="filter-checkbox" id="class-12"></div>
-                                <span class="filter-option-text">Class 12</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="filter-group">
-                        <div class="filter-label" onclick="toggleDropdown('board')">
-                            Board 
-                            <span class="selected-count" id="board-count">0 selected</span>
-                        </div>
-                        <div class="filter-dropdown" id="board-dropdown">
-                            <div class="filter-option" onclick="toggleFilter('board', 'wbbse')">
-                                <div class="filter-checkbox" id="board-wbbse"></div>
-                                <span class="filter-option-text">WBBSE</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('board', 'cbse')">
-                                <div class="filter-checkbox" id="board-cbse"></div>
-                                <span class="filter-option-text">CBSE</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('board', 'icse')">
-                                <div class="filter-checkbox" id="board-icse"></div>
-                                <span class="filter-option-text">ICSE</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('board', 'ise')">
-                                <div class="filter-checkbox" id="board-ise"></div>
-                                <span class="filter-option-text">ISE</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('board', 'wbcshe')">
-                                <div class="filter-checkbox" id="board-wbcshe"></div>
-                                <span class="filter-option-text">WBCSHE</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="filter-group">
-                        <div class="filter-label" onclick="toggleDropdown('subject')">
-                            Subject 
-                            <span class="selected-count" id="subject-count">0 selected</span>
-                        </div>
-                        <div class="filter-dropdown" id="subject-dropdown">
-                            <div class="filter-option" onclick="toggleFilter('subject', 'english')">
-                                <div class="filter-checkbox" id="subject-english"></div>
-                                <span class="filter-option-text">English</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('subject', 'bengali')">
-                                <div class="filter-checkbox" id="subject-bengali"></div>
-                                <span class="filter-option-text">Bengali</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('subject', 'mathematics')">
-                                <div class="filter-checkbox" id="subject-mathematics"></div>
-                                <span class="filter-option-text">Mathematics</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('subject', 'physics')">
-                                <div class="filter-checkbox" id="subject-physics"></div>
-                                <span class="filter-option-text">Physics</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('subject', 'chemistry')">
-                                <div class="filter-checkbox" id="subject-chemistry"></div>
-                                <span class="filter-option-text">Chemistry</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('subject', 'biology')">
-                                <div class="filter-checkbox" id="subject-biology"></div>
-                                <span class="filter-option-text">Biology</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('subject', 'history')">
-                                <div class="filter-checkbox" id="subject-history"></div>
-                                <span class="filter-option-text">History</span>
-                            </div>
-                            <div class="filter-option" onclick="toggleFilter('subject', 'geography')">
-                                <div class="filter-checkbox" id="subject-geography"></div>
-                                <span class="filter-option-text">Geography</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<?php
+
+$servername = "localhost:3307";
+$username = "root";        // change if different
+$password = "";            // change if you have a DB password
+$database = "dooars_tutors"; // change to your actual DB name
+
+$conn = new mysqli($servername, $username, $password, $database);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$search = $_POST['search'] ?? '';
+$sql = "SELECT * FROM tutors WHERE 
+           name LIKE ? OR
+           subjects LIKE ? OR 
+           classes LIKE ? OR 
+           boards LIKE ?";
+
+$stmt = $conn->prepare($sql);
+$searchParam = "%{$search}%";
+$stmt->bind_param("ssss",$searchParam, $searchParam, $searchParam, $searchParam);
+$stmt->execute();
+$result = $stmt->get_result();
+?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DooarsTutors - Find Your Perfect Tutor</title>  
+    <link rel="icon" type="image/x-icon" href="./favicon_io/favicon.ico">
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="./css/style_1.css">
+    <!-- <link rel="stylesheet" href="./css/style_2.css"> -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body style="background:#e2e8f0;">  
+
+    <div class="section-wrapper">
+    <div class="background-layer"></div>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <h1 class="main-title">Find Your Ideal Teacher</h1>
+                <p class="subtitle">Discover qualified educators for personalized learning</p>
             </div>
         </div>
-    </section>
 
-    <!-- Teachers Section -->
-    <section class="teachers-section">
-        <div class="teachers-container">
-            <div class="section-header">
-                <h2>Available Teachers</h2>
-                <div class="results-info" id="resultsInfo">
-                    Showing all teachers
-                </div>
-            </div>
-            
-            <div class="teachers-grid" id="teachersGrid">
-                <!-- Teachers will be dynamically loaded here -->
-            </div>
-        </div>
-    </section>
+        <div class="search-content">         
 
-    <script>
-        // Global variables
-        let allTutors = [];
-        let filteredTutors = [];
+            <!-- Advanced Filters -->
+            <div class="advanced-filters">
+                <!-- <h3 class="filters-title">Advanced Search Filters</h3> -->
+                <form id="searchForm">
+                    <div class="form-group">
+                        <label for="name" class="form-label">Teacher Name</label>
+                        <input 
+                            type="text" 
+                            id="name" 
+                            name="name" 
+                            class="form-input" 
+                            placeholder="Enter teacher's full name"
+                        >
+                    </div><br>
+                    <div class="form-grid">
 
-        // Filter state
-        let selectedFilters = {
-            class: [],
-            board: [],
-            subject: []
-        };
+                        <div class="form-group">
+                            <label for="board" class="form-label">Educational Board</label>
+                            <select id="board" name="board" class="form-select">
+                                <option value="">Select Board</option>
+                                <option value="WB">West Bengal Board</option>
+                                <option value="CBSE">CBSE</option>
+                                <option value="ICSE">CISCE</option>
+                            </select>
+                        </div>
 
-        // Initialize the application
-        document.addEventListener('DOMContentLoaded', function() {
-            loadTutorsFromDatabase();
-            setupEventListeners();
-        });
+                        <div class="form-group">
+                            <label for="city" class="form-label">Location</label>
+                            <select id="city" name="city" class="form-select">
+                                <option value="">Select Location</option>
+                                <option value="Alipurduar">Alipurduar</option>
+                                <option value="Coochbehar">Coochbehar</option>
+                                <option value="Falakata">Falakata</option>
+                                <option value="Sonapur">Sonapur</option>
+                            </select>
+                        </div>
 
-        // Load tutors from database
-        async function loadTutorsFromDatabase() {
-            try {
-                // Show loading message
-                document.getElementById('resultsInfo').textContent = 'Loading tutors...';
-                document.getElementById('teachersGrid').innerHTML = `
-                    <div style="grid-column: 1 / -1; text-align: center; color: white; padding: 2rem;">
-                        <h3>Loading tutors...</h3>
-                        <p>Please wait while we fetch the latest data</p>
+                        <div class="form-group">
+    <label for="classGrade" class="form-label">Class/Course</label>
+    <input 
+        type="text" 
+        id="classGrade" 
+        name="classGrade" 
+        class="form-input" 
+        placeholder="e.g., 1, 2, 10 or 1,2,3 (comma-separated)"
+    >
+</div>
+
+<div class="form-group">
+    <label for="subject" class="form-label">Subject</label>
+    <input 
+        type="text" 
+        id="subject" 
+        name="subject" 
+        class="form-input" 
+        placeholder="e.g., Math, Physics, English (comma-separated)"
+    >
+</div>
                     </div>
-                `;
 
-                const response = await fetch('get_tutors.php');
-                const data = await response.json();
-                
-                if (data.success) {
-                    allTutors = data.tutors;
-                    filteredTutors = [...allTutors];
-                    displayTeachers(filteredTutors);
-                    updateResultsInfo(filteredTutors.length);
-                } else {
-                    throw new Error(data.message || 'Failed to load tutors');
-                }
-            } catch (error) {
-                console.error('Error loading tutors:', error);
-                document.getElementById('teachersGrid').innerHTML = `
-                    <div style="grid-column: 1 / -1; text-align: center; color: white; padding: 2rem;">
-                        <h3>Error Loading Tutors</h3>
-                        <p>${error.message}</p>
-                        <button onclick="loadTutorsFromDatabase()" style="padding: 10px 20px; margin-top: 1rem; background: white; color: #667eea; border: none; border-radius: 5px; cursor: pointer;">
-                            Try Again
+                    <div class="search-button-container">
+                        <button type="submit" class="search-button">
+                            Search Teachers
                         </button>
                     </div>
-                `;
-                document.getElementById('resultsInfo').textContent = 'Error loading tutors';
-            }
-        }
-        // Set up event listeners
-        function setupEventListeners() {
-            // Search input events
-            document.getElementById('searchInput').addEventListener('input', performSearch);
-            document.getElementById('locationSelect').addEventListener('change', performSearch);
+                </form>
+            </div>          
+        </div>
+    </div>
+    </div>
+
+    <div id="results"></div>
+             
+
+    <script>
+
+        // Advanced search form functionality
+        document.getElementById('searchForm').addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            // Close dropdowns when clicking outside
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('.filter-group')) {
-                    closeAllDropdowns();
-                }
+            const formData = new FormData(this);
+            const resultsDiv = document.getElementById('results');
+            
+            // Show loading state
+            resultsDiv.innerHTML = `
+                <div class="loading-state">
+                    <div class="loading-spinner"></div>
+                    <div class="loading-text">Searching with advanced filters...</div>
+                </div>
+            `;
+            
+            // Send AJAX request
+            fetch('search_teachers.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                displayResults(data, 'Advanced Search Results');
+            })
+            .catch(error => {
+                resultsDiv.innerHTML = `<div class="error-state">Search Error: ${error.message}</div>`;
             });
-        }
-
-        // Toggle dropdown visibility
-        function toggleDropdown(filterType) {
-            const dropdown = document.getElementById(filterType + '-dropdown');
-            const isVisible = dropdown.classList.contains('show');
+        });
+        
+        // Replace your displayResults function with this version
+        function displayResults(teachers, searchType = 'Search Results') {
+            const resultsDiv = document.getElementById('results');
             
-            // Close all dropdowns first
-            closeAllDropdowns();
-            
-            // Toggle the clicked dropdown
-            if (!isVisible) {
-                dropdown.classList.add('show');
-                document.getElementById(filterType + '-dropdown').parentElement
-                    .querySelector('.filter-label').classList.add('active');
-            }
-        }
-
-        // Close all dropdowns
-        function closeAllDropdowns() {
-            document.querySelectorAll('.filter-dropdown').forEach(dropdown => {
-                dropdown.classList.remove('show');
-            });
-            document.querySelectorAll('.filter-label').forEach(label => {
-                label.classList.remove('active');
-            });
-        }
-
-        // Toggle filter selection
-        function toggleFilter(filterType, value) {
-            const checkbox = document.getElementById(filterType + '-' + value);
-            
-            if (selectedFilters[filterType].includes(value)) {
-                // Remove from selection
-                selectedFilters[filterType] = selectedFilters[filterType].filter(item => item !== value);
-                checkbox.classList.remove('checked');
-            } else {
-                // Add to selection
-                selectedFilters[filterType].push(value);
-                checkbox.classList.add('checked');
-            }
-            
-            // Update count display
-            updateFilterCount(filterType);
-            
-            // Perform search with new filters
-            performSearch();
-        }
-
-        // Update filter count display
-        function updateFilterCount(filterType) {
-            const count = selectedFilters[filterType].length;
-            const countElement = document.getElementById(filterType + '-count');
-            countElement.textContent = count === 0 ? '0 selected' : count + ' selected';
-        }
-
-        // Main search function
-        function performSearch() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const selectedLocation = document.getElementById('locationSelect').value;
-            
-            filteredTutors = allTutors.filter(tutor => {
-                // Text search
-                const matchesSearch = !searchTerm || 
-                    tutor.name.toLowerCase().includes(searchTerm) ||
-                    (tutor.subjects && tutor.subjects.toLowerCase().includes(searchTerm)) ||
-                    (tutor.classes && tutor.classes.includes(searchTerm));
-                
-                // Location filter
-                const matchesLocation = !selectedLocation || tutor.address === selectedLocation;
-                
-                // Class filter
-                const matchesClass = selectedFilters.class.length === 0 ||
-                    (tutor.classes && selectedFilters.class.some(cls => tutor.classes.includes(cls)));
-                
-                // Board filter
-                const matchesBoard = selectedFilters.board.length === 0 ||
-                    (tutor.boards && selectedFilters.board.some(board => 
-                        tutor.boards.toLowerCase().includes(board.toLowerCase())
-                    ));
-                
-                // Subject filter
-                const matchesSubject = selectedFilters.subject.length === 0 ||
-                    (tutor.subjects && selectedFilters.subject.some(subject => 
-                        tutor.subjects.toLowerCase().includes(subject.toLowerCase())
-                    ));
-                
-                return matchesSearch && matchesLocation && matchesClass && matchesBoard && matchesSubject;
-            });
-            
-            displayTeachers(filteredTutors);
-            updateResultsInfo(filteredTutors.length);
-        }
-
-        // Display teachers in the grid
-        function displayTeachers(tutors) {
-            const grid = document.getElementById('teachersGrid');
-            
-            if (tutors.length === 0) {
-                grid.innerHTML = `
-                    <div style="grid-column: 1 / -1; text-align: center; color: white; padding: 2rem;">
-                        <h3>No tutors found</h3>
-                        <p>Try adjusting your search criteria</p>
+            if (teachers.length === 0) {
+                resultsDiv.innerHTML = `
+                    <div class="no-results">
+                        <div class="no-results-icon">🔍</div>
+                        <div class="no-results-title">No Teachers Found</div>
+                        <div class="no-results-text">Try adjusting your search criteria or use different keywords</div>
                     </div>
                 `;
                 return;
             }
             
-            grid.innerHTML = tutors.map(tutor => `
-                <div class="teacher-card">
-                    <div class="teacher-name">${tutor.name || 'Name not provided'}</div>
-                    <div class="teacher-info">
-                        <span><strong>Location:</strong> ${tutor.location || 'Not specified'}</span>
-                        <span><strong>Experience:</strong> ${tutor.experience || 'Not specified'}</span>
-                        <span><strong>Subjects:</strong> ${tutor.subjects || 'Not specified'}</span>
-                        <span><strong>Classes:</strong> ${tutor.classes || 'Not specified'}</span>
-                        <span><strong>Boards:</strong> ${tutor.boards || 'Not specified'}</span>
+            let html = `
+                <div class="results-section">
+                    <div class="results-header">
+                        <div class="results-title">
+                            ${searchType}
+                            <span class="results-count">${teachers.length}</span>
+                        </div>
                     </div>
-                    <div class="rating">
-                        <span class="stars">${generateStars(tutor.rating || 0)}</span>
-                        <span>${tutor.rating || 0}/5 ${tutor.review_count ? `(${tutor.review_count} reviews)` : '(No reviews)'}</span>
+                    <div class="teachers-container t_c">
+                        <div class="teachers-scroll" id="teachersScroll">
+            `;
+            
+            teachers.forEach(teacher => {
+                const stars = '★'.repeat(Math.floor(teacher.rating)) + '☆'.repeat(5 - Math.floor(teacher.rating));
+                const initials = teacher.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                
+                html += `
+                    <div class="teacher-profile">
+                        <div class="profile-picture">${initials}</div>
+                        <div class="teacher-name">${teacher.name}</div>
+
+                        <div class="rating-section">
+                            <div class="rating-stars">
+                                <span class="star">${stars}</span>
+                            </div>
+                            <span class="rating-value">${teacher.rating}/5</span>
+                            <span class="rating-reviews">(${teacher.rating_count})</span>
+                        </div>
+
+                        <div class="profile-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Subjects</span>
+                                <span class="detail-content" title="${teacher.subjects}">${teacher.subjects}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Classes</span>
+                                <span class="detail-content">${teacher.classes}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Location</span>
+                                <span class="detail-content">${teacher.city}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Experience</span>
+                                <span class="detail-content">${teacher.experience} Years</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Mode</span>
+                                <span class="detail-content" title="${teacher.teaching_preferences}">${teacher.teaching_preferences}</span>
+                            </div>
+                        </div>
+
+                        <!-- Check profile Button -->
+                        <div class="contact-wrapper">
+                            <a href="teacher-profile.php?id=${teacher.id || teacher.teacher_id || encodeURIComponent(teacher.name)}" class="contact-button">Check Profile</a>
+                        </div>
                     </div>
-                    <button class="contact-btn" onclick="contactTeacher(${tutor.id})">
-                        Contact Tutor
-                    </button>
+                `;
+            });
+                
+            html += `
+                        </div>
+                        
+                    </div>
                 </div>
-            `).join('');
+            `;
+            
+            resultsDiv.innerHTML = html;
         }
 
-        // Generate star rating display
-        function generateStars(rating) {
-            const fullStars = Math.floor(rating);
-            const emptyStars = 5 - fullStars;
-            return '★'.repeat(fullStars) + '☆'.repeat(emptyStars);
-        }
-
-        // Update results information
-        function updateResultsInfo(count) {
-            const resultsInfo = document.getElementById('resultsInfo');
-            if (count === allTutors.length) {
-                resultsInfo.textContent = 'Showing all tutors';
+        // Scroll navigation functions
+        function scrollTeachers(direction) {
+            const container = document.getElementById('teachersScroll');
+            const scrollAmount = 300;
+            
+            if (direction === 'left') {
+                container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
             } else {
-                resultsInfo.textContent = `Found ${count} tutor${count !== 1 ? 's' : ''}`;
-            }
-        }
-
-        // Contact teacher function
-        function contactTeacher(tutorId) {
-            const tutor = allTutors.find(t => t.id === tutorId);
-            if (tutor) {
-                const contactInfo = `Contact ${tutor.name}:\n`;
-                const phone = tutor.phone ? `Phone: ${tutor.phone}\n` : '';
-                const email = tutor.email ? `Email: ${tutor.email}` : '';
-                alert(contactInfo + phone + email);
-                // In a real application, this would open a contact form or initiate contact
+                container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
             }
         }
     </script>
-
-
-
-
-
-
-
-
-
-"Alipurduar": [
-        { name: "New Alipurduar Railway Station", lat: 26.486342, lng: 89.541450, type: "transport", icon: "🚉" },
-        { name: "Alipurduar Court Station", lat: 26.501588, lng: 89.527886, type: "transport", icon: "🚉" },
-        { name: "Alipurduar Station", lat: 26.478928, lng: 89.521043, type: "transport", icon: "🚉" }, // Changed
-        { name: "Alipurduar Junction Railway Station", lat: 26.523268, lng: 89.533703, type: "transport", icon: "🚉" },
-
-        { name: "Alipurduar University", lat: 26.50138, lng: 89.53870, type: "education", icon: "🎓" },
-        { name: "Jamai Dokan", lat: 26.49677, lng: 89.53594, type: "market", icon: "JD" },
-        { name: "Dooars Kanya", lat: 26.50359, lng: 89.53154, type: "government", icon: "DK" },
-        { name: "NBSTC", lat: 26.50382, lng: 89.52954, type: "transport", icon: "NB" },
-        { name: "Alipurduar Fire Station", lat: 26.50238, lng: 89.52948, type: "fire station", icon: "🚒" },
-        { name: "Alipurduar Court", lat: 26.50030, lng: 89.53027, type: "ward", icon: "🏛️" },
-        { name: "Mc William High School", lat: 26.496367, lng: 89.526762, type: "education", icon: "MC" },
-        { name: "New Town Durga Bari", lat: 26.495061, lng: 89.530205, type: "religious", icon: "ૐ" },
-        { name: "Buxa Feeder", lat: 26.494182, lng: 89.526558, type: "hotel", icon: "BF" },
-        { name: "New Town Bazaar", lat: 26.49410, lng: 89.53014, type: "market", icon: "🛒" },
-        { name: "Go Green Nursery", lat: 26.49351, lng: 89.53308, type: "education", icon: "🏫" },
-        { name: "Mahakal Dham", lat: 26.49220, lng: 89.52705, type: "religious", icon: "MD" },
-        { name: "Lohar Pul Mandir", lat: 26.49187, lng: 89.53220, type: "religious", icon: "LP" },
-        { name: "Govinda High School", lat: 26.49174, lng: 89.53338, type: "education", icon: "HS" },
-        { name: "Power House pukur", lat: 26.49220, lng: 89.53424, type: "other", icon: "PH" },
-        { name: "Madhyapara Housing Complex", lat: 26.495397, lng: 89.536300, type: "hotel", icon: "HC" },
-        { name: "Kanchenjungha Apartment", lat: 26.49206, lng: 89.53626, type: "hotel", icon: "KA" },
-        { name: "Indoor Stadium", lat: 26.503662, lng: 89.530517, type: "stadium", icon: "🏟" },
-        { name: "N.F.Railway Community Hall",lat: 26.53257386175455,lng: 89.53820843372694,type: "government",icon: "🏛️"},
-        { name: "Rly. Community Hall, Alipurduar Jn.",lat: 26.53267037938547,lng: 89.5373916319224,type: "government",icon: "🏛️"},
-        
-        { name: "Alipurduar District Hospital", lat: 26.484184, lng: 89.523363, type: "hospital", icon: "🏥" },
-        { name: "Alipurduar Lions Eye Hospital", lat: 26.482253, lng: 89.527947, type: "hospital", icon: "🏥" },
-        { name: "Yashoda Hospitals Medical Information Centre", lat: 26.486204, lng: 89.523746, type: "hospital", icon: "🏥" },
-        { name: "Divisional Railway Hospital", lat: 26.524767, lng: 89.536621, type: "hospital", icon: "🏥" },
-        { name: "AYUSH Hospital", lat: 26.505319, lng: 89.433257, type: "hospital", icon: "🏥" },
-        { name: "Greenland Nursing Home Pvt Ltd", lat: 26.481429, lng: 89.524212, type: "hospital", icon: "🏥" },
-        { name: "St Mary's Nursing Home", lat: 26.481961, lng: 89.527297, type: "hospital", icon: "🏥" },
-        { name: "Shree Krishna Nursing Home", lat: 26.483569, lng: 89.524710, type: "hospital", icon: "🏥" },
-        { name: "Pulse Sanjivani Nursing Home", lat: 26.483972, lng: 89.526435, type: "hospital", icon: "🏥" },
-        { name: "JD Healthcare Nursing Home & Diagnostic Centre", lat: 26.485248, lng: 89.525230, type: "hospital", icon: "🏥" },
-        { name: "ALIPURDUAR MISTI AAYA CENTRE & HOME CARE NURSING", lat: 26.520909, lng: 89.555695, type: "hospital", icon: "🏥" },
-        { name: "New Sri Krishna Nursing Home", lat: 26.484533, lng: 89.525876, type: "hospital", icon: "🏥" },
-        { name: "Alipurduar Aya Service Centre", lat: 26.525635, lng: 89.556233, type: "hospital", icon: "🏥" },
-        { name: "Alipurduar District Hospital Nursing Training School", lat: 26.483112, lng: 89.522342, type: "education", icon: "🏫" },
-                
-                
-        {name: "IndianOil",lat: 26.480376009807067,lng: 89.5344585691566,type: "fuel",icon: "⛽"},
-        {name: "Bharat Petrol Pump",lat: 26.48202529689521,lng: 89.51123213043049,type: "fuel",icon: "⛽"},
-        {name: "IndianOil",lat: 26.48077899598905,lng: 89.53784900002093,type: "fuel",icon: "⛽"},
-        {name: "IndianOil",lat: 26.480788599197922,lng: 89.53785168222998,type: "fuel",icon: "⛽"},
-        {name: "Jio-bp",lat: 26.488528430707955,lng: 89.5015995435023,type: "fuel",icon: "⛽"},
-        {name: "Bharat Petrol Pump",lat: 26.47279210193813,lng: 89.55013204244035,type: "fuel",icon: "⛽"},
-        {name: "IndianOil",lat: 26.479697699175134,lng: 89.50846234111498,type: "fuel",icon: "⛽"},
-        {name: "Bharat Petrol Pump - N.N ROY SERVICE STATION",lat: 26.467141597282875,lng: 89.57747500001045,type: "fuel",icon: "⛽"},
-        {name: "IndianOil",lat: 26.535167400501177,lng: 89.53630300001045,type: "fuel",icon: "⛽"},
-        {name: "Public Bus Station",lat: 26.478919315036542,lng: 89.52179060333211,type: "fuel",icon: "⛽"},
-        
-        {name: "Alipurduar Bus Stand",lat: 26.479864652335255,lng: 89.53551890411389,type: "transport",icon: "🚌"},
-        {name: "Alipurduar-Cochbehar Bus Stand",lat: 26.519487823039068,lng: 89.20291890001343,type: "transport",icon: "🚌"},
-        
-        {name: "Alipurduar College Ground", lat: 26.500812, lng: 89.535945, type: "ground", icon: "🌲" },
-        {name: "Surya Nagar Ground",lat: 26.497193612374762,lng: 89.52292890008374,type: "ground",icon: "🌲"},
-        {name: "Town Club Ground",lat: 26.476205696409306,lng: 89.5235520680222,type: "ground",icon: "🌲"},
-        {name: "DRM GROUND",lat: 26.534929698684024,lng: 89.5378923000209,type: "ground",icon: "🌲"},
-        {name: "Arabinda Nagar Play Ground",lat: 26.502588501387994,lng: 89.5261914466481,type: "ground",icon: "🌲"},
-        {name: "BMC Ground",lat: 26.477936995692403,lng: 89.52618471781186,type: "ground",icon: "🌲"},
-        {name: "Udayan Bitan Ground",lat: 26.498833998724265,lng: 89.52480600002093,type: "ground",icon: "🌲"},
-        {name: "SHANTINAGAR, UPAL MUKHAR GROUND",lat: 26.483449797760546,lng: 89.52845100002092,type: "ground",icon: "🌲"},
-        {name: "Asutosh Club Field",lat: 26.47609039909986,lng: 89.51771941781183,type: "ground",icon: "🌲"},
-        {name: "Ananda nagar play ground",lat: 26.481912200000007,lng: 89.53402423560279,type: "ground",icon: "🌲"},
-        {name: "Netaji Vidyapith Playground",lat: 26.51331950036827,lng: 89.53288924664811,type: "ground",icon: "🌲"},
-        {name: "NABIN CLUB FOOTBALL GROUND",lat: 26.509018599575,lng: 89.53140571781185,type: "ground",icon: "🌲"},
-        
-        {name: "Alipurduar Park",lat: 26.47754536871918,lng: 89.52504886191598,type: "park",icon: "🛝"},
-        {name: "Rabindra Shishu Udyan",lat: 26.497296452901598,lng: 89.52758180508614,type: "park",icon: "🛝"},
-        {name: "Netaji PARK",lat: 26.496715049500697,lng: 89.5272949495227,type: "park",icon: "🛝"},
-        {name: "Gol Park",lat: 26.532053354559768,lng: 89.53765747779273,type: "park",icon: "🛝"},
-        {name: "Choto Gol Park",lat: 26.533456305659172,lng: 89.53830860752493,type: "ground",icon: "🌲"},
-        {name: "Parade Ground", lat: 26.500870, lng: 89.532598, type: "ground", icon: "PG" },
-        {name: "Maa Paradise World",lat: 26.51663989968116,lng: 89.5701440246104,type: "park",icon: "🛝"},
-
-        {name: "Alipurduar Super Market", lat: 26.48060585729641, lng: 89.52714132731707,type: "market",icon: "🛒"},
-        {name: "New Town Bazaar", lat: 26.493049399999993, lng: 89.52838907838527,type: "market",icon: "🛒"},
-        {name: "New-Alipur station Fancy Market", lat: 26.486144999654876, lng: 89.53993709878748,type: "market",icon: "🛒"},
-        {name: "Radha Madhab Mondir Market", lat: 26.491266093585963, lng: 89.5407733178014,type: "market",icon: "🛒"},
-        {name: "Lichutala Bazaar", lat: 26.515224700000008, lng: 89.53255034111498,type: "market",icon: "🛒"},
-        {name: "Alipurduar Jn. Railway Market", lat: 26.52874299990015, lng: 89.5351764822195,type: "market",icon: "🛒"},
-        {name: "Birpara Market", lat: 26.482853898861535, lng: 89.50850668221952,type: "market",icon: "🛒"},
-        {name: "Alipurduar Daily Fish Market", lat: 26.480925210394712, lng: 89.52097864663763,type: "market",icon: "🛒"},
-        {name: "Boro Bazar", lat: 26.480740348702565, lng: 89.52071847235861,type: "market",icon: "🛒"},
-        {name: "Bou Bazaar", lat: 26.498831599681107, lng: 89.52779460008368,type: "market",icon: "🛒"},
-        {name: "Cosmo Bazaar Alipurduar", lat: 26.479932772541304, lng: 89.52643743721862,type: "maarket",icon: "🛒"},
-        {name: "STYLE BAAZAR ALIPURDUAR", lat: 26.48063529959736, lng: 89.52432631036318,type: "maarket",icon: "🛒"},
-        {name: "TRENDS", lat: 26.484796899999996, lng: 89.52654410001045,type: "maarket",icon: "🛒"},
-        {name: "PRIMART-Alipurduar", lat: 26.489165000000014, lng: 89.52663170001046,type: "maarket",icon: "🛒"},
-        {name: "Reliance Smart Point Alipurduar", lat: 26.495407600248466, lng: 89.52784610001045,type: "maarket",icon: "🛒"},
-        {name: "Dipak Shopping Mall", lat: 26.685724500000024, lng: 89.42206210001045,type: "maarket",icon: "🛒"},
-        {name: "FASHION FUSION ALIPURDUAR", lat: 26.480462296764685, lng: 89.52298800001046,type: "maarket",icon: "🛒"},
-        {name: "Bharat Stores", lat: 26.480579998790358, lng: 89.52515374111495,type: "maarket",icon: "🛒"},
-        {name: "Senco Gold & Diamonds- AlipurDuar", lat: 26.49891360042367, lng: 89.52748604111498,type: "maarket",icon: "🛒"},
-        {name: "ORIENT JEWELLERS, ALIPURDUAR", lat: 26.494531800772815, lng: 89.52712732762373,type: "maarket",icon: "🛒"},
-        
-        { name: "Banga Bhumi", lat: 26.502099, lng: 89.528435, type: "hotel", icon: "HB" },
-        {name: "Hotel Ratneshwar", lat: 26.48406824013886, lng: 89.5063995890738,type: "hotel",icon: "🏢"},
-        {name: "Hotel Dooars Mountain", lat: 26.488258098694256, lng: 89.52669167349582,type: "hotel",icon: "🏢"},
-        {name: "HOTEL PALACIO REGENCY", lat: 26.491954795449676, lng: 89.49381708251529,type: "hotel",icon: "🏢"},
-        {name: "HOTEL ELITE", lat: 26.48056859516062, lng: 89.52828143562374,type: "hotel",icon: "🏢"},
-        {name: "Hotel Dooars Hillton", lat: 26.480999814846086, lng: 89.534053622498,type: "hotel",icon: "🏢"},
-        {name: "Hotel Maa international", lat: 26.480844400000002, lng: 89.5352623646206,type: "hotel",icon: "🏢"},
-        {name: "OYO Hotel Chitra", lat: 26.48308699773781, lng: 89.5266125711847,type: "hotel",icon: "🏢"},
-        {name: "Hotel Sinchula", lat: 26.482976562994327, lng: 89.52726166577771,type: "hotel",icon: "🏢"},
-        {name: "OYO 62896 Hotel Ridhi Sidhi", lat: 26.47966800330245, lng: 89.52219836013936,type: "hotel",icon: "🏢"},
-
-        { name: "Mc William Higher Secondary School", lat: 26.4963004758017, lng: 89.52689884103808, type: "education", icon: "🏫" },
-        { name: "EuroKids - Alipurduar School", lat: 26.496842332960806, lng: 89.53199410878166, type: "education", icon: "🏫" },
-        { name: "Stepping Stone Model School", lat: 26.492361899859887, lng: 89.52620445288488, type: "education", icon: "🏫" },
-        { name: "MOUNT LITERA ZEE SCHOOL ALIPURDUAR", lat: 26.496884499650488, lng: 89.530341070539, type: "education", icon: "🏫" },
-        { name: "Netaji Vidyapith Higher Secondary School", lat: 26.513684100259013, lng: 89.53288891348001, type: "education", icon: "🏫" },
-        { name: "Little Flowers English School", lat: 26.489553900309584, lng: 89.4835567410912, type: "education", icon: "🏫" },
-        { name: "Alipurduar New Town Girl's High School", lat: 26.487184999665757, lng: 89.52382109998678, type: "education", icon: "🏫" },
-        { name: "Alipurduar Govinda High School (H.S)", lat: 26.49192649957282, lng: 89.53332369998678, type: "education", icon: "🏫" },
-        { name: "SANTIDEBI HIGH SCHOOL (H.S)", lat: 26.479252600208557, lng: 89.5362329999868, type: "education", icon: "🏫" },
-        { name: "Jitpur High School (H.S)", lat: 26.517352199980827, lng: 89.52854259998678, type: "education", icon: "🏫" },
-        { name: "Little Flowers English School (primary)", lat: 26.5028572, lng: 89.53446637053898, type: "education", icon: "🏫" },
-        { name: "Alipurduar Girls' High School", lat: 26.475811104077554, lng: 89.52087259998675, type: "education", icon: "🏫" },
-        { name: "ALIPURDUAR HINDI MADHYAMIK VIDYALAYA", lat: 26.480949783436643, lng: 89.52967529998678, type: "education", icon: "🏫" },
-        { name: "KIDZEE ,ALIPURDUAR", lat: 26.49210600084879, lng: 89.52446960182334, type: "education", icon: "🏫" },
-        { name: "OAKLAND PUBLIC SCHOOL", lat: 26.51984560026596, lng: 89.5342677343446, type: "education", icon: "🏫" },
-        { name: "PADMESWARI HIGH SCHOOL (H.S)", lat: 26.47099739949678, lng: 89.56408935888231, type: "education", icon: "🏫" },
-        { name: "SIP ABACUS ALIPURDUAR", lat: 26.491998099857984, lng: 89.52704945888232, type: "education", icon: "🏫" },
-        { name: "CHILDREN'S PARADISE", lat: 26.498869199787727, lng: 89.52747022943453, type: "education", icon: "🏫" },
-        { name: "Alipurduar collegiate english medium high school", lat: 26.499892298992126, lng: 89.53672441348002, type: "education", icon: "🏫" },
-        { name: "LebuBagan Primary school", lat: 26.494741399616927, lng: 89.52504379998678, type: "education", icon: "🏫" },
-        { name: "Uttarpara GSF Primary School", lat: 26.477741899350722, lng: 89.52773799998677, type: "education", icon: "🏫" },
-        { name: "Alipurduar College Of Visual & Performing Arts", lat: 26.48436610145501, lng: 89.52854837053899, type: "education", icon: "🏫" },
-        { name: "Banchukamari No.1 BFP School", lat: 26.52604260068106, lng: 89.48379782207569, type: "education", icon: "🏫" },
-        { name: "Kanuram valika vidyalaya High School", lat: 26.47082850303019, lng: 89.56338499385232, type: "education", icon: "🏫" },
-        { name: "Arabindanagar No 2 N P School", lat: 26.505409598920505, lng: 89.52364477974686, type: "education", icon: "🏫" },
-        { name: "Shyama Prashad Vidyamandir School (H.S)", lat: 26.53644100018035, lng: 89.54026872943453, type: "education", icon: "🏫" },
-        { name: "Junction Colony R.R. Primary School", lat: 26.513586601408832, lng: 89.53301628219563, type: "education", icon: "🏫" },
-        { name: "DATM", lat: 26.488778299841155, lng: 89.53990082943453, type: "education", icon: "🏫" },
-        { name: "Alipurduar Mahila Maha Vidyalaya", lat: 26.492425999720446, lng: 89.53139171164341, type: "education", icon: "🏫" },
-        { name: "Balika Siksha Mandir (HS)", lat: 26.490094099544134, lng: 89.52448339998676, type: "education", icon: "🏫" },
-        { name: "Techno India Group Public School", lat: 26.499923802114115, lng: 89.46559068219567, type: "education", icon: "🏫" },
-        { name: "Vivekananda College", lat: 26.481608499803766, lng: 89.514303270539, type: "education", icon: "🏫" },
-        { name: "St. Xavier's School", lat: 26.540887000226864, lng: 89.57091669998675, type: "education", icon: "🏫" },
-        { name: "Alokdyut english medium primary school", lat: 26.474080692935498, lng: 89.52265410797027, type: "education", icon: "🏫" },
-        { name: "S.T. Joseph's High School", lat: 26.52631230003722, lng: 89.54389434109122, type: "education", icon: "🏫" },
-        { name: "Santinagar RR Primary School ( English Medium)", lat: 26.49099989985277, lng: 89.52891898833009, type: "education", icon: "🏫" },
-        { name: "Navodaya Nursery School", lat: 26.509853499902444, lng: 89.53249972943452, type: "education", icon: "🏫" },
-        { name: "Mc. William R.R. Primary School", lat: 26.497634599999998, lng: 89.52625862391228, type: "education", icon: "🏫" },
-        { name: "Kendriya Vidyalaya Sangathan, Alipurduar Junction", lat: 26.54860020015377, lng: 89.53185897053896, type: "education", icon: "🏫" },
-        { name: "Kalakakoli Adarsha Shishu Vidyalaya", lat: 26.494289499869936, lng: 89.53008069998678, type: "education", icon: "🏫" },
-        { name: "Ananda Marga Primary School", lat: 26.47857019957579, lng: 89.53972919998677, type: "education", icon: "🏫" },
-        { name: "Alipurduar University", lat: 26.501649585858285, lng: 89.53722350547476, type: "education", icon: "🏫" },
-        { name: "Alipurduar Government Engineering and Management College", lat: 26.495841853400783, lng: 89.69984256341935, type: "education", icon: "🏫" },
-        { name: "Alipurduar (Damanpur) Government Polytechnic", lat: 26.493447647864308, lng: 89.5404262078703, type: "education", icon: "🏫" },
-        { name: "Government ITI Alipurduar", lat: 26.479617727942117, lng: 89.49846640445882, type: "education", icon: "🏫" }
-
-    ],
-    "Coochbehar": [
-        { name: "Coochbehar Palace", lat: 26.3244, lng: 89.4492, type: "heritage", icon: "🏰" },
-        { name: "Coochbehar Railway Station", lat: 26.3389, lng: 89.4525, type: "transport", icon: "🚉" },
-        { name: "Coochbehar Medical College", lat: 26.3356, lng: 89.4478, type: "education", icon: "🏥" },
-        { name: "Coochbehar Government College", lat: 26.3267, lng: 89.4503, type: "education", icon: "🎓" },
-        { name: "Coochbehar District Court", lat: 26.3289, lng: 89.4515, type: "government", icon: "🏛️" },
-        { name: "Coochbehar Bus Terminus", lat: 26.3378, lng: 89.4512, type: "transport", icon: "🚌" },
-        { name: "Coochbehar Collectorate", lat: 26.3301, lng: 89.4528, type: "government", icon: "🏢" },
-        { name: "Rajbari Market", lat: 26.3256, lng: 89.4487, type: "market", icon: "🛒" },
-        { name: "Coochbehar Stadium", lat: 26.3312, lng: 89.4456, type: "sports", icon: "⚽" },
-        { name: "Coochbehar High School", lat: 26.3278, lng: 89.4495, type: "education", icon: "🏫" },
-        { name: "Coochbehar Police Station", lat: 26.3295, lng: 89.4521, type: "government", icon: "👮" },
-        { name: "Madan Mohan Temple", lat: 26.3234, lng: 89.4465, type: "religious", icon: "🛕" },
-        { name: "Ward 1 - Rajbari Area", lat: 26.3245, lng: 89.4475, type: "ward", icon: "🏛️" },
-        { name: "Ward 5 - College Para", lat: 26.3275, lng: 89.4505, type: "ward", icon: "🏛️" },
-        { name: "Ward 10 - Station Area", lat: 26.3385, lng: 89.4520, type: "ward", icon: "🏛️" }
-    ],
-    "Falakata": [
-        { name: "Falakata Railway Station", lat: 26.5289, lng: 89.2089, type: "transport", icon: "🚉" },
-        { name: "Falakata Block Office", lat: 26.5298, lng: 89.2105, type: "government", icon: "🏢" },
-        { name: "Falakata High School", lat: 26.5275, lng: 89.2085, type: "education", icon: "🏫" },
-        { name: "Falakata Hospital", lat: 26.5305, lng: 89.2112, type: "hospital", icon: "🏥" },
-        { name: "Falakata Police Station", lat: 26.5285, lng: 89.2095, type: "government", icon: "👮" },
-        { name: "Falakata Bus Stand", lat: 26.5312, lng: 89.2125, type: "transport", icon: "🚌" },
-        { name: "Falakata Market", lat: 26.5292, lng: 89.2102, type: "market", icon: "🛒" },
-        { name: "Falakata College", lat: 26.5265, lng: 89.2075, type: "education", icon: "🎓" },
-        { name: "Falakata Post Office", lat: 26.5288, lng: 89.2098, type: "government", icon: "📮" },
-        { name: "Falakata Stadium", lat: 26.5315, lng: 89.2135, type: "sports", icon: "⚽" },
-        { name: "Ward 1 Office", lat: 26.5268, lng: 89.2072, type: "ward", icon: "🏛️" },
-        { name: "Ward 2 Office", lat: 26.5282, lng: 89.2088, type: "ward", icon: "🏛️" },
-        { name: "Ward 3 Office", lat: 26.5295, lng: 89.2108, type: "ward", icon: "🏛️" },
-        { name: "Ward 4 Office", lat: 26.5308, lng: 89.2128, type: "ward", icon: "🏛️" }
-    ]
-};
-
-const landmarkColors = {
-    "transport": "#c2c1a5",
-    "education": "#c2c1a5",
-    "government": "#c2c1a5",
-    "hospital": "#c2c1a5",
-    "market": "#c2c1a5",
-    "heritage": "#c2c1a5",
-    "religious": "#c2c1a5",
-    "sports": "#c2c1a5",
-    "office": "#c2c1a5",
-    "ward": "#c2c1a5",
-    "ground": "#c2c1a5",
-    "stadium": "#c2c1a5",
-    "post office": "#c2c1a5",
-    "police station": "#c2c1a5",
-    "fire station": "#c2c1a5",
-    "hotel": "#c2c1a5",
-    "religious": "#c2c1a5",
-    "other": "#c2c1a5",
-    "fuel": "#c2c1a5",
-    "park": "#c2c1a5",
+</body>
+</html>

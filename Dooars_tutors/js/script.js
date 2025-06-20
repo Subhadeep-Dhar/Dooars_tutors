@@ -1,4 +1,4 @@
-// Unified filter state management using Set for better performance
+// Unified filter state management using Set
 const filterState = {
     class: new Set(),
     board: new Set(),
@@ -9,24 +9,23 @@ const filterState = {
 function toggleDropdown(filterType) {
     const dropdown = document.getElementById(`${filterType}-dropdown`);
     const label = dropdown.previousElementSibling;
-    
-    // Close all other dropdowns first
+
+    // Close other dropdowns
     document.querySelectorAll('.filter-dropdown').forEach(dd => {
         if (dd !== dropdown) {
             dd.classList.remove('active');
             dd.previousElementSibling.classList.remove('active');
         }
     });
-    
-    // Toggle current dropdown
+
+    // Toggle current
     dropdown.classList.toggle('active');
     label.classList.toggle('active');
 }
 
-// Toggle individual filter selection
+// Toggle filter selection
 function toggleFilter(filterType, value) {
-    const checkboxId = `${filterType}-${value}`;
-    const checkbox = document.getElementById(checkboxId);
+    const checkbox = document.getElementById(`${filterType}-${value}`);
     const countElement = document.getElementById(`${filterType}-count`);
 
     if (filterState[filterType].has(value)) {
@@ -37,37 +36,31 @@ function toggleFilter(filterType, value) {
         checkbox.classList.add('checked');
     }
 
-    // Update count display
     const count = filterState[filterType].size;
     countElement.textContent = count === 0 ? '0 selected' : `${count} selected`;
-    
-    // Prevent event from bubbling up to close dropdown
+
     if (event) event.stopPropagation();
-    
-    // Trigger search after filter change
+
     performSearch();
 }
 
-// Search functionality - Updated to work with database search
+// Search logic
 function performSearch() {
     const searchInput = document.querySelector('.search-input')?.value.trim() || '';
     const location = document.querySelector('.location-select')?.value || '';
 
-    // Update the form inputs if they exist (for search page)
     const searchInputField = document.getElementById('searchInput');
     const locationSelect = document.getElementById('locationSelect');
-    
+
     if (searchInputField) searchInputField.value = searchInput;
     if (locationSelect) locationSelect.value = location;
 
-    // Update global selectedFilters for database search
     if (typeof selectedFilters !== 'undefined') {
         selectedFilters.class = Array.from(filterState.class);
         selectedFilters.board = Array.from(filterState.board);
         selectedFilters.subject = Array.from(filterState.subject);
     }
 
-    // Call the database search if on search page
     if (typeof window.performDatabaseSearch === 'function') {
         window.performDatabaseSearch();
     } else {
@@ -83,25 +76,22 @@ function performSearch() {
     }
 }
 
-// Board exploration
+// Explore board
 function exploreBoard(board) {
-    console.log('Exploring board:', board);
-    // Redirect to search page with board filter
     window.location.href = `search.php?board=${encodeURIComponent(board)}`;
 }
 
-// Close dropdowns when clicking outside
-document.addEventListener('click', function(event) {
-    const filterGroups = document.querySelectorAll('.filter-group');
-    let clickedInside = false;
-    
-    filterGroups.forEach(group => {
-        if (group.contains(event.target)) {
-            clickedInside = true;
-        }
-    });
-    
-    if (!clickedInside) {
+// Mobile menu toggle
+function toggleMobileMenu() {
+    document.querySelector('.mobile-menu-btn')?.classList.toggle('active');
+    document.querySelector('.mobile-nav')?.classList.toggle('active');
+    document.querySelector('.mobile-overlay')?.classList.toggle('active');
+    document.body.style.overflow = document.querySelector('.mobile-nav')?.classList.contains('active') ? 'hidden' : '';
+}
+
+// Close dropdowns if clicking outside
+document.addEventListener('click', function (e) {
+    if (!e.target.closest('.filter-group')) {
         document.querySelectorAll('.filter-dropdown').forEach(dropdown => {
             dropdown.classList.remove('active');
             dropdown.previousElementSibling.classList.remove('active');
@@ -109,111 +99,113 @@ document.addEventListener('click', function(event) {
     }
 });
 
-// Prevent dropdown from closing when clicking inside it
+// Prevent dropdown from closing when clicked inside
 document.querySelectorAll('.filter-dropdown').forEach(dropdown => {
-    dropdown.addEventListener('click', function(event) {
-        event.stopPropagation();
+    dropdown.addEventListener('click', e => e.stopPropagation());
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const isHashLink = href => href && href.startsWith('#');
+
+    // Desktop and mobile nav links
+    document.querySelectorAll('.nav-links a, .mobile-nav a').forEach(link => {
+        link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+
+            // ✅ INTERNAL LINK: Smooth scroll
+            if (isHashLink(href)) {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+
+            // ✅ Close mobile menu on any click
+            document.querySelector('.mobile-menu-btn')?.classList.remove('active');
+            document.querySelector('.mobile-nav')?.classList.remove('active');
+            document.querySelector('.mobile-overlay')?.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    });
+
+    // Mobile toggle button
+    document.querySelector('.mobile-menu-btn')?.addEventListener('click', () => {
+        document.querySelector('.mobile-menu-btn').classList.toggle('active');
+        document.querySelector('.mobile-nav').classList.toggle('active');
+        document.querySelector('.mobile-overlay').classList.toggle('active');
+        document.body.style.overflow = document.querySelector('.mobile-nav').classList.contains('active') ? 'hidden' : '';
+    });
+
+    // Mobile overlay click closes menu
+    document.querySelector('.mobile-overlay')?.addEventListener('click', () => {
+        document.querySelector('.mobile-menu-btn')?.classList.remove('active');
+        document.querySelector('.mobile-nav')?.classList.remove('active');
+        document.querySelector('.mobile-overlay')?.classList.remove('active');
+        document.body.style.overflow = '';
     });
 });
 
-// Mobile menu functionality
-function toggleMobileMenu() {
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const mobileNav = document.querySelector('.mobile-nav');
-    const mobileOverlay = document.querySelector('.mobile-overlay');
-    
-    if (mobileMenuBtn && mobileNav && mobileOverlay) {
-        mobileMenuBtn.classList.toggle('active');
-        mobileNav.classList.toggle('active');
-        mobileOverlay.classList.toggle('active');
-        
-        // Prevent body scroll when menu is open
-        document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
-    }
-}
 
-// Event listeners for search functionality
-document.addEventListener('DOMContentLoaded', function() {
+
+
+// DOM Ready
+document.addEventListener('DOMContentLoaded', function () {
     const searchBtn = document.querySelector('.search-btn');
     const searchInput = document.querySelector('.search-input');
-    
+
     if (searchBtn) {
         searchBtn.addEventListener('click', performSearch);
     }
-    
+
     if (searchInput) {
-        searchInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                performSearch();
-            }
+        searchInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') performSearch();
         });
     }
 
-    // Mobile menu event listeners
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const mobileOverlay = document.querySelector('.mobile-overlay');
-    
-    if (mobileMenuBtn) {
-        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-    }
-    
-    if (mobileOverlay) {
-        mobileOverlay.addEventListener('click', toggleMobileMenu);
-    }
+    // Toggle mobile menu
+    document.querySelector('.mobile-menu-btn')?.addEventListener('click', toggleMobileMenu);
+    document.querySelector('.mobile-overlay')?.addEventListener('click', toggleMobileMenu);
 
-    // Close mobile menu when clicking on links
-    document.querySelectorAll('.mobile-nav a').forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href').substring(1);
-            console.log('Mobile navigation clicked:', targetId);
-            
-            // Close mobile menu
-            toggleMobileMenu();
-            
-            if (targetId === 'home') {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Link click (mobile): smooth scroll for # links, allow normal for external
+    document.querySelectorAll('.mobile-nav a, .nav-links a').forEach(link => {
+        link.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+
+            if (href && href.startsWith('#')) {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+                toggleMobileMenu(); // close mobile nav
             } else {
-                // alert(`Navigating to ${targetId} page`);
+                // external .php or .html: allow navigation, just close mobile menu if open
+                if (document.querySelector('.mobile-nav')?.classList.contains('active')) {
+                    toggleMobileMenu();
+                }
             }
         });
     });
 
-    // Smooth scrolling for desktop navigation links
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href').substring(1);
-            console.log('Navigation clicked:', targetId);
-            
-            if (targetId === 'home') {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            } else {
-                // alert(`Navigating to ${targetId} page`);
-            }
-        });
-    });
-
-    // Add interactive hover effects for board cards
+    // Card hover effects
     document.querySelectorAll('.board-card').forEach(card => {
-        card.addEventListener('mouseenter', function() {
+        card.addEventListener('mouseenter', function () {
             this.style.transform = 'translateY(-10px) scale(1.02)';
         });
-        
-        card.addEventListener('mouseleave', function() {
+        card.addEventListener('mouseleave', function () {
             this.style.transform = 'translateY(0) scale(1)';
         });
     });
 
-    // Smooth scrolling for anchor links
+    // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
-            e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
             if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth'
-                });
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth' });
             }
         });
     });

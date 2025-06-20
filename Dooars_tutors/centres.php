@@ -1,11 +1,9 @@
-
 <?php
-// Replace the existing PHP query section at the top of temp.txt with this:
 
 $servername = "localhost:3307";
-$username = "root";        
-$password = "";            
-$database = "dooars_tutors"; 
+$username = "root";        // change if different
+$password = "";            // change if you have a DB password
+$database = "dooars_tutors"; // change to your actual DB name
 
 $conn = new mysqli($servername, $username, $password, $database);
 
@@ -15,17 +13,15 @@ if ($conn->connect_error) {
 }
 
 $search = $_POST['search'] ?? '';
-$sql = "SELECT *, profession_details FROM tutors WHERE 
-           profession_details IS NOT NULL AND profession_details != '' AND (
+$sql = "SELECT * FROM tutors WHERE 
            name LIKE ? OR
-           JSON_EXTRACT(profession_details, '$.tutor.subjects') LIKE ? OR 
-           JSON_EXTRACT(profession_details, '$.tutor.classes') LIKE ? OR 
-           JSON_EXTRACT(profession_details, '$.tutor.boards') LIKE ?
-           )";
+           subjects LIKE ? OR 
+           classes LIKE ? OR 
+           boards LIKE ?";
 
 $stmt = $conn->prepare($sql);
 $searchParam = "%{$search}%";
-$stmt->bind_param("ssss", $searchParam, $searchParam, $searchParam, $searchParam);
+$stmt->bind_param("ssss",$searchParam, $searchParam, $searchParam, $searchParam);
 $stmt->execute();
 $result = $stmt->get_result();
 ?>
@@ -36,7 +32,7 @@ $result = $stmt->get_result();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DooarsTutors - Find Your Perfect Tutor</title>  
+    <title>DooarsTutors - Find Your Perfect Cooching</title>  
     <link rel="icon" type="image/x-icon" href="./favicon_io/favicon.ico">
     <!-- <link rel="stylesheet" href="style.css"> -->
     <link rel="stylesheet" href="./css/style_1.css">
@@ -750,6 +746,15 @@ button:active {
         text-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
     }
 
+    .mh2 {
+        text-align: center;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color:black;
+        margin-bottom: 20px;
+        text-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+    }
+
     .section-subtitle {
         text-align: center;
         font-size: 1.1rem;
@@ -1225,7 +1230,7 @@ button:active {
         left: 0;
         width: 100%;
         height: 100%;
-        background-image: url("blackboard-classroom-college-desk-wallpaper-preview.jpg");
+        background-image: url("https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg");
         background-size: cover;
         background-position: center;
         opacity: 0.25; /* Adjust transparency */
@@ -1984,8 +1989,8 @@ button:active {
     <div class="container">
         <div class="header">
             <div class="header-content">
-                <h1 class="main-title">Find Your Ideal Teacher</h1>
-                <p class="subtitle">Discover qualified educators for personalized learning</p>
+                <h1 class="main-title">Find Your Ideal Coaching Centre</h1>
+                <p class="subtitle">Empowering Every Student to Achieve More</p>
             </div>
         </div>
 
@@ -2008,12 +2013,12 @@ button:active {
                     <div class="form-grid">
 
                         <div class="form-group">
-                            <label for="board" class="form-label">Educational Board</label>
-                            <select id="board" name="board" class="form-select">
-                                <option value="">Select Board</option>
-                                <option value="WB">West Bengal Board</option>
-                                <option value="CBSE">CBSE</option>
-                                <option value="ICSE">CISCE</option>
+                            <label for="org_type" class="form-label">Type of Centre</label>
+                            <select id="org_type" name="org_type" class="form-select">
+                                <option value="">Select Centre</option>
+                                <option value="Computer Centre">Computer Centre</option>
+                                <option value="Educational Coaching Centre">Educational Coaching Centre</option>
+                                <option value="Abacus Centre">Abacus Centre</option>
                             </select>
                         </div>
 
@@ -2024,31 +2029,30 @@ button:active {
                                 <option value="Alipurduar">Alipurduar</option>
                                 <option value="Coochbehar">Coochbehar</option>
                                 <option value="Falakata">Falakata</option>
-                                <option value="Sonapur">Sonapur</option>
                             </select>
                         </div>
 
                         <div class="form-group">
-    <label for="classGrade" class="form-label">Class/Course</label>
-    <input 
-        type="text" 
-        id="classGrade" 
-        name="classGrade" 
-        class="form-input" 
-        placeholder="e.g., 1, 2, 10 or 1,2,3 (comma-separated)"
-    >
-</div>
+                            <label for="course_type" class="form-label">Class/Course</label>
+                            <input 
+                                type="text" 
+                                id="course_type" 
+                                name="course_type" 
+                                class="form-input" 
+                                placeholder="Enter class (Only class number)"
+                            >
+                        </div>
 
-<div class="form-group">
-    <label for="subject" class="form-label">Subject</label>
-    <input 
-        type="text" 
-        id="subject" 
-        name="subject" 
-        class="form-input" 
-        placeholder="e.g., Math, Physics, English (comma-separated)"
-    >
-</div>
+                        <div class="form-group">
+                            <label for="days_per_week" class="form-label">Coaching days</label>
+                            <input 
+                                type="text" 
+                                id="days_per_week" 
+                                name="days_per_week" 
+                                class="form-input" 
+                                placeholder="Search for coaching days per week"
+                            >
+                        </div>
                     </div>
 
                     <div class="search-button-container">
@@ -2083,7 +2087,7 @@ button:active {
             `;
             
             // Send AJAX request
-            fetch('search_teachers.php', {
+            fetch('search_centre.php', {
                 method: 'POST',
                 body: formData
             })
@@ -2096,122 +2100,149 @@ button:active {
             });
         });
         
-        // Replace your displayResults function with this version
-        // Also update the displayResults function in the JavaScript section:
-// Updated displayResults function to work exclusively with JSON data:
-function displayResults(teachers, searchType = 'Search Results') {
+        function displayResults(data, searchType = 'Search Results') {
     const resultsDiv = document.getElementById('results');
-    
-    if (teachers.length === 0) {
+
+    if (!data.success || !Array.isArray(data.results) || data.results.length === 0) {
         resultsDiv.innerHTML = `
             <div class="no-results">
                 <div class="no-results-icon">🔍</div>
-                <div class="no-results-title">No Teachers Found</div>
+                <div class="no-results-title">No Centres Found</div>
                 <div class="no-results-text">Try adjusting your search criteria or use different keywords</div>
             </div>
         `;
         return;
     }
-    
+
+    const centres = data.results;
+
     let html = `
         <div class="results-section">
             <div class="results-header">
                 <div class="results-title">
                     ${searchType}
-                    <span class="results-count">${teachers.length}</span>
+                    <span class="results-count">${centres.length}</span>
                 </div>
             </div>
             <div class="teachers-container t_c">
                 <div class="teachers-scroll" id="teachersScroll">
     `;
-    
-    teachers.forEach(teacher => {
-        const stars = '★'.repeat(Math.floor(teacher.rating)) + '☆'.repeat(5 - Math.floor(teacher.rating));
-        const initials = teacher.name.split(' ').map(n => n[0]).join('').toUpperCase();
-        
-        // Extract data from profession_details JSON only
-        let subjects = '';
-        let classes = '';
-        let boards = '';
-        let classSubjectMapping = {};
-        
-        // Parse profession_details from the response (already parsed by PHP)
-        if (teacher.subjects) {
-            subjects = teacher.subjects;
-        }
-        if (teacher.classes) {
-            classes = teacher.classes;
-        }
-        if (teacher.boards) {
-            boards = teacher.boards;
-        }
-        if (teacher.class_subject_mapping) {
-            classSubjectMapping = teacher.class_subject_mapping;
+
+    centres.forEach(c => {
+        const initials = c.name.split(' ').map(n => n[0]).join('').toUpperCase();
+        const rating = parseFloat(c.rating) || 0;
+        const ratingCount = parseInt(c.rating_count) || 0;
+        const stars = '★'.repeat(Math.floor(rating)) + '☆'.repeat(5 - Math.floor(rating));
+
+        let centreType = 'N/A';
+        let courseOffered = 'N/A';
+        let days = 'N/A';
+
+        try {
+            const details = JSON.parse(c.profession_details || '{}');
+
+            // Check for educational coaching centre
+            if (details.educational_coaching_centre) {
+                centreType = 'Educational Coaching Centre';
+                courseOffered = details.educational_coaching_centre.course_type || 'N/A';
+                days = details.educational_coaching_centre.days_per_week || 'N/A';
+            }
+            // Check for computer centre
+            else if (details.computer_centre) {
+                centreType = 'Computer Centre';
+                courseOffered = details.computer_centre.course_type || 'N/A';
+                days = details.computer_centre.days_per_week || 'N/A';
+            }
+            // abacus centre
+            else if (details.abacus_centre) {
+                centreType = 'Abacus Centre';
+                courseOffered = details.abacus_centre.course_type || 'N/A';
+                days = details.abacus_centre.days_per_week || 'N/A';
+            }
+            // If profession field exists, try to determine type from it
+            else if (c.profession) {
+                const professions = c.profession.split(',');
+                if (professions.includes('Educational Coaching Centre')) {
+                    centreType = 'Educational Coaching Centre';
+                } else if (professions.includes('Computer Centre')) {
+                    centreType = 'Computer Centre';
+                } else if (professions.includes('Abacus Centre')) {
+                    centreType = 'Abacus Centre';
+                } else {
+                    centreType = professions[0] || 'N/A';
+                }
+            }
+
+        } catch (e) {
+            console.error('Error parsing profession_details for centre:', c.name, e);
+            // Fallback to profession field if JSON parsing fails
+            if (c.profession) {
+                centreType = c.profession.split(',')[0] || 'N/A';
+            }
         }
 
-        // Create a more detailed subject-class display
-        let subjectClassDisplay = subjects;
-        if (Object.keys(classSubjectMapping).length > 0) {
-            const mappingDetails = Object.entries(classSubjectMapping)
-                .map(([subject, classList]) => `${subject} (Classes: ${classList.join(', ')})`)
-                .join(' | ');
-            subjectClassDisplay = mappingDetails;
+        // Format days display
+        if (days !== 'N/A' && !isNaN(days)) {
+            days = `${days} days/week`;
         }
-        
+
         html += `
             <div class="teacher-profile">
                 <div class="profile-picture">${initials}</div>
-                <div class="teacher-name">${teacher.name}</div>
+                <div class="teacher-name">${escapeHtml(c.name)}</div>
 
                 <div class="rating-section">
                     <div class="rating-stars">
                         <span class="star">${stars}</span>
                     </div>
-                    <span class="rating-value">${teacher.rating}/5</span>
-                    <span class="rating-reviews">(${teacher.rating_count})</span>
+                    <span class="rating-value">${rating.toFixed(1)}/5</span>
+                    <span class="rating-reviews">(${ratingCount})</span>
                 </div>
 
                 <div class="profile-details">
                     <div class="detail-item">
-                        <span class="detail-label">Subjects & Classes</span>
-                        <span class="detail-content" title="${subjectClassDisplay}">${subjectClassDisplay || 'Not specified'}</span>
+                        <span class="detail-label">Centre Type</span>
+                        <span class="detail-content">${escapeHtml(centreType)}</span>
                     </div>
                     <div class="detail-item">
-                        <span class="detail-label">All Classes</span>
-                        <span class="detail-content">${classes || 'Not specified'}</span>
+                        <span class="detail-label">Coaching Offered</span>
+                        <span class="detail-content">${escapeHtml(courseOffered)}</span>
                     </div>
                     <div class="detail-item">
-                        <span class="detail-label">Boards</span>
-                        <span class="detail-content">${boards || 'Not specified'}</span>
+                        <span class="detail-label">Schedule</span>
+                        <span class="detail-content">${escapeHtml(days)}</span>
                     </div>
                     <div class="detail-item">
                         <span class="detail-label">Location</span>
-                        <span class="detail-content">${teacher.city}</span>
+                        <span class="detail-content">${escapeHtml(c.city || 'N/A')}</span>
                     </div>
                     <div class="detail-item">
                         <span class="detail-label">Experience</span>
-                        <span class="detail-content">${teacher.experience || 'Not specified'} ${teacher.experience ? 'Years' : ''}</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Mode</span>
-                        <span class="detail-content" title="${teacher.teaching_preferences}">${teacher.teaching_preferences || 'Not specified'}</span>
+                        <span class="detail-content">${parseInt(c.experience) || 0} Years</span>
                     </div>
                 </div>
 
                 <div class="contact-wrapper">
-                    <a href="teacher-profile.php?id=${teacher.id || teacher.teacher_id || encodeURIComponent(teacher.name)}" class="contact-button">Check Profile</a>
+                    <a href="teacher-profile.php?id=${c.id}" class="contact-button">Check Profile</a>
                 </div>
             </div>
         `;
     });
-        
+
     html += `
                 </div>
             </div>
         </div>
     `;
-    
+
     resultsDiv.innerHTML = html;
+}
+
+// Helper function to escape HTML to prevent XSS
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
 }
 
 
@@ -2227,344 +2258,6 @@ function displayResults(teachers, searchType = 'Search Results') {
             }
         }
     </script>
-
-    <?php
-        // Connect to database
-        $conn = new mysqli("localhost:3307", "root", "", "dooars_tutors");
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-
-        $sql = "SELECT * FROM tutors 
-        WHERE status = 'active' 
-        ORDER BY rating DESC, rating_count DESC 
-        LIMIT 15";
-
-        $result = $conn->query($sql);
-
-        if ($result->num_rows > 0): 
-    ?>
-
-    <section class="tutors-section">
-        <h2 style="color:#12181e">Our Expert Tutors</h2>
-        <p class="section-subtitle" style="color:#12181e">Meet our qualified and experienced tutors who are passionate about helping students achieve their academic goals.</p>
-        
-        <div class="tutor-carousel">
-            <div class="tutor-card-container" id="tutorContainer">
-                <?php 
-                $tutors = [];
-                while ($row = $result->fetch_assoc()) {
-                    $tutors[] = $row;
-                }
-                
-                foreach ($tutors as $index => $row): 
-                    $img = (!empty($row['profile_pic']) && file_exists('uploads/' . $row['profile_pic']))
-                        ? $row['profile_pic'] : 'default.png';
-                ?>
-                <div class="tutor-card">
-                    <div class="tutor-image-section">
-                        <img src="uploads/<?php echo htmlspecialchars($img); ?>" alt="<?php echo htmlspecialchars($row['name']); ?>" class="tutor-img" loading="lazy">
-                    </div>
-                    <div class="tutor-info">
-                        <div class="tutor-header">
-                            <h3><?php echo htmlspecialchars($row['name']); ?></h3>
-                                <div class="tutor-badge"><?php echo htmlspecialchars($row['experience']); ?> Years Experience</div>
-                            
-                                <?php 
-                                // Rating display - add these columns to your database: rating DECIMAL(2,1), rating_count INT
-                                $rating = isset($row['rating']) ? floatval($row['rating']) : 0;
-                                $ratingCount = isset($row['rating_count']) ? intval($row['rating_count']) : 0;
-                                ?>
-                                
-                                <div class="rating-section" style ="justify-content: left;">
-                                    <?php if ($rating > 0): ?>
-                                        <div class="stars-container">
-                                            <?php 
-                                            $fullStars = floor($rating);
-                                            $hasHalfStar = ($rating - $fullStars) >= 0.5;
-                                            
-                                            // Full stars
-                                            for ($i = 1; $i <= $fullStars; $i++): ?>
-                                                <span class="star">★</span>
-                                            <?php endfor; 
-                                            
-                                            // Half star
-                                            if ($hasHalfStar): ?>
-                                                <span class="star">☆</span>
-                                            <?php endif;
-                                            
-                                            // Empty stars
-                                            $remainingStars = 5 - $fullStars - ($hasHalfStar ? 1 : 0);
-                                            for ($i = 1; $i <= $remainingStars; $i++): ?>
-                                                <span class="star empty">☆</span>
-                                            <?php endfor; ?>
-                                        </div>
-                                        <span class="rating-text"><?php echo number_format($rating, 1); ?></span>
-                                        <span class="rating-count">(<?php echo $ratingCount; ?> <?php echo $ratingCount == 1 ? 'review' : 'reviews'; ?>)</span>
-                                        <?php else: ?>
-                                            <div class="no-rating">No ratings yet</div>
-                                        <?php endif; ?>
-                                </div>
-                            </div>
-                        
-                        <div class="tutor-details">
-                            <div class="detail-item">
-                                <span class="detail-label">Subjects:</span>
-                                <span class="detail-value"><?php echo htmlspecialchars($row['subjects']); ?></span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Classes:</span>
-                                <span class="detail-value"><?php echo htmlspecialchars($row['classes']); ?></span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Boards:</span>
-                                <span class="detail-value"><?php echo htmlspecialchars($row['boards']); ?></span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Type:</span>
-                                <span class="detail-value"><?php echo htmlspecialchars($row['teaching_preferences']); ?></span>
-                            </div>
-                        </div>
-
-                        <div class="map-container">
-                            <iframe
-                                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDTy16l_Zhg8IgEWj2nu_MnBJjCRg_SrB8&q=<?php echo $row['latitude']; ?>,<?php echo $row['longitude']; ?>&zoom=15"
-                                width="100%"
-                                height="180"
-                                style="border:0;"
-                                allowfullscreen=""
-                                loading="lazy">
-                            </iframe>
-                            <a href="https://www.google.com/maps?q=<?php echo $row['latitude']; ?>,<?php echo $row['longitude']; ?>&z=15"
-                            target="_blank" class="map-link">
-                                📍 View Location on Google Maps
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <?php endforeach; ?>
-            </div>
-        </div>
-
-        <div class="carousel-controls">
-            <button class="carousel-btn" id="prevBtn">‹</button>
-            <div class="carousel-info" id="carouselInfo">
-                <div class="carousel-counter" id="counter">1 / <?php echo count($tutors); ?></div>
-                <?php if (count($tutors) <= 10): ?>
-                    <div class="carousel-indicators" id="indicators">
-                        <?php for ($i = 0; $i < count($tutors); $i++): ?>
-                            <div class="indicator <?php echo $i === 0 ? 'active' : ''; ?>" data-index="<?php echo $i; ?>"></div>
-                        <?php endfor; ?>
-                    </div>
-                <?php else: ?>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressFill" style="width: <?php echo (1 / count($tutors)) * 100; ?>%"></div>
-                    </div>
-                <?php endif; ?>
-            </div>
-            <button class="carousel-btn" id="nextBtn">›</button>
-        </div>
-        
-        <!-- <div class="swipe-hint">← Swipe or use arrow keys to navigate →</div> -->
-    </section>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const container = document.getElementById('tutorContainer');
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            const counter = document.getElementById('counter');
-            const indicators = document.querySelectorAll('.indicator');
-            const progressFill = document.getElementById('progressFill');
-            const totalCards = <?php echo count($tutors); ?>;
-            const useIndicators = totalCards <= 10;
-            let currentIndex = 0;
-            let startX = 0;
-            let currentX = 0;
-            let isDragging = false;
-
-            function updateCarousel() {
-                const translateX = -currentIndex * 100;
-                container.style.transform = `translateX(${translateX}%)`;
-                
-                // Update counter
-                counter.textContent = `${currentIndex + 1} / ${totalCards}`;
-                
-                if (useIndicators) {
-                    // Update indicators for small numbers
-                    indicators.forEach((indicator, index) => {
-                        indicator.classList.toggle('active', index === currentIndex);
-                    });
-                } else {
-                    // Update progress bar for large numbers
-                    const progressPercent = ((currentIndex + 1) / totalCards) * 100;
-                    progressFill.style.width = `${progressPercent}%`;
-                }
-                
-                // Update buttons
-                prevBtn.disabled = currentIndex === 0;
-                nextBtn.disabled = currentIndex === totalCards - 1;
-            }
-
-            function nextSlide() {
-                if (currentIndex < totalCards - 1) {
-                    currentIndex++;
-                    updateCarousel();
-                }
-            }
-
-            function prevSlide() {
-                if (currentIndex > 0) {
-                    currentIndex--;
-                    updateCarousel();
-                }
-            }
-
-            function goToSlide(index) {
-                currentIndex = index;
-                updateCarousel();
-            }
-
-            // Button controls
-            nextBtn.addEventListener('click', nextSlide);
-            prevBtn.addEventListener('click', prevSlide);
-
-            // Indicator controls (only if using indicators)
-            if (useIndicators) {
-                indicators.forEach((indicator, index) => {
-                    indicator.addEventListener('click', () => goToSlide(index));
-                });
-            }
-
-            // Keyboard controls
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'ArrowLeft') prevSlide();
-                if (e.key === 'ArrowRight') nextSlide();
-            });
-
-            // Touch/Mouse swipe controls
-// Touch/Mouse swipe controls
-let initialY = 0;
-let isVerticalScroll = false;
-let autoPlayTimeout; // Add this to track restart timeout
-
-container.addEventListener('mousedown', handleStart);
-container.addEventListener('touchstart', handleStart);
-container.addEventListener('mousemove', handleMove);
-container.addEventListener('touchmove', handleMove, { passive: false });
-container.addEventListener('mouseup', handleEnd);
-container.addEventListener('touchend', handleEnd);
-container.addEventListener('mouseleave', handleEnd);
-
-function handleStart(e) {
-    isDragging = true;
-    isVerticalScroll = false;
-    startX = e.type === 'mousedown' ? e.clientX : e.touches[0].clientX;
-    initialY = e.type === 'mousedown' ? e.clientY : e.touches[0].clientY;
-    container.style.transition = 'none';
-    
-    // Stop auto-play and clear any pending restart
-    stopAutoPlay();
-    clearTimeout(autoPlayTimeout);
-}
-
-function handleMove(e) {
-    if (!isDragging) return;
-    
-    currentX = e.type === 'mousemove' ? e.clientX : e.touches[0].clientX;
-    const currentY = e.type === 'mousemove' ? e.clientY : e.touches[0].clientY;
-    
-    const diffX = currentX - startX;
-    const diffY = currentY - initialY;
-    
-    // Determine if this is a vertical scroll
-    if (!isVerticalScroll && Math.abs(diffY) > Math.abs(diffX) && Math.abs(diffY) > 10) {
-        isVerticalScroll = true;
-        isDragging = false;
-        container.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-        updateCarousel();
-        return;
-    }
-    
-    // Only prevent default and handle horizontal drag if it's not vertical scroll
-    if (!isVerticalScroll && Math.abs(diffX) > 10) {
-        e.preventDefault();
-        const translateX = -currentIndex * 100 + (diffX / container.offsetWidth) * 100;
-        container.style.transform = `translateX(${translateX}%)`;
-    }
-}
-
-function handleEnd(e) {
-    if (!isDragging || isVerticalScroll) {
-        isDragging = false;
-        isVerticalScroll = false;
-        return;
-    }
-    
-    isDragging = false;
-    container.style.transition = 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-    
-    const diffX = currentX - startX;
-    const threshold = container.offsetWidth * 0.2;
-    
-    if (Math.abs(diffX) > threshold) {
-        if (diffX > 0) {
-            prevSlide();
-        } else {
-            nextSlide();
-        }
-    } else {
-        updateCarousel();
-    }
-    
-    // Clear any existing timeout and restart auto-play after user interaction ends
-    clearTimeout(autoPlayTimeout);
-    autoPlayTimeout = setTimeout(() => {
-        startAutoPlay();
-    }, 3000); // 3 second delay before restarting auto-play
-}
-
-            // Auto-play (optional)
-            let autoPlayInterval;
-            
-            function startAutoPlay() {
-                autoPlayInterval = setInterval(() => {
-                    if (currentIndex < totalCards - 1) {
-                        nextSlide();
-                    } else {
-                        currentIndex = 0;
-                        updateCarousel();
-                    }
-                }, 5000);
-            }
-
-            function stopAutoPlay() {
-                clearInterval(autoPlayInterval);
-            }
-
-            // Start auto-play
-            startAutoPlay();
-
-            // Pause auto-play on hover
-            container.addEventListener('mouseenter', stopAutoPlay);
-            container.addEventListener('mouseleave', startAutoPlay);
-
-            // Initialize
-            updateCarousel();
-        });
-    </script>
-
-    <?php else: ?>
-        <div class="tutors-section">
-            <div style="text-align: center; padding: 60px 20px; background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-                <h3 style="color: #7f8c8d; font-size: 1.5rem; margin-bottom: 10px;">No Tutors Available</h3>
-                <p style="color: #bdc3c7;">Please check back later for available tutors.</p>
-            </div>
-        </div>
-    <?php endif;
-
-    $conn->close();
-    ?>
 
     <!-- Boards Section -->
     <section class="boards-section">
@@ -2661,7 +2354,7 @@ function handleEnd(e) {
     </div>
 
     <section class="all-tutors-map">
-    <h2>Our Community on Map</h2>
+    <h2 class="mh2">Our Community on Map</h2>
     <div id="tutorMap" style="height: 500px; width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"></div>
 </section>
 

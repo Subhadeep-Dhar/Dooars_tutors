@@ -704,6 +704,272 @@ button:active {
         .conditional-section.active {
             display: block;
         }
+
+
+
+
+        /* Subject-Class Container Styles */
+#subject-class-container {
+    margin-bottom: 24px;
+}
+
+.subject-class-group {
+    padding: 20px;
+    margin-bottom: 16px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border: 2px solid #e0e6ed;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.subject-class-group:hover {
+    border-color: #003153;
+    box-shadow: 0 4px 15px rgba(87, 204, 153, 0.1);
+    transform: translateY(-2px);
+}
+
+.subject-class-group label {
+    display: block;
+    font-weight: 600;
+    color: #003153;
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+
+.subject-select {
+    width: 100%;
+    padding: 16px 20px;
+    border: 2px solid #e0e6ed;
+    border-radius: 12px;
+    font-size: 15px;
+    font-family: inherit;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+}
+
+.subject-select:focus {
+    outline: none;
+    border-color: #003153;
+    box-shadow: 0 0 0 4px rgba(87, 204, 153, 0.15);
+    transform: translateY(-2px);
+    background: white;
+}
+
+.other-subject {
+    margin-top: 8px;
+}
+
+.other-subject input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e0e6ed;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.other-subject input:focus {
+    outline: none;
+    border-color: #003153;
+    box-shadow: 0 0 0 3px rgba(87, 204, 153, 0.1);
+    background: white;
+}
+
+.class-checkboxes {
+    margin-top: 12px;
+    padding: 16px;
+    background: linear-gradient(135deg, rgba(87, 204, 153, 0.05), rgba(56, 163, 165, 0.05));
+    border-radius: 8px;
+    border: 1px solid rgba(87, 204, 153, 0.2);
+}
+
+.class-checkboxes label {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 16px;
+    margin-bottom: 8px;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.class-checkboxes label:hover {
+    background: #003153;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(87, 204, 153, 0.3);
+}
+
+.class-checkboxes input[type="checkbox"] {
+    margin-right: 8px;
+    width: 16px;
+    height: 16px;
+    accent-color: #003153;
+    cursor: pointer;
+}
+
+.class-checkboxes label:has(input:checked) {
+    background: #003153;
+    color: white;
+    border-color: #003153;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(56, 163, 165, 0.4);
+}
+
+/* Add Subject Button */
+button[onclick="addSubjectGroup()"] {
+    padding: 12px 24px;
+    background: #003153;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-top: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+button[onclick="addSubjectGroup()"]::before {
+    content: '+';
+    font-size: 18px;
+    font-weight: bold;
+}
+
+button[onclick="addSubjectGroup()"]:hover {
+    background: #003153;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(87, 204, 153, 0.4);
+}
+
+button[onclick="addSubjectGroup()"] {
+    position: relative;
+    overflow: hidden;
+}
+
+button[onclick="addSubjectGroup()"]::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    transform: translate(-50%, -50%);
+}
+
+button[onclick="addSubjectGroup()"]:hover::after {
+    width: 200px;
+    height: 200px;
+}
+
+.subject-class-group:not(:first-child):hover::after {
+    opacity: 1;
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(255, 107, 107, 0.4);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .subject-class-group {
+        padding: 16px;
+        margin-bottom: 12px;
+    }
+    
+    .class-checkboxes {
+        padding: 12px;
+    }
+    
+    .class-checkboxes label {
+        margin-right: 12px;
+        margin-bottom: 6px;
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+    
+    button[onclick="addSubjectGroup()"] {
+        width: 100%;
+        justify-content: center;
+        padding: 14px 24px;
+    }
+}
+
+/* Animation for new groups */
+@keyframes slideInGroup {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.subject-class-group:last-child {
+    animation: slideInGroup 0.3s ease-out;
+}
+
+
+
+.remove-subject-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(220, 53, 69, 0.2);
+}
+
+.remove-subject-btn:hover {
+  background-color: #c82333;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+}
+
+.remove-subject-btn:active {
+  background-color: #bd2130;
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(220, 53, 69, 0.2);
+}
+
+.remove-subject-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.25);
+}
+
+/* Alternative subtle style */
+.remove-subject-btn.subtle {
+  background-color: #f8f9fa;
+  color: #6c757d;
+  border: 1px solid #dee2e6;
+}
+
+.remove-subject-btn.subtle:hover {
+  background-color: #e9ecef;
+  color: #495057;
+  border-color: #adb5bd;
+}
      </style>
 </head>
 
@@ -718,12 +984,16 @@ button:active {
             <form action="save_teacher.php" method="POST" id="tutorForm">
                 <div class="form-section">
                     <h2 class="section-title">Personal Information</h2>
-
-                    <div class="form-group">
-                        <label for="name">Full Name *</label>
-                        <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                    <div class="two-column">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label for="experience">Experience </label>
+                            <input type="text" id="experience" name="experience" required placeholder="Enter teaching experience">
+                        </div>
                     </div>
-
                     <div class="two-column">
                         <div class="form-group">
                             <label for="phone">Phone Number *</label>
@@ -780,10 +1050,7 @@ button:active {
                     </div>
     
 
-                    <div class="form-group">
-                        <label for="experience">Experience </label>
-                        <input type="text" id="experience" name="experience" required placeholder="Enter teaching experience">
-                    </div>
+                    
                 
 
                     <div class="conditional-section" id="tutor-section">
@@ -810,165 +1077,147 @@ button:active {
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Classes Dropdown -->
-                        <div class="dropdown-section" id="classes-section">
-                            <div class="dropdown-header" onclick="toggleDropdown('classes-section')">
-                                <span>Classes <span class="selection-summary" id="classes-summary"></span></span>
-                                <span class="dropdown-arrow">▼</span>
-                            </div>
-                            <div class="dropdown-content">
-                                <div class="checkbox-grid">
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="classes[]" value="1" id="class-1" onchange="updateSummary('classes')">
-                                        <label for="class-1">Class 1</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="classes[]" value="2" id="class-2" onchange="updateSummary('classes')">
-                                        <label for="class-2">Class 2</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="classes[]" value="3" id="class-3" onchange="updateSummary('classes')">
-                                        <label for="class-3">Class 3</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="classes[]" value="4" id="class-4" onchange="updateSummary('classes')">
-                                        <label for="class-4">Class 4</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="classes[]" value="5" id="class-5" onchange="updateSummary('classes')">
-                                        <label for="class-5">Class 5</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="classes[]" value="6" id="class-6" onchange="updateSummary('classes')">
-                                        <label for="class-6">Class 6</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="classes[]" value="7" id="class-7" onchange="updateSummary('classes')">
-                                        <label for="class-7">Class 7</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="classes[]" value="8" id="class-8" onchange="updateSummary('classes')">
-                                        <label for="class-8">Class 8</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="classes[]" value="9" id="class-9" onchange="updateSummary('classes')">
-                                        <label for="class-9">Class 9</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="classes[]" value="10" id="class-10" onchange="updateSummary('classes')">
-                                        <label for="class-10">Class 10</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="classes[]" value="11" id="class-11" onchange="updateSummary('classes')">
-                                        <label for="class-11">Class 11</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="classes[]" value="12" id="class-12" onchange="updateSummary('classes')">
-                                        <label for="class-12">Class 12</label>
-                                    </div>
-                                
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="classes[]" value="others" id="class-others" onchange="toggleOtherClass(); updateSummary('classes')">
-                                        <label for="class-others">Others</label>
-                                    </div>
-                                </div>
-                                <div class="form-group" id="other-class-group" style="display: none; margin-top: 16px;">
-                                    <label for="other-class">Please specify:</label>
-                                    <input type="text" id="other-class" name="other_class" placeholder="Enter other class details">
-                                </div>
-                            </div>
-                        </div>
                             
+                        <style>
+  .remove-subject-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .subject-wrapper {
+    position: relative;
+    padding: 12px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    border-radius: 6px;
+  }
+</style>
 
-                            
-                        <div class="dropdown-section" id="subjects-section">
-                            <div class="dropdown-header" onclick="toggleDropdown('subjects-section')">
-                                <span>Subjects <span class="selection-summary" id="subjects-summary"></span></span>
-                                <span class="dropdown-arrow">▼</span>
-                            </div>
-                            <div class="dropdown-content">
-                                <div class="checkbox-grid">
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="subjects[]" value="English" id="english">
-                                        <label for="english">English</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="subjects[]" value="Hindi" id="hindi">
-                                        <label for="hindi">Hindi</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="subjects[]" value="Bengali" id="bengali">
-                                        <label for="bengali">Bengali</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="subjects[]" value="Mathematics" id="mathematics" onchange="updateSummary('subjects')">
-                                        <label for="mathematics">Mathematics</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="subjects[]" value="Physics" id="physics" onchange="updateSummary('subjects')">
-                                        <label for="physics">Physics</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="subjects[]" value="Chemistry" id="chemistry" onchange="updateSummary('subjects')">
-                                        <label for="chemistry">Chemistry</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="subjects[]" value="Biology" id="biology" onchange="updateSummary('subjects')">
-                                        <label for="biology">Biology</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="subjects[]" value="General Science" id="general-science" onchange="updateSummary('subjects')">
-                                        <label for="general-science">General Science</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="subjects[]" value="EVS" id="evs" onchange="updateSummary('subjects')">
-                                        <label for="evs">EVS</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="subjects[]" value="Computer Science" id="computer-science" onchange="updateSummary('subjects')">
-                                        <label for="computer-science">Computer Science</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="subjects[]" value="History" id="history" onchange="updateSummary('subjects')">
-                                        <label for="history">History</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="subjects[]" value="Geography" id="geography" onchange="updateSummary('subjects')">
-                                        <label for="geography">Geography</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="subjects[]" value="Economics" id="economics" onchange="updateSummary('subjects')">
-                                        <label for="economics">Economics</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="subjects[]" value="Accountancy" id="accountancy" onchange="updateSummary('subjects')">
-                                        <label for="accountancy">Accountancy</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="subjects[]" value="Business Studies" id="business-studies" onchange="updateSummary('subjects')">
-                                        <label for="business-studies">Business Studies</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="subjects[]" value="Education" id="education" onchange="updateSummary('subjects')">
-                                        <label for="education">Education</label>
-                                    </div>
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="subjects[]" value="Philosophy" id="philosophy" onchange="updateSummary('subjects')">
-                                        <label for="philosophy">Philosophy</label>
-                                    </div>
-                
-                                    <div class="checkbox-item">
-                                        <input type="checkbox" name="subjects[]" value="Others" id="others" onchange="toggleOtherSubject(); updateSummary('subjects')">
-                                        <label for="others">Others</label>
-                                    </div>
-                                </div>
-                                <div class="other-specification" id="other-specification" style="display: none; margin-top: 16px;">
-                                    <label for="other-subject">Please specify other subject:</label>
-                                    <input type="text" name="other_subject" id="other-subject" placeholder="Enter subject name">
-                                </div>
-                            </div>
-                        </div>
+<div id="subject-class-container">
+  <!-- Initial Subject-Class Group -->
+  <div class="subject-wrapper">
+    <div class="subject-class-group">
+      <label>Subject:</label>
+      <select name="subjects[]" class="subject-select" onchange="handleSubjectChange(this)">
+        <option value="">Select Subject</option>
+        <option value="English">English</option>
+        <option value="Hindi">Hindi</option>
+        <option value="Bengali">Bengali</option>
+        <option value="Mathematics">Mathematics</option>
+        <option value="Physics">Physics</option>
+        <option value="Chemistry">Chemistry</option>
+        <option value="Biology">Biology</option>
+        <option value="General Science">General Science</option>
+        <option value="EVS">EVS</option>
+        <option value="Computer Science">Computer Science</option>
+        <option value="History">History</option>
+        <option value="Geography">Geography</option>
+        <option value="Economics">Economics</option>
+        <option value="Accountancy">Accountancy</option>
+        <option value="Business Studies">Business Studies</option>
+        <option value="Education">Education</option>
+        <option value="Philosophy">Philosophy</option>
+        <option value="Others">Others</option>
+      </select>
+
+      <div class="other-subject" style="display: none; margin-top: 8px;">
+        <input type="text" name="other_subjects[]" placeholder="Enter other subject">
+      </div>
+
+      <div class="class-checkboxes" style="display:none; margin-top: 12px;"></div>
+    </div>
+  </div>
+</div>
+
+<button type="button" onclick="addSubjectGroup()">Add Subject</button>
+
+<script>
+const availableClasses = [1,2,3,4,5,6,7,8,9,10,11,12];
+
+function handleSubjectChange(select) {
+  const group = select.closest('.subject-class-group');
+  const classDiv = group.querySelector('.class-checkboxes');
+  const otherWrapper = group.querySelector('.other-subject');
+  const otherInput = otherWrapper.querySelector('input');
+  const subject = select.value;
+  classDiv.innerHTML = '';
+
+  if (!subject) {
+    classDiv.style.display = 'none';
+    otherWrapper.style.display = 'none';
+    return;
+  }
+
+  if (subject === 'Others') {
+    otherWrapper.style.display = 'block';
+
+    otherInput.addEventListener('input', () => {
+      const customSubject = otherInput.value.trim() || 'Other';
+      renderClassCheckboxes(classDiv, customSubject);
+    });
+
+    const customSubject = otherInput.value.trim() || 'Other';
+    renderClassCheckboxes(classDiv, customSubject);
+  } else {
+    otherWrapper.style.display = 'none';
+    renderClassCheckboxes(classDiv, subject);
+  }
+
+  classDiv.style.display = 'block';
+}
+
+function renderClassCheckboxes(container, subjectKey) {
+  container.innerHTML = '';
+  availableClasses.forEach(cls => {
+    const label = document.createElement('label');
+    label.innerHTML = `<input type="checkbox" name="classes_for_subject[${subjectKey}][]" value="${cls}"> Class ${cls}`;
+    label.style.marginRight = '12px';
+    container.appendChild(label);
+  });
+}
+
+function addSubjectGroup() {
+  const container = document.getElementById('subject-class-container');
+  const firstGroup = container.querySelector('.subject-wrapper');
+  const clone = firstGroup.cloneNode(true);
+
+  // Reset all fields in the clone
+  const select = clone.querySelector('select');
+  const classDiv = clone.querySelector('.class-checkboxes');
+  const otherInput = clone.querySelector('.other-subject input');
+  const otherWrapper = clone.querySelector('.other-subject');
+
+  select.value = '';
+  classDiv.innerHTML = '';
+  classDiv.style.display = 'none';
+  otherWrapper.style.display = 'none';
+  otherInput.value = '';
+
+  // Remove existing remove buttons if any
+  const oldRemove = clone.querySelector('.remove-subject-btn');
+  if (oldRemove) oldRemove.remove();
+
+  // Add a new remove button
+  let removeBtn = document.createElement('button');
+  removeBtn.type = 'button';
+  removeBtn.textContent = 'Remove';
+  removeBtn.className = 'remove-subject-btn';
+  removeBtn.onclick = function () {
+    container.removeChild(clone);
+  };
+
+  clone.appendChild(removeBtn);
+  container.appendChild(clone);
+}
+</script>
+
                     </div>
 
                     <!-- Sports Coach Section -->
@@ -1094,10 +1343,21 @@ button:active {
                         <div class="form-group">
                             <label for="music-gender">For which gender:</label>
                             <select id="music-gender" name="music_gender">
-                                <option value="">Select Gender</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Both">Both</option>
+                                <option value="">Select Instrument</option>
+                                <option value="Guitar">Guitar</option>
+                                <option value="Harmonium">Harmonium</option>
+                                <option value="Ukulele">Ukulele</option>
+                                <option value="Flute">Flute</option>
+                                <option value="Mouth Organ (Harmonica)">Mouth Organ (Harmonica)</option>
+                                <option value="Violin">Violin</option>
+                                <option value="Sitar">Sitar</option>
+                                <option value="Sarod">Sarod</option>
+                                <option value="Mandolin">Mandolin</option>
+                                <option value="Tabla">Tabla</option>
+                                <option value="Ektara">Ektara</option>
+                                <option value="Dotara">Dotara</option>
+                                <option value="Cajón">Cajón</option>
+                                <option value="Drum Set">Drum Set</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -1223,7 +1483,7 @@ button:active {
                             <div class="checkbox-grid">
                                 <div class="checkbox-item">
                                     <input type="checkbox" name="preferred_location[]" value="Home" id="home">
-                                    <label for="home">At Home</label>
+                                    <label for="home">At Teaching place</label>
                                 </div>
                                 <div class="checkbox-item">
                                     <input type="checkbox" name="preferred_location[]" value="Away" id="away">
@@ -1245,6 +1505,7 @@ button:active {
                                 <option value="Alipurduar">Alipurduar</option>
                                 <option value="Coochbehar">Coochbehar</option>
                                 <option value="Falakata">Falakata</option>
+                                <option value="Sonapur">Sonapur</option>
                             </select>
                         </div>
 
@@ -1287,6 +1548,7 @@ button:active {
             selectedProfessions.push(checkbox.value);
         }
     });
+    
     
     // Hide all conditional sections first
     const allSections = document.querySelectorAll('.conditional-section');

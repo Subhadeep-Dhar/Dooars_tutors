@@ -1,8 +1,10 @@
 <?php
+// Enable error reporting during development
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+// Set response type to JSON
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST');
-header('Access-Control-Allow-Headers: Content-Type');
 
 // Database configuration
 $host = 'localhost:3307';
@@ -11,77 +13,126 @@ $username = 'root';
 $password = '';
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
-    // Get search parameters
-    $name = $_POST['name'] ?? '';
-    $board = $_POST['board'] ?? '';
-    $city = $_POST['city'] ?? '';
-    $subject = $_POST['subject'] ?? '';
-    $class = $_POST['classGrade'] ?? '';
-    
-    // Build the SQL query
-    $sql = "SELECT id, name, phone, email, experience, boards, classes, subjects, 
-                   teaching_preferences, city, address, rating, rating_count, status 
-            FROM tutors WHERE status = 'active' AND profession = 'tutor'";
-    
-    $params = array();
-    $conditions = array();
-    
-    // Add conditions based on search parameters
+
+    // Get POST parameters
+    $name = trim($_POST['name'] ?? '');
+    $city = trim($_POST['city'] ?? '');
+    $org_type = trim($_POST['org_type'] ?? '');
+    $course_type = trim($_POST['course_type'] ?? '');
+    $days_per_week = trim($_POST['days_per_week'] ?? '');
+
+    // Base SQL query for organization type tutors
+    $sql = "
+    SELECT t.id, t.name, t.phone, t.email, t.experience, t.profession, t.profession_details,
+        t.teaching_preferences, t.city, t.address, t.rating, t.rating_count, t.status
+    FROM tutors t
+    WHERE t.status = 'active'
+        AND t.type = 'Organisation'
+        AND (
+            JSON_CONTAINS_PATH(t.profession_details, 'one', '$.educational_coaching_centre')
+            OR JSON_CONTAINS_PATH(t.profession_details, 'one', '$.computer_centre')
+            OR JSON_CONTAINS_PATH(t.profession_details, 'one', '$.abacus_centre')
+        )
+";
+
+
+    $params = [];
+    $conditions = [];
+
+    // Apply filters
     if (!empty($name)) {
-        $conditions[] = "name LIKE ?";
+        $conditions[] = "t.name LIKE ?";
         $params[] = "%$name%";
     }
-    
-    if (!empty($board)) {
-        $conditions[] = "boards LIKE ?";
-        $params[] = "%$board%";
-    }
-    
+
     if (!empty($city)) {
-        $conditions[] = "city LIKE ?";
+        $conditions[] = "t.city LIKE ?";
         $params[] = "%$city%";
     }
-    
-    if (!empty($subject)) {
-        $conditions[] = "subjects LIKE ?";
-        $params[] = "%$subject%";
+
+    if (!empty($org_type)) {
+        $conditions[] = "FIND_IN_SET(?, t.profession) > 0";
+        $params[] = $org_type;
     }
-    
-    if (!empty($class)) {
-        $conditions[] = "classes LIKE ?";
-        $params[] = "%$class%";
+
+    // More flexible JSON filtering for course_type and days_per_week
+    if (!empty($course_type)) {
+        $conditions[] = "(
+            JSON_UNQUOTE(JSON_EXTRACT(t.profession_details, '$.educational_coaching_centre.course_type')) LIKE ? OR
+            JSON_UNQUOTE(JSON_EXTRACT(t.profession_details, '$.computer_centre.course_type')) LIKE ? OR
+            JSON_UNQUOTE(JSON_EXTRACT(t.profession_details, '$.abacus_centre.course_type')) LIKE ?
+        )";
+        $params[] = "%$course_type%";
+        $params[] = "%$course_type%";
+        $params[] = "%$course_type%";
     }
-    
-    // Add conditions to the query
+
+    if (!empty($days_per_week)) {
+        $conditions[] = "(
+            JSON_UNQUOTE(JSON_EXTRACT(t.profession_details, '$.educational_coaching_centre.days_per_week')) = ? OR
+            JSON_UNQUOTE(JSON_EXTRACT(t.profession_details, '$.computer_centre.days_per_week')) = ? OR
+            JSON_UNQUOTE(JSON_EXTRACT(t.profession_details, '$.abacus_centre.days_per_week')) = ?
+        )";
+        $params[] = $days_per_week;
+        $params[] = $days_per_week;
+        $params[] = $days_per_week;
+    }
+
+    // Add dynamic conditions
     if (!empty($conditions)) {
-        $sql .= " AND " . implode(" AND ", $conditions);
+        $sql .= ' AND ' . implode(' AND ', $conditions);
     }
-    
+
     // Add ordering
-    $sql .= " ORDER BY rating DESC, rating_count DESC";
-    
-    // Prepare and execute the query
+    $sql .= " ORDER BY t.rating DESC, t.rating_count DESC";
+
+    // Prepare and execute
     $stmt = $pdo->prepare($sql);
     $stmt->execute($params);
-    
-    $teachers = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-    // Format the results
-    foreach ($teachers as &$teacher) {
-        $teacher['rating'] = number_format($teacher['rating'], 1);
-        $teacher['experience'] = $teacher['experience'] ?: 'Not specified';
+
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Process results to ensure proper data structure
+    $processedResults = [];
+    foreach ($results as $result) {
+        // Ensure rating is numeric
+        $result['rating'] = floatval($result['rating'] ?? 0);
+        $result['rating_count'] = intval($result['rating_count'] ?? 0);
+        $result['experience'] = intval($result['experience'] ?? 0);
+        
+        // Validate JSON in profession_details
+        if (!empty($result['profession_details'])) {
+            $decoded = json_decode($result['profession_details'], true);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                // If JSON is invalid, create a default structure
+                $result['profession_details'] = json_encode([]);
+            }
+        } else {
+            $result['profession_details'] = json_encode([]);
+        }
+        
+        $processedResults[] = $result;
     }
-    
-    echo json_encode($teachers);
-    
+
+    echo json_encode([
+        'success' => true,
+        'results' => $processedResults,
+        'count' => count($processedResults)
+    ]);
+
 } catch (PDOException $e) {
-    http_response_code(500);
-    echo json_encode(['error' => 'Database error: ' . $e->getMessage()]);
+    echo json_encode([
+        'success' => false, 
+        'message' => 'Database Error: ' . $e->getMessage(),
+        'results' => []
+    ]);
 } catch (Exception $e) {
-    http_response_code(500);
-    echo json_encode(['error' => 'Server error: ' . $e->getMessage()]);
+    echo json_encode([
+        'success' => false, 
+        'message' => 'Error: ' . $e->getMessage(),
+        'results' => []
+    ]);
 }
 ?>
