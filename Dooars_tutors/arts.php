@@ -1992,6 +1992,242 @@ button:active {
         grid-column: 1;
     }
 }
+
+/* Drawing Canvas Overlay */
+        #drawingCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 1000;
+            cursor: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        #drawingCanvas.active {
+            pointer-events: all;
+            opacity: 1;
+        }
+
+        /* Floating Drawing Button */
+        .drawing-fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1001;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: #003153;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: pulse 2s infinite;
+        }
+
+        .drawing-fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4); }
+            50% { box-shadow: 0 8px 25px rgba(102, 126, 234, 0.8), 0 0 0 10px rgba(102, 126, 234, 0.1); }
+            100% { box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4); }
+        }
+
+        /* Tooltip */
+        .drawing-fab::before {
+            content: "Try drawing on this page! 🎨";
+            position: absolute;
+            right: 80px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .drawing-fab:hover::before {
+            opacity: 1;
+        }
+
+        /* Drawing Controls Panel */
+        .drawing-controls {
+            position: fixed;
+            bottom: 120px;
+            right: 30px;
+            z-index: 1002;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 25px;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            transform: scale(0) translateY(20px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: bottom right;
+            min-width: 200px;
+        }
+
+        .drawing-controls.open {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .drawing-controls button {
+            padding: 12px 16px;
+            border: none;
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.25);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        .drawing-controls button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .drawing-controls button.active {
+            background: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Close button */
+        .close-controls {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #ff4757;
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .close-controls:hover {
+            background: #ff3742;
+            transform: scale(1.1);
+        }
+
+        .color-palette {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+
+        .color-option.selected {
+            border-color: white;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .brush-size {
+            margin-top: 10px;
+        }
+
+        .brush-size input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 5px;
+            height: 30px;
+        }
+
+        .brush-size label {
+            color: white;
+            font-size: 12px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        /* Custom Cursor */
+        .custom-cursor {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1002;
+            border-radius: 50%;
+            border: 2px solid white;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .custom-cursor.visible {
+            opacity: 1;
+        }
+         /* Responsive */
+        @media (max-width: 768px) {
+            .drawing-fab {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+                bottom: 20px;
+                right: 20px;
+            }
+            .drawing-fab::before {
+                right: 70px;
+                font-size: 12px;
+            }
+            .drawing-controls {
+                bottom: 90px;
+                right: 20px;
+                padding: 20px;
+                min-width: 180px;
+            }
+            .color-palette {
+                gap: 5px;
+            }
+            .color-option {
+                width: 25px;
+                height: 25px;
+            }
+        }
     </style>
 
 </head>
@@ -2078,6 +2314,231 @@ button:active {
             </ul>
         </div>
     </nav>
+
+    <!-- Drawing Canvas -->
+    <canvas id="drawingCanvas"></canvas>
+    
+    <!-- Custom Cursor -->
+    <div class="custom-cursor" id="customCursor"></div>
+
+    <!-- Floating Drawing Button -->
+    <button class="drawing-fab" id="drawingFab">🎨</button>
+
+    <!-- Drawing Controls Panel -->
+    <div class="drawing-controls" id="drawingControls">
+        <button class="close-controls" id="closeControls">×</button>
+        <button id="toggleDraw" class="toggle-btn">Start Drawing</button>
+        <button id="clearCanvas">Clear</button>
+        
+        <div class="color-palette">
+            <div class="color-option selected" data-color="#ff4757" style="background: #ff4757;"></div>
+            <div class="color-option" data-color="#2ed573" style="background: #2ed573;"></div>
+            <div class="color-option" data-color="#1e90ff" style="background: #1e90ff;"></div>
+            <div class="color-option" data-color="#ffa502" style="background: #ffa502;"></div>
+            <div class="color-option" data-color="#ff6348" style="background: #ff6348;"></div>
+            <div class="color-option" data-color="#a55eea" style="background: #a55eea;"></div>
+            <div class="color-option" data-color="#ffffff" style="background: #ffffff;"></div>
+            <div class="color-option" data-color="#2c2c54" style="background: #2c2c54;"></div>
+        </div>
+        
+        <div class="brush-size">
+            <label>Brush Size</label>
+            <input type="range" id="brushSize" min="2" max="50" value="15">
+        </div>
+    </div>
+
+    <script>
+        class InteractiveDrawing {
+            constructor() {
+                this.canvas = document.getElementById('drawingCanvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.isDrawing = false;
+                this.isDrawMode = false;
+                this.currentColor = '#ff4757';
+                this.currentSize = 15;
+                this.lastX = 0;
+                this.lastY = 0;
+                
+                this.init();
+                this.setupEventListeners();
+            }
+
+            init() {
+                this.resizeCanvas();
+                window.addEventListener('resize', () => this.resizeCanvas());
+                
+                // Setup canvas drawing properties
+                this.ctx.lineCap = 'round';
+                this.ctx.lineJoin = 'round';
+                this.ctx.globalCompositeOperation = 'source-over';
+            }
+
+            resizeCanvas() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+                
+                // Re-apply drawing properties after resize
+                this.ctx.lineCap = 'round';
+                this.ctx.lineJoin = 'round';
+                this.ctx.globalCompositeOperation = 'source-over';
+            }
+
+            setupEventListeners() {
+                const drawingFab = document.getElementById('drawingFab');
+                const drawingControls = document.getElementById('drawingControls');
+                const closeControls = document.getElementById('closeControls');
+                const toggleBtn = document.getElementById('toggleDraw');
+                const clearBtn = document.getElementById('clearCanvas');
+                const brushSize = document.getElementById('brushSize');
+                const colorOptions = document.querySelectorAll('.color-option');
+                const customCursor = document.getElementById('customCursor');
+
+                // Show/hide controls
+                drawingFab.addEventListener('click', () => {
+                    drawingControls.classList.add('open');
+                    drawingFab.style.transform = 'scale(0)';
+                    setTimeout(() => {
+                        drawingFab.style.display = 'none';
+                    }, 200);
+                });
+
+                closeControls.addEventListener('click', () => {
+                    drawingControls.classList.remove('open');
+                    drawingFab.style.display = 'flex';
+                    setTimeout(() => {
+                        drawingFab.style.transform = 'scale(1)';
+                    }, 100);
+                    
+                    // Also stop drawing if active
+                    if (this.isDrawMode) {
+                        this.isDrawMode = false;
+                        this.canvas.classList.remove('active');
+                        toggleBtn.textContent = 'Start Drawing';
+                        toggleBtn.classList.remove('active');
+                        customCursor.classList.remove('visible');
+                    }
+                });
+
+                // Toggle drawing mode
+                toggleBtn.addEventListener('click', () => {
+                    this.isDrawMode = !this.isDrawMode;
+                    this.canvas.classList.toggle('active', this.isDrawMode);
+                    toggleBtn.textContent = this.isDrawMode ? 'Stop Drawing' : 'Start Drawing';
+                    toggleBtn.classList.toggle('active', this.isDrawMode);
+                    customCursor.classList.toggle('visible', this.isDrawMode);
+                });
+
+                // Clear canvas
+                clearBtn.addEventListener('click', () => {
+                    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                });
+
+                // Brush size
+                brushSize.addEventListener('input', (e) => {
+                    this.currentSize = e.target.value;
+                    this.updateCursor();
+                });
+
+                // Color selection
+                colorOptions.forEach(option => {
+                    option.addEventListener('click', () => {
+                        colorOptions.forEach(opt => opt.classList.remove('selected'));
+                        option.classList.add('selected');
+                        this.currentColor = option.dataset.color;
+                    });
+                });
+
+                // Drawing events
+                this.canvas.addEventListener('mousedown', this.startDrawing.bind(this));
+                this.canvas.addEventListener('mousemove', this.draw.bind(this));
+                this.canvas.addEventListener('mouseup', this.stopDrawing.bind(this));
+                this.canvas.addEventListener('mouseout', this.stopDrawing.bind(this));
+
+                // Touch events for mobile
+                this.canvas.addEventListener('touchstart', this.handleTouch.bind(this));
+                this.canvas.addEventListener('touchmove', this.handleTouch.bind(this));
+                this.canvas.addEventListener('touchend', this.stopDrawing.bind(this));
+
+                // Custom cursor
+                this.canvas.addEventListener('mousemove', (e) => {
+                    if (this.isDrawMode) {
+                        customCursor.style.left = e.clientX + 'px';
+                        customCursor.style.top = e.clientY + 'px';
+                    }
+                });
+
+                this.updateCursor();
+            }
+
+            updateCursor() {
+                const customCursor = document.getElementById('customCursor');
+                const size = this.currentSize;
+                customCursor.style.width = size + 'px';
+                customCursor.style.height = size + 'px';
+                customCursor.style.backgroundColor = this.currentColor + '40';
+                customCursor.style.borderColor = this.currentColor;
+            }
+
+            startDrawing(e) {
+                if (!this.isDrawMode) return;
+                
+                this.isDrawing = true;
+                [this.lastX, this.lastY] = this.getCoordinates(e);
+            }
+
+            draw(e) {
+                if (!this.isDrawing || !this.isDrawMode) return;
+                
+                const [currentX, currentY] = this.getCoordinates(e);
+                
+                this.ctx.beginPath();
+                this.ctx.moveTo(this.lastX, this.lastY);
+                this.ctx.lineTo(currentX, currentY);
+                this.ctx.strokeStyle = this.currentColor;
+                this.ctx.lineWidth = this.currentSize;
+                this.ctx.stroke();
+                
+                [this.lastX, this.lastY] = [currentX, currentY];
+            }
+
+            stopDrawing() {
+                this.isDrawing = false;
+            }
+
+            handleTouch(e) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const mouseEvent = new MouseEvent(e.type === 'touchstart' ? 'mousedown' : 
+                    e.type === 'touchmove' ? 'mousemove' : 'mouseup', {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                this.canvas.dispatchEvent(mouseEvent);
+            }
+
+            getCoordinates(e) {
+                const rect = this.canvas.getBoundingClientRect();
+                return [
+                    e.clientX - rect.left,
+                    e.clientY - rect.top
+                ];
+            }
+        }
+
+        // Initialize the drawing application
+        new InteractiveDrawing();
+
+        // Add interactivity to feature cards
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
 
     <div class="section-wrapper">
     <div class="background-layer"></div>
