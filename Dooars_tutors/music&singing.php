@@ -132,7 +132,7 @@ button:active {
         }
 
         .nav-links a:hover {
-            background: #003153;
+            background: #7B3F00;
             color: white;
             transform: translateY(-2px);
         }
@@ -177,7 +177,7 @@ button:active {
         }
 
         .dropdown-menu a:hover {
-            background: #003153;
+            background: #7B3F00;
             color: white;
             transform: none;
         }
@@ -240,7 +240,7 @@ button:active {
         .mobile-nav-header {
             padding: 20px;
             border-bottom: 1px solid #eee;
-            background: #003153;
+            background: #7b3f00;
             color: white;
             flex-shrink: 0;
         }
@@ -270,7 +270,7 @@ button:active {
 
         .mobile-nav a:hover {
             background: #f5f5f5;
-            color: #003153;
+            color: #7B3F00;
         }
 
         /* Mobile Dropdown Styles */
@@ -563,7 +563,7 @@ button:active {
         /* Boards Section */
         .boards-section {
             padding: 5rem 2rem;
-            background: #003153;
+            background: #7B3F00;
         }
 
         .boards-container {
@@ -615,7 +615,7 @@ button:active {
             justify-content: center;
             margin: 0 auto 1.5rem;
             font-size: 2rem;
-            color: #003153;
+            color: #7B3F00;
             font-weight: bold;
         }
 
@@ -634,7 +634,7 @@ button:active {
 
         /* Footer */
         .footer {
-            background: #003153;
+            background: #7B3F00;
             backdrop-filter: blur(20px);
             padding: 3rem 2rem 2rem;
             color: white;
@@ -799,7 +799,7 @@ button:active {
     .tutor-image-section {
         flex: 0 0 40%;
         position: relative;
-        background:#003153;
+        background:#7B3F00;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -843,7 +843,7 @@ button:active {
 
     .tutor-badge {
         display: inline-block;
-        background: #003153;
+        background: #7B3F00;
         color: white;
         padding: 6px 16px;
         border-radius: 20px;
@@ -926,7 +926,7 @@ button:active {
     }
 
     .carousel-btn {
-        background: #003153;
+        background: #7B3F00;
         border: none;
         color: white;
         width: 50px;
@@ -961,7 +961,7 @@ button:active {
 
     .carousel-counter {
         background: rgba(102, 126, 234, 0.1);
-        color: #003153;
+        color: #7B3F00;
         padding: 8px 16px;
         border-radius: 20px;
         font-weight: 600;
@@ -985,7 +985,7 @@ button:active {
     }
 
     .indicator.active {
-        background: #003153;
+        background: #7B3F00;
         transform: scale(1.3);
     }
 
@@ -1000,7 +1000,7 @@ button:active {
 
     .progress-fill {
         height: 100%;
-        background: #003153;
+        background: #7B3F00;
         border-radius: 2px;
         transition: width 0.4s ease;
     }
@@ -1099,7 +1099,7 @@ button:active {
     width: 100%;
     margin: 0 auto;
     padding: 4rem 2rem;
-    background: rgba(255, 224, 1, 0.7); /* fallback color */
+    background: rgba(123, 63, 0, 0.7); /* fallback color */
     align-items: center;
     overflow: hidden; /* prevent image overflow */
     z-index: 1; /* bring content to front */
@@ -1232,7 +1232,7 @@ button:active {
         left: 0;
         width: 100%;
         height: 100%;
-        background-image: url("blackboard-classroom-college-desk-wallpaper-preview.jpg");
+        background-image: url("m_s.png");
         background-size: cover;
         background-position: center;
         opacity: 0.75; /* Adjust transparency */
@@ -1244,7 +1244,7 @@ button:active {
             position: relative;
             max-width: 1000px;
             margin: 0 auto;
-            background: rgba(255, 255, 255, 0.35); /* <-- Semi-transparent white */
+            background: rgba(244, 234, 213, 0.35); /* <-- Semi-transparent white */
             border-radius: 20px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             overflow: hidden;
@@ -1252,12 +1252,12 @@ button:active {
         }
 
         .header {
-            /* background: #003153; */
+            /* background: #7B3F00; */
             color: white;
             padding: 40px 30px;
             text-align: center;
             position: relative;
-            background: rgba(0, 49, 83, 0.82);
+            background: rgba(123, 63, 0, 0.72);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(4.4px);
             -webkit-backdrop-filter: blur(4.4px);
@@ -1407,7 +1407,7 @@ button:active {
         .form-input:focus,
         .form-select:focus {
             outline: none;
-            border-color: #003153;
+            border-color: #7B3F00;
             box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
         }
 
@@ -1421,7 +1421,7 @@ button:active {
         }
 
         .search-button {
-            background: #003153;
+            background: #7B3F00;
             color: white;
             border: none;
             padding: 16px 40px;
@@ -1430,14 +1430,14 @@ button:active {
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+            box-shadow: 0 4px 15px rgba(123, 63, 0, 0.3);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         .search-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+            box-shadow: 0 6px 20px rgba(123, 63, 0, 0.4);
         }
 
         .search-button:active {
@@ -1539,7 +1539,7 @@ button:active {
     width: 40px;
     height: 40px;
     border: 3px solid #e2e8f0;
-    border-top: 3px solid #3b82f6;
+    border-top: 3px solid #7B3F00;
     border-radius: 50%;
     animation: spin 1s linear infinite;
     margin-bottom: 16px;
@@ -1601,7 +1601,7 @@ button:active {
 }
 
 .results-header {
-    background: #01427a;
+    background: #7B3F00;
     border-bottom: 1px solid #e2e8f0;
     padding: 20px 24px;
 }
@@ -1616,7 +1616,7 @@ button:active {
 }
 
 .results-count {
-    background: #3b82f6;
+    background: #9E3D3F;
     color: white;
     padding: 4px 12px;
     border-radius: 20px;
@@ -1698,7 +1698,7 @@ button:active {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    background: #7B3F00;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1793,7 +1793,7 @@ button:active {
 .contact-button {
     margin-top: 16px;
     padding: 10px;
-    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    background: #7B3F00;
     color: white;
     border: none;
     border-radius: 6px;
@@ -1805,7 +1805,7 @@ button:active {
 }
 
 .contact-button:hover {
-    background: linear-gradient(135deg, #2563eb, #1e40af);
+    background:rgb(150, 78, 1);
     transform: translateY(-1px);
 }
 
@@ -1910,10 +1910,92 @@ button:active {
 }
 }
 
+/* Music fields container - 2 column layout */
+.music-fields-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+/* Music fields styling */
+.music-fields {
+    display: none;
+}
+
+.music-fields.show {
+    display: block;
+}
+
+/* When music is selected, show fields in 2 columns */
+.music-active .music-fields-container {
+    display: grid;
+}
+
+.music-active .music-fields {
+    display: block;
+}
+
+/* Singing fields - full width spanning 2 columns */
+.singing-fields {
+    display: none;
+    grid-column: 1 / -1; /* Span full width */
+}
+
+.singing-fields.show {
+    display: block;
+}
+
+/* When singing is selected, show field spanning full width */
+.singing-active .singing-fields {
+    display: block;
+    grid-column: 1 / -1;
+}
+
+/* Form group styling */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-select,
+.form-input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.form-select:focus,
+.form-input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .music-fields-container {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .singing-fields {
+        grid-column: 1;
+    }
+}
     </style>
 
 </head>
-<body style="background:#e2e8f0;">  
+<body style="background:rgb(241, 228, 201);">  
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
@@ -2002,16 +2084,14 @@ button:active {
     <div class="container">
         <div class="header">
             <div class="header-content">
-                <h1 class="main-title">Find Your Ideal Teacher</h1>
+                <h1 class="main-title">Learn about the Culture</h1>
                 <p class="subtitle">Discover qualified educators for personalized learning</p>
             </div>
         </div>
-
         <div class="search-content">         
 
             <!-- Advanced Filters -->
             <div class="advanced-filters">
-                <!-- <h3 class="filters-title">Advanced Search Filters</h3> -->
                 <form id="searchForm">
                     <div class="form-group">
                         <label for="name" class="form-label">Teacher Name</label>
@@ -2023,15 +2103,17 @@ button:active {
                             placeholder="Enter teacher's full name"
                         >
                     </div><br>
+                    
                     <div class="form-grid">
-
                         <div class="form-group">
-                            <label for="board" class="form-label">Educational Board</label>
-                            <select id="board" name="board" class="form-select">
-                                <option value="">Select Board</option>
-                                <option value="WB">West Bengal Board</option>
-                                <option value="CBSE">CBSE</option>
-                                <option value="ICSE">CISCE</option>
+                            <label for="profession_type" class="form-label">Profession Type</label>
+                            <select id="profession_type" name="profession_type" class="form-select">
+                                <option value="">--Select type--</option>
+                                <option value="music_teacher">Music Teacher</option>
+                                <option value="singing_teacher">Singing Teacher</option>
+                                <option value="music_school">Music School</option>
+                                <option value="singing_school">Singing School</option>
+                                <option value="abriti_school">Abriti School</option>
                             </select>
                         </div>
 
@@ -2046,27 +2128,38 @@ button:active {
                             </select>
                         </div>
 
-                        <div class="form-group">
-                            <label for="classGrade" class="form-label">Class/Course</label>
+                        <!-- Music-specific fields -->
+                        <div class="form-group music-fields" id="music_type_field" style="display: none;">
+                            <label for="music_type" class="form-label">Music Type</label>
+                            <select id="music_type" name="music_type" class="form-select">
+                                <option value="">Select Music Type</option>
+                                <option value="Eastern/Classical">Eastern/Classical</option>
+                                <option value="Western">Western</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group music-fields" id="instruments_field" style="display: none;">
+                            <label for="instruments" class="form-label">Instruments</label>
                             <input 
                                 type="text" 
-                                id="classGrade" 
-                                name="classGrade" 
+                                id="instruments" 
+                                name="instruments" 
                                 class="form-input" 
-                                placeholder="e.g., 1, 2, 10 or 1,2,3 (comma-separated)"
+                                placeholder="e.g., Piano, Guitar, Violin"
                             >
                         </div>
 
-                        <div class="form-group">
-                            <label for="subject" class="form-label">Subject</label>
-                            <input 
-                                type="text" 
-                                id="subject" 
-                                name="subject" 
-                                class="form-input" 
-                                placeholder="e.g., Math, Physics, English (comma-separated)"
-                            >
+                        <!-- Singing-specific fields -->
+                        <div class="form-group singing-fields" id="singing_type_field" style="display: none;">
+                            <label for="singing_type" class="form-label">Singing Type</label>
+                            <select id="singing_type" name="singing_type" class="form-select">
+                                <option value="">Select Singing Type</option>
+                                <option value="Eastern/Classical">Eastern/Classical</option>
+                                <option value="Western">Western</option>
+                            </select>
                         </div>
+
+                        
                     </div>
 
                     <div class="search-button-container">
@@ -2075,6 +2168,108 @@ button:active {
                         </button>
                     </div>
                 </form>
+
+                <script>
+                    // Dynamic field visibility based on profession type selection
+                    document.getElementById('profession_type').addEventListener('change', function() {
+                        const selectedProfession = this.value;
+                        
+                        // Hide all conditional fields first
+                        document.querySelectorAll('.music-fields').forEach(field => {
+                            field.style.display = 'none';
+                        });
+                        document.querySelectorAll('.singing-fields').forEach(field => {
+                            field.style.display = 'none';
+                        });
+                        
+                        // Show relevant fields based on selection
+                        switch(selectedProfession) {
+                            case 'music_teacher':
+                            case 'music_school':
+                                document.getElementById('music_type_field').style.display = 'block';
+                                document.getElementById('instruments_field').style.display = 'block';
+                                // Gender field is always visible for music teacher/school (individual vs school preference)
+                                break;
+                            
+                            case 'singing_teacher':
+                            case 'singing_school':
+                                document.getElementById('singing_type_field').style.display = 'block';
+                                // Gender field is always visible for singing teacher/school
+                                break;
+                            
+                            case 'abriti_school':
+                                // Only general fields (gender, days) are relevant for abriti school
+                                break;
+                            
+                            case '':
+                            
+                        }
+                    });
+
+                    // Form submission handler
+                    document.getElementById('searchForm').addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        
+                        const formData = new FormData(this);
+                        
+                        // Show loading state
+                        const searchButton = document.querySelector('.search-button');
+                        const originalText = searchButton.textContent;
+                        searchButton.textContent = 'Searching...';
+                        searchButton.disabled = true;
+                        
+                        // Send AJAX request
+                        fetch('search_m&s.php', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.error) {
+                                console.error('Search error:', data.error);
+                                document.getElementById('results').innerHTML = `
+                                    <div class="error-message">
+                                        <div class="error-icon">⚠️</div>
+                                        <div class="error-text">${data.error}</div>
+                                    </div>
+                                `;
+                            } else {
+                                // Create search type description
+                                let searchType = 'Search Results';
+                                const professionType = formData.get('profession_type');
+                                const musicType = formData.get('music_type');
+                                const singingType = formData.get('singing_type');
+                                const city = formData.get('city');
+                                
+                                if (professionType) {
+                                    searchType = professionType.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase()) + ' Results';
+                                } else if (musicType || singingType) {
+                                    searchType = 'Music & Singing Results';
+                                }
+                                
+                                if (city) {
+                                    searchType += ` in ${city}`;
+                                }
+                                
+                                displayResults(data, searchType);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Network error:', error);
+                            document.getElementById('results').innerHTML = `
+                                <div class="error-message">
+                                    <div class="error-icon">🔍</div>
+                                    <div class="error-text">Search failed. Please try again.</div>
+                                </div>
+                            `;
+                        })
+                        .finally(() => {
+                            // Restore button state
+                            searchButton.textContent = originalText;
+                            searchButton.disabled = false;
+                        });
+                    });
+                </script>
             </div>          
         </div>
     </div>
@@ -2101,7 +2296,7 @@ button:active {
             `;
             
             // Send AJAX request
-            fetch('search_teachers.php', {
+            fetch('search_m&s.php', {
                 method: 'POST',
                 body: formData
             })
@@ -2114,18 +2309,16 @@ button:active {
             });
         });
         
-        // Replace your displayResults function with this version
-        // Also update the displayResults function in the JavaScript section:
-// Updated displayResults function to work exclusively with JSON data:
+        // Updated displayResults function for Music, Singing & Abriti search results
 function displayResults(teachers, searchType = 'Search Results') {
     const resultsDiv = document.getElementById('results');
     
     if (teachers.length === 0) {
         resultsDiv.innerHTML = `
             <div class="no-results">
-                <div class="no-results-icon">🔍</div>
+                <div class="no-results-icon">🎵</div>
                 <div class="no-results-title">No Teachers Found</div>
-                <div class="no-results-text">Try adjusting your search criteria or use different keywords</div>
+                <div class="no-results-text">Try adjusting your search criteria for music, singing, or abriti teachers</div>
             </div>
         `;
         return;
@@ -2147,39 +2340,123 @@ function displayResults(teachers, searchType = 'Search Results') {
         const stars = '★'.repeat(Math.floor(teacher.rating)) + '☆'.repeat(5 - Math.floor(teacher.rating));
         const initials = teacher.name.split(' ').map(n => n[0]).join('').toUpperCase();
         
-        // Extract data from profession_details JSON only
-        let subjects = '';
-        let classes = '';
-        let boards = '';
-        let classSubjectMapping = {};
+        // Extract profession data from the new structure (teacher.professions)
+        const professions = teacher.professions || {};
         
-        // Parse profession_details from the response (already parsed by PHP)
-        if (teacher.subjects) {
-            subjects = teacher.subjects;
+        // Determine profession types and collect data
+        const professionTypes = [];
+        const allMusicTypes = [];
+        const allInstruments = [];
+        const allSingingTypes = [];
+        const genderPreferences = [];
+        const daysPerWeek = [];
+        
+        // Process each profession type
+        if (professions.music_teacher) {
+            professionTypes.push('Music Teacher');
+            if (professions.music_teacher.music_type) {
+                allMusicTypes.push(professions.music_teacher.music_type);
+            }
+            if (professions.music_teacher.instruments) {
+                allInstruments.push(professions.music_teacher.instruments);
+            }
+            if (professions.music_teacher.days_per_week) {
+                daysPerWeek.push(professions.music_teacher.days_per_week);
+            }
         }
-        if (teacher.classes) {
-            classes = teacher.classes;
+        
+        if (professions.singing_teacher) {
+            professionTypes.push('Singing Teacher');
+            if (professions.singing_teacher.singing_type) {
+                allSingingTypes.push(professions.singing_teacher.singing_type);
+            }
+            if (professions.singing_teacher.gender) {
+                genderPreferences.push(professions.singing_teacher.gender);
+            }
+            if (professions.singing_teacher.days_per_week) {
+                daysPerWeek.push(professions.singing_teacher.days_per_week);
+            }
         }
-        if (teacher.boards) {
-            boards = teacher.boards;
+        
+        if (professions.music_school) {
+            professionTypes.push('Music School');
+            if (professions.music_school.music_type) {
+                allMusicTypes.push(professions.music_school.music_type);
+            }
+            if (professions.music_school.instrument) {
+                allInstruments.push(professions.music_school.instrument);
+            }
+            if (professions.music_school.days_per_week) {
+                daysPerWeek.push(professions.music_school.days_per_week);
+            }
         }
-        if (teacher.class_subject_mapping) {
-            classSubjectMapping = teacher.class_subject_mapping;
+        
+        if (professions.singing_school) {
+            professionTypes.push('Singing School');
+            if (professions.singing_school.singing_type) {
+                allSingingTypes.push(professions.singing_school.singing_type);
+            }
+            if (professions.singing_school.gender) {
+                genderPreferences.push(professions.singing_school.gender);
+            }
+            if (professions.singing_school.days_per_week) {
+                daysPerWeek.push(professions.singing_school.days_per_week);
+            }
         }
-
-        // Create a more detailed subject-class display
-        let subjectClassDisplay = subjects;
-        if (Object.keys(classSubjectMapping).length > 0) {
-            const mappingDetails = Object.entries(classSubjectMapping)
-                .map(([subject, classList]) => `${subject} (Classes: ${classList.join(', ')})`)
-                .join(' | ');
-            subjectClassDisplay = mappingDetails;
+        
+        if (professions.abriti_school) {
+            professionTypes.push('Abriti School');
+            if (professions.abriti_school.days_per_week) {
+                daysPerWeek.push(professions.abriti_school.days_per_week);
+            }
         }
+        
+        // Remove duplicates and format
+        const uniqueMusicTypes = [...new Set(allMusicTypes)];
+        const uniqueInstruments = [...new Set(allInstruments)];
+        const uniqueSingingTypes = [...new Set(allSingingTypes)];
+        const uniqueGenderPreferences = [...new Set(genderPreferences)];
+        const uniqueDaysPerWeek = [...new Set(daysPerWeek)];
+        
+        // Get profession type display
+        const professionType = professionTypes.length > 0 ? professionTypes.join(', ') : 'Not specified';
+        
+        // Use available_services from backend if available, otherwise create our own
+        const availableServices = teacher.available_services || professionType;
+        
+        // Determine profession icon based on types
+        let professionIcon = '🎵';
+        if (professionTypes.some(type => type.toLowerCase().includes('music'))) {
+            professionIcon = '🎼';
+        } else if (professionTypes.some(type => type.toLowerCase().includes('singing'))) {
+            professionIcon = '🎤';
+        } else if (professionTypes.some(type => type.toLowerCase().includes('abriti'))) {
+            professionIcon = '📖';
+        }
+        
+        // Build specialty display
+        let specialtyDisplay = '';
+        const specialtyParts = [];
+        
+        if (uniqueMusicTypes.length > 0) {
+            specialtyParts.push(`Music: ${uniqueMusicTypes.join(', ')}`);
+        }
+        if (uniqueSingingTypes.length > 0) {
+            specialtyParts.push(`Singing: ${uniqueSingingTypes.join(', ')}`);
+        }
+        if (uniqueInstruments.length > 0) {
+            specialtyParts.push(`Instruments: ${uniqueInstruments.join(', ')}`);
+        }
+        
+        specialtyDisplay = specialtyParts.join(' | ');
         
         html += `
             <div class="teacher-profile">
                 <div class="profile-picture">${initials}</div>
-                <div class="teacher-name">${teacher.name}</div>
+                <div class="teacher-name">
+                    ${teacher.name}
+                    <span class="profession-icon">${professionIcon}</span>
+                </div>
 
                 <div class="rating-section">
                     <div class="rating-stars">
@@ -2191,25 +2468,29 @@ function displayResults(teachers, searchType = 'Search Results') {
 
                 <div class="profile-details">
                     <div class="detail-item">
-                        <span class="detail-label">Subjects & Classes</span>
-                        <span class="detail-content" title="${subjectClassDisplay}">${subjectClassDisplay || 'Not specified'}</span>
+                        <span class="detail-label">Services</span>
+                        <span class="detail-content" title="${availableServices}">${availableServices.length > 50 ? availableServices.substring(0, 50) + '...' : availableServices}</span>
                     </div>
+                    
+                    ${uniqueInstruments.length > 0 ? `
                     <div class="detail-item">
-                        <span class="detail-label">All Classes</span>
-                        <span class="detail-content">${classes || 'Not specified'}</span>
+                        <span class="detail-label">Instruments</span>
+                        <span class="detail-content" title="${uniqueInstruments.join(', ')}">${uniqueInstruments.join(', ')}</span>
                     </div>
+                    ` : ''}
+                    ${uniqueSingingTypes.length > 0 ? `
                     <div class="detail-item">
-                        <span class="detail-label">Boards</span>
-                        <span class="detail-content">${boards || 'Not specified'}</span>
+                        <span class="detail-label">Singing Types</span>
+                        <span class="detail-content">${uniqueSingingTypes.join(', ')}</span>
                     </div>
+                    ` : ''}
+                    
+                    ${uniqueDaysPerWeek.length > 0 ? `
                     <div class="detail-item">
-                        <span class="detail-label">Location</span>
-                        <span class="detail-content">${teacher.city}</span>
+                        <span class="detail-label">Days per Week</span>
+                        <span class="detail-content">${uniqueDaysPerWeek.join(', ')} day${uniqueDaysPerWeek.length > 1 || uniqueDaysPerWeek[0] > 1 ? 's' : ''}</span>
                     </div>
-                    <div class="detail-item">
-                        <span class="detail-label">Experience</span>
-                        <span class="detail-content">${teacher.experience || 'Not specified'} ${teacher.experience ? 'Years' : ''}</span>
-                    </div>
+                    ` : ''}
                     <div class="detail-item">
                         <span class="detail-label">Mode</span>
                         <span class="detail-content" title="${teacher.teaching_preferences}">${teacher.teaching_preferences || 'Not specified'}</span>
@@ -2231,7 +2512,6 @@ function displayResults(teachers, searchType = 'Search Results') {
     
     resultsDiv.innerHTML = html;
 }
-
 
         // Scroll navigation functions
         function scrollTeachers(direction) {
@@ -2584,51 +2864,6 @@ function handleEnd(e) {
     $conn->close();
     ?>
 
-    <!-- Boards Section -->
-    <section class="boards-section">
-        <div class="boards-container">
-            <h2 class="section-title">Explore Teachers by Board</h2>
-            
-            <div class="boards-grid">
-                <div class="board-card" onclick="exploreBoard('wbbse')">
-                    <div class="board-icon">WB</div>
-                    <h3>WBBSE</h3>
-                    <p>West Bengal Board of Secondary Education - Find expert teachers for Bengali medium and English medium schools following WBBSE curriculum.</p>
-                </div>
-                
-                <div class="board-card" onclick="exploreBoard('cbse')">
-                    <div class="board-icon">CB</div>
-                    <h3>CBSE</h3>
-                    <p>Central Board of Secondary Education - Connect with qualified tutors specializing in CBSE syllabus and NCERT textbooks.</p>
-                </div>
-                
-                <div class="board-card" onclick="exploreBoard('icse')">
-                    <div class="board-icon">IC</div>
-                    <h3>ICSE</h3>
-                    <p>Indian Certificate of Secondary Education - Discover teachers experienced in ICSE curriculum and comprehensive subject knowledge.</p>
-                </div>
-                
-                <div class="board-card" onclick="exploreBoard('ise')">
-                    <div class="board-icon">IS</div>
-                    <h3>ISC</h3>
-                    <p>Indian School Certificate - Find dedicated educators familiar with ISC board requirements and assessment patterns.</p>
-                </div>
-                
-                <div class="board-card" onclick="exploreBoard('wbcshe')">
-                    <div class="board-icon">WC</div>
-                    <h3>WBCSHE</h3>
-                    <p>West Bengal Council of Secondary and Higher Education - Connect with teachers for higher secondary education in West Bengal.</p>
-                </div>
-                
-                <div class="board-card" onclick="exploreBoard('others')">
-                    <div class="board-icon">+</div>
-                    <h3>Other Boards</h3>
-                    <p>State boards, international curricular, and specialized programs - Find tutors for various educational systems and competitive exams.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- views -->
     <div class="stats-container">
         <section class="views-section">
@@ -2767,7 +3002,7 @@ function handleEnd(e) {
                             url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
                                 <svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M16 2 C10.5 2 6 6.5 6 12 C6 20 16 30 16 30 S26 20 26 12 C26 6.5 21.5 2 16 2 Z" 
-                                        fill="#01427a" stroke="white" stroke-width="2"/>
+                                        fill="#7B3F00" stroke="white" stroke-width="2"/>
                                     <circle cx="16" cy="12" r="4" fill="white"/>
                                 </svg>
                             `),
@@ -2940,7 +3175,5 @@ function handleEnd(e) {
         });
     });
 </script>
-
-
 </body>
 </html>

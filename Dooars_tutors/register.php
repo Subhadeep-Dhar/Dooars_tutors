@@ -976,7 +976,7 @@ button[onclick="addSubjectGroup()"]:hover::after {
 <body>
     <div class="container">
         <div class="header">
-            <img src="DOOARS TUTORS (7)_page-0001 (1) (1).jpg" class="logo-blend" alt="Logo">
+            <img src="logo_white.jpg" class="logo-blend" alt="Logo">
             <p>Join our community of dedicated educators and add value to the society</p>
         </div>
 
@@ -1341,8 +1341,8 @@ function addSubjectGroup() {
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="music-gender">For which gender:</label>
-                            <select id="music-gender" name="music_gender">
+                            <label for="music-instruments">For which instruments:</label>
+                            <select id="music-instruments" name="music_instruments">
                                 <option value="">Select Instrument</option>
                                 <option value="Guitar">Guitar</option>
                                 <option value="Harmonium">Harmonium</option>

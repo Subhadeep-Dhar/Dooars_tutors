@@ -228,6 +228,9 @@ button:active {
             z-index: 1999;
             transition: all 0.3s ease;
             box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            height: 100vh; 
         }
 
         .mobile-nav-header {
@@ -235,10 +238,14 @@ button:active {
             border-bottom: 1px solid #eee;
             background: #003153;
             color: white;
+            flex-shrink: 0;
         }
 
         .mobile-nav-content {
             padding: 20px 0;
+            flex-grow: 1;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
         }
 
         .mobile-nav ul {
@@ -1233,7 +1240,7 @@ button:active {
         background-image: url("https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg");
         background-size: cover;
         background-position: center;
-        opacity: 0.25; /* Adjust transparency */
+        opacity: 0.75; /* Adjust transparency */
         z-index: -1; /* Behind container */
         pointer-events: none;
         }
@@ -1250,11 +1257,16 @@ button:active {
         }
 
         .header {
-            background: #003153;
+            /* background: #003153; */
             color: white;
             padding: 40px 30px;
             text-align: center;
             position: relative;
+            background: rgba(0, 49, 83, 0.82);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(4.4px);
+            -webkit-backdrop-filter: blur(4.4px);
+            border: 1px solid rgba(123, 63, 0, 0.3);
         }
 
         .header::before {
@@ -1348,10 +1360,16 @@ button:active {
         }
 
         .advanced-filters {
-            background: #f8fafc;
+            /* background: #f8fafc; */
             border-radius: 16px;
             padding: 30px;
-            border: 1px solid #e2e8f0;
+            /* border: 1px solid #e2e8f0; */
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(3.5px);
+            -webkit-backdrop-filter: blur(3.5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         .filters-title {
@@ -1904,7 +1922,7 @@ button:active {
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo"><img src="DOOARS TUTORS (7)_page-0002 (1) (1).jpg" class="logo-blend2"></div>
+            <div class="logo"><img src="logo_black.jpg" class="logo-blend2"></div>
             <ul class="nav-links">
                 <li><a href="index.php">Home</a></li>
                 <li><a href="about.php">About Us</a></li>
@@ -1945,13 +1963,15 @@ button:active {
 
     <!-- Mobile Navigation -->
     <div class="mobile-overlay"></div>
+    <!-- Mobile Navigation -->
+    <div class="mobile-overlay"></div>
     <nav class="mobile-nav">
         <div class="mobile-nav-header">
-        <img src="DOOARS TUTORS (7)_page-0001 (1) (1).jpg" class="logo-blend" alt="Logo">
+        <img src="logo_white.jpg" class="logo-blend" alt="Logo">
         </div>
 
         <div class="mobile-nav-content">
-            <ul class="nav-links">
+            <ul class="mobile-nav-links">
                 <li><a href="index.php">Home</a></li>
                 <li><a href="about.php">About Us</a></li>
                 <li><a href="centres.php">Centres</a></li>
@@ -2525,7 +2545,7 @@ function escapeHtml(text) {
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-section">
-                <img src="DOOARS TUTORS (7)_page-0001 (1) (1).jpg" class="logo-blend" alt="Logo">
+                <img src="logo_white.jpg" class="logo-blend" alt="Logo">
                 <p>Connecting students with qualified teachers across India. Excellence in education, delivered personally.</p>
             </div>
             
@@ -2567,5 +2587,53 @@ function escapeHtml(text) {
     </footer>
 
     <script src="./js/script.js"></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileNav = document.querySelector('.mobile-nav');
+        const overlay = document.querySelector('.mobile-overlay');
+
+        const toggleMenu = () => {
+            mobileNav.classList.toggle('active');
+            overlay.classList.toggle('active');
+            menuBtn.classList.toggle('active');
+            document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+        };
+
+        const closeMenu = () => {
+            mobileNav.classList.remove('active');
+            overlay.classList.remove('active');
+            menuBtn.classList.remove('active');
+            document.body.style.overflow = '';
+        };
+
+        // Toggle menu on button click
+        menuBtn.addEventListener('click', toggleMenu);
+
+        // Close menu on overlay click
+        overlay.addEventListener('click', closeMenu);
+
+        // Smooth scroll & close menu on link click
+        const isHashLink = href => href && href.startsWith('#');
+        document.querySelectorAll('.nav-links a, .mobile-nav a').forEach(link => {
+            link.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+
+                // If internal anchor link, scroll smoothly
+                if (isHashLink(href)) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+
+                // Close menu after click
+                closeMenu();
+            });
+        });
+    });
+</script>
 </body>
 </html>

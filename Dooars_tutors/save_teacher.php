@@ -169,8 +169,9 @@ if (in_array('others', $_POST['profession'] ?? [])) {
 
         if (in_array('Visual Arts', $_POST['profession'] ?? [])) {
             $profession_details['visual_arts'] = [
-                'type' => trim($_POST['VS-school_type'] ?? ''),
-                'gender' => trim($_POST['VS-school_gender'] ?? '')
+                'type' => trim($_POST['VS_school_type'] ?? ''),
+                'gender' => trim($_POST['VS_school_gender'] ?? ''),
+                'days_per_week' => trim($_POST['VS_school_days'] ?? '')
             ];
         }
 
