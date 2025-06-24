@@ -1004,6 +1004,17 @@ button[onclick="addSubjectGroup()"]:hover::after {
                             <input type="email" id="email" name="email" placeholder="your.email@example.com">
                         </div>
                     </div>
+                    <div class="two-column">
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" required placeholder="Enter your password">
+                        </div>
+                        <div class="form-group">
+                            <label for="referral_code">Referral code</label>
+                            <input type="text" id="referral_code" name="referral_code" placeholder="Referral Code (optional)">
+                        </div>
+                    </div>
+
 
                     <!-- Profession Dropdown -->
                     <div class="dropdown-section" id="profession-section">
@@ -1604,35 +1615,63 @@ function updateProfessionSummary(selectedProfessions) {
     }
 }
 
-        // Handle form submission
-        document.getElementById('tutorForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        // Enhanced form submission with debugging
+document.getElementById('tutorForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    
+    // Add loading state
+    const submitBtn = document.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Processing...';
+    submitBtn.disabled = true;
+    
+    fetch('save_teacher.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        console.log('Response status:', response.status);
+        console.log('Response headers:', response.headers);
+        
+        // Check if response is ok
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        // Get response as text first to see what we're getting
+        return response.text();
+    })
+    .then(text => {
+        console.log('Raw response:', text);
+        
+        // Try to parse as JSON
+        try {
+            const data = JSON.parse(text);
+            console.log('Parsed JSON:', data);
             
-            const formData = new FormData(this);
-            
-            fetch('save_teacher.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert(data.message);
-                    if (data.redirect) {
-                        window.location.href = data.redirect;
-                    } else {
-                        // Reset form or redirect to success page
-                        this.reset();
-                    }
-                } else {
-                    alert('Error: ' + data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred while submitting the form. Please try again.');
-            });
-        });
+            if (data.success) {
+                // Redirect to payment page with tutor ID
+                window.location.href = `payment.php?tutor_id=${data.tutor_id}`;
+            } else {
+                alert('Error: ' + (data.message || 'Unknown error occurred'));
+            }
+        } catch (jsonError) {
+            console.error('JSON parse error:', jsonError);
+            alert('Server response is not valid JSON. Raw response: ' + text);
+        }
+    })
+    .catch(error => {
+        console.error('Fetch error:', error);
+        alert('Network error occurred: ' + error.message + '. Please check your internet connection and try again.');
+    })
+    .finally(() => {
+        // Reset button state
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+    });
+});
 
         // Show/hide other class specification
         document.getElementById('class-others').addEventListener('change', function() {

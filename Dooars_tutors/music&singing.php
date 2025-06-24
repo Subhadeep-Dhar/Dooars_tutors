@@ -2016,8 +2016,7 @@ button:active {
                     <a href="sports&health.php">Sports & Health</a>
                     <ul class="dropdown-menu">
                         <li><a href="sports.php">Sports</a></li>
-                        <li><a href="yoga.php">Yoga</a></li>
-                        <li><a href="gym.php">Gym</a></li>
+                        <li><a href="gym&yoga.php">Gym / Yoga</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -2062,8 +2061,7 @@ button:active {
                     <a href="sports&health.php">Sports & Health</a>
                     <ul class="dropdown-menu">
                         <li><a href="sports.php">Sports</a></li>
-                        <li><a href="yoga.php">Yoga</a></li>
-                        <li><a href="gym.php">Gym</a></li>
+                        <li><a href="gym&yoga.php">Gym / Yoga</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -2094,13 +2092,13 @@ button:active {
             <div class="advanced-filters">
                 <form id="searchForm">
                     <div class="form-group">
-                        <label for="name" class="form-label">Teacher Name</label>
+                        <label for="name" class="form-label">Teacher Name / School name</label>
                         <input 
                             type="text" 
                             id="name" 
                             name="name" 
                             class="form-input" 
-                            placeholder="Enter teacher's full name"
+                            placeholder="Enter name and search"
                         >
                     </div><br>
                     

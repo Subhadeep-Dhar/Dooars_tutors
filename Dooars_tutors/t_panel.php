@@ -1,0 +1,1928 @@
+<?php
+session_start();
+
+// Check if user is logged in
+if (!isset($_SESSION['phone'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Database configuration
+$servername = "localhost:3307";
+$username = "root";
+$password = "";
+$dbname = "dooars_tutors";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$phone = $_SESSION['phone'];
+
+// Get the selected tutor ID from URL parameter, default to first tutor
+$selected_tutor_id = isset($_GET['tutor_id']) ? intval($_GET['tutor_id']) : null;
+
+// Fetch all tutors with the same phone number
+$stmt = $conn->prepare("SELECT * FROM tutors WHERE phone = ? ORDER BY created_at ASC");
+$stmt->bind_param("s", $phone);
+$stmt->execute();
+$result = $stmt->get_result();
+$all_tutors = $result->fetch_all(MYSQLI_ASSOC);
+$stmt->close();
+
+// If no selected tutor ID, use the first tutor
+if (!$selected_tutor_id && !empty($all_tutors)) {
+    $selected_tutor_id = $all_tutors[0]['id'];
+}
+
+// Find the current tutor from the list
+$tutor = null;
+foreach ($all_tutors as $t) {
+    if ($t['id'] == $selected_tutor_id) {
+        $tutor = $t;
+        break;
+    }
+}
+
+// If tutor not found, use the first one
+if (!$tutor && !empty($all_tutors)) {
+    $tutor = $all_tutors[0];
+    $selected_tutor_id = $tutor['id'];
+}
+
+// If no tutors found, redirect to login
+if (!$tutor) {
+    header("Location: login.php");
+    exit();
+}
+
+// Handle form submission for profile update
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_profile'])) {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $experience = $_POST['experience'];
+    $city = $_POST['city'];
+    $address = $_POST['address'];
+    $latitude = $_POST['latitude'];
+    $longitude = $_POST['longitude'];
+    $new_password = $_POST['password'];
+    
+    $stmt = $conn->prepare("UPDATE tutors SET name=?, email=?, experience=?, city=?, address=?, latitude=?, longitude=?, password=? WHERE id=?");
+    $stmt->bind_param("ssssssssi", $name, $email, $experience, $city, $address, $latitude, $longitude, $new_password, $selected_tutor_id);
+    
+    if ($stmt->execute()) {
+        $update_message = "Profile updated successfully!";
+        // Refresh the tutor data
+        $stmt2 = $conn->prepare("SELECT * FROM tutors WHERE id = ?");
+        $stmt2->bind_param("i", $selected_tutor_id);
+        $stmt2->execute();
+        $result2 = $stmt2->get_result();
+        $tutor = $result2->fetch_assoc();
+        $stmt2->close();
+    } else {
+        $update_message = "Error updating profile!";
+    }
+    $stmt->close();
+}
+
+$initial = strtoupper(substr($tutor['name'] ?? 'U', 0, 1));
+$profilePic = !empty($tutor['profile_picture']) 
+    ? htmlspecialchars($tutor['profile_picture']) 
+    : "https://via.placeholder.com/80x80/007bff/white?text=" . urlencode($initial);
+$fallback = "https://via.placeholder.com/80x80/6c757d/white?text=" . urlencode($initial);
+
+// Fetch visit count
+$stmt = $conn->prepare("SELECT visits FROM teacher_scount WHERE tutor_id = ?");
+$stmt->bind_param("i", $tutor['id']);
+$stmt->execute();
+$visit_result = $stmt->get_result();
+$visit_data = $visit_result->fetch_assoc();
+$visit_count = $visit_data['visits'] ?? 0;
+$stmt->close();
+
+// Parse profession details
+$profession_details = json_decode($tutor['profession_details'], true) ?? [];
+
+// Fetch reviews for this tutor
+$reviews_query = "SELECT * FROM reviews WHERE teacher_id = ? ORDER BY created_at DESC";
+$reviews_stmt = $conn->prepare($reviews_query);
+$reviews_stmt->bind_param("i", $tutor['id']);
+$reviews_stmt->execute();
+$reviews_result = $reviews_stmt->get_result();
+$reviews = $reviews_result->fetch_all(MYSQLI_ASSOC);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $tutor_id = $tutor['id'];
+    $uploadDir = 'uploads/';
+
+    if (!file_exists($uploadDir)) {
+        mkdir($uploadDir, 0777, true);
+    }
+
+    // --- Uploading a new picture ---
+    if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] === 0) {
+        $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+        $fileType = $_FILES['profile_picture']['type'];
+        $fileSize = $_FILES['profile_picture']['size'];
+        $fileName = $_FILES['profile_picture']['name'];
+        $tmpName = $_FILES['profile_picture']['tmp_name'];
+
+        if (!in_array($fileType, $allowedTypes)) {
+            $upload_error = "Invalid file type.";
+        } elseif ($fileSize > 5 * 1024 * 1024) {
+            $upload_error = "File size exceeds 5MB.";
+        } else {
+            $fileExt = pathinfo($fileName, PATHINFO_EXTENSION);
+            $newName = "profile_{$tutor_id}_" . time() . "." . $fileExt;
+            $uploadPath = $uploadDir . $newName;
+
+            if (move_uploaded_file($tmpName, $uploadPath)) {
+                if (!empty($tutor['profile_picture']) && file_exists($tutor['profile_picture'])) {
+                    unlink($tutor['profile_picture']);
+                }
+
+                $stmt = $conn->prepare("UPDATE tutors SET profile_picture = ? WHERE id = ?");
+                $stmt->bind_param("si", $uploadPath, $tutor_id);
+                $stmt->execute();
+
+                $upload_success = "Profile picture updated!";
+            } else {
+                $upload_error = "Upload failed.";
+            }
+        }
+    }
+
+    // --- Deleting the existing picture ---
+    if (isset($_POST['delete_profile_picture'])) {
+        if (!empty($tutor['profile_picture']) && file_exists($tutor['profile_picture'])) {
+            unlink($tutor['profile_picture']);
+        }
+
+        $stmt = $conn->prepare("UPDATE tutors SET profile_picture = NULL WHERE id = ?");
+        $stmt->bind_param("i", $tutor_id);
+        $stmt->execute();
+        $upload_success = "Profile picture removed!";
+    }
+
+    // Reload the updated data
+    $stmt = $conn->prepare("SELECT * FROM tutors WHERE id = ?");
+    $stmt->bind_param("i", $tutor_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $tutor = $result->fetch_assoc();
+}
+
+$conn->close();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutor Dashboard - Profile</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #e2e8f0;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .dashboard-header {
+            background: #003153;
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .dashboard-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .dashboard-title h1 {
+            font-size: 2.2em;
+            font-weight: 700;
+            background: White;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* .dashboard-title .icon {
+            font-size: 2.5em;
+            color: #667eea;
+        } */
+
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.44);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(7.7px);
+            -webkit-backdrop-filter: blur(7.7px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            /* box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3); */
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: #003153;;
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            background: white;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #fff;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9em;
+        }
+
+        .profile-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .card-title {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .edit-btn {
+            background: #003153;;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            /* box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3); */
+        }
+
+        .edit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .cancel-btn {
+            background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .cancel-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(149, 165, 166, 0.4);
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .profile-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 4px solid #003153;
+            transition: all 0.3s ease;
+        }
+
+        .profile-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .profile-label {
+            font-weight: 700;
+            color: #495057;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .profile-value {
+            color: #333;
+            font-size: 1.1em;
+            line-height: 1.4;
+        }
+
+        .profession-details {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 20px;
+            border: 1px solid #2196f3;
+        }
+
+        .profession-details h3 {
+            color: #1976d2;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .profession-details h4 {
+            color: #1565c0;
+            margin: 15px 0 10px 0;
+            font-size: 1.2em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #495057;
+            font-size: 0.95em;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            background: #fff;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1em;
+            resize: vertical;
+            min-height: 100px;
+            transition: all 0.3s ease;
+            background: #fff;
+            font-family: inherit;
+        }
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .update-btn {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .update-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        }
+
+        .alert {
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .alert-success {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-inactive {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .rating-display {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .stars {
+            color: #ffc107;
+            font-size: 1.2em;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                padding: 15px;
+            }
+            
+            .dashboard-header {
+                flex-direction: row;
+                gap: 20px;
+                /* text-align: left; */
+            }
+            
+            .dashboard-title h1 {
+                font-size: 1.8em;
+            }
+            
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+
+        .profile-picture-container {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1rem;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #007bff;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.profile-picture-container:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.3);
+}
+
+.profile-picture {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.profile-picture-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.profile-picture-container:hover .profile-picture-overlay {
+    opacity: 1;
+}
+
+.profile-picture-overlay i {
+    color: white;
+    font-size: 1.2rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .profile-picture-container {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+/* Alternative larger size for profile pages */
+.profile-picture-container.large {
+    width: 120px;
+    height: 120px;
+}
+
+/* Status indicator (optional) */
+.profile-picture-container::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 16px;
+    height: 16px;
+    background: #28a745;
+    border: 2px solid white;
+    border-radius: 50%;
+    display: none; /* Show only if user is online */
+}
+
+.profile-picture-container.online::after {
+    display: block;
+}
+
+
+
+.location-section {
+    grid-column: 1 / -1;
+}
+
+.help-text {
+    font-size: 0.85em;
+    color: #666;
+    font-weight: normal;
+    margin-left: 8px;
+}
+
+.location-info {
+    margin-bottom: 15px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #28a745;
+}
+
+.selected-location {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.location-display {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    color: #333;
+}
+
+.location-display i {
+    color: #28a745;
+}
+
+.coordinates-display {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.map-container-edit {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border: 2px solid #e0e0e0;
+    transition: border-color 0.3s ease;
+}
+
+.map-container-edit:hover {
+    border-color: #007bff;
+}
+
+#editMap {
+    height: 400px;
+    width: 100%;
+    cursor: crosshair;
+}
+
+.map-instructions {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.85em;
+    color: #666;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+.map-instructions i {
+    color: #007bff;
+    margin-right: 5px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    #editMap {
+        height: 300px;
+    }
+    
+    .map-instructions {
+        font-size: 0.8em;
+        padding: 6px 10px;
+    }
+}
+
+
+
+.address-info {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+        }
+
+        .address-info p {
+            margin: 0;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .map-container {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border: 1px solid #e0e0e0;
+        }
+
+        #map {
+            height: 300px;
+            width: 100%;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            #map {
+                height: 250px;
+            }
+        }
+
+
+
+        .reviews-section {
+                        margin-top: 20px;
+                        border-top: 1px solid #eee;
+                        padding-top: 15px;
+                        max-height:500px;
+                        overflow-y: auto
+                    }
+
+                    .reviews-section h4 {
+                        margin-bottom: 15px;
+                        color: #333;
+                        font-weight: 600;
+                    }
+
+                    .review-item {
+                        background: #f8f9fa;
+                        border-radius: 8px;
+                        padding: 15px;
+                        margin-bottom: 15px;
+                        border-left: 4px solid #007bff;
+                    }
+
+                    .review-header {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin-bottom: 10px;
+                        flex-wrap: wrap;
+                        gap: 10px;
+                    }
+
+                    .student-name {
+                        font-weight: 600;
+                        color: #333;
+                    }
+
+                    .review-rating {
+                        color: #ffc107;
+                    }
+
+                    .review-rating i {
+                        margin-right: 2px;
+                    }
+
+                    .review-date {
+                        color: #666;
+                        font-size: 0.9em;
+                    }
+
+                    .review-text {
+                        color: #555;
+                        line-height: 1.6;
+                        margin-top: 8px;
+                    }
+
+                    .no-reviews {
+                        text-align: center;
+                        padding: 20px;
+                        color: #666;
+                        font-style: italic;
+                    }
+
+                    /* Responsive design */
+                    @media (max-width: 768px) {
+                        .review-header {
+                            flex-direction: column;
+                            align-items: flex-start;
+                        }
+                        
+                        .review-rating {
+                            order: -1;
+                            margin-bottom: 5px;
+                        }
+                    }
+
+
+                    /* Account Switcher Styles */
+.account-switcher {
+    background: #003153;
+    border-radius: 16px;
+    padding: 24px;
+    margin: 24px 0;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.account-switcher-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.account-switcher-header h3 {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.account-switcher-header h3 i {
+    margin-right: 8px;
+    color:rgb(255, 255, 255);
+}
+
+.account-switcher-header p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+    margin: 0;
+    opacity: 0.9;
+}
+
+.accounts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.account-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid transparent;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.account-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    /* background: linear-gradient(90deg, #007bff, #28a745, #ffc107, #dc3545); */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.account-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.account-card:hover::before {
+    opacity: 1;
+}
+
+.account-card.selected {
+    border-color: #28a745;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 8px 32px rgba(40, 167, 69, 0.2);
+}
+
+.account-card.selected::before {
+    opacity: 1;
+    background: #28a745;
+}
+
+.account-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.account-avatar {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.account-avatar img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.account-card:hover .account-avatar img {
+    border-color: #007bff;
+    transform: scale(1.05);
+}
+
+.account-card.selected .account-avatar img {
+    border-color: #28a745;
+}
+
+.selected-badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    background: #28a745;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    border: 2px solid white;
+    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+    }
+    50% {
+        box-shadow: 0 2px 16px rgba(40, 167, 69, 0.6);
+    }
+    100% {
+        box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+    }
+}
+
+.account-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.account-info h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0 0 4px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.account-info p {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin: 0 0 12px 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.account-info p::before {
+    content: '\f3c5';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 0.8rem;
+    color: #dc3545;
+}
+
+.account-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.account-type {
+    background: #003153;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.account-rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: #fff3cd;
+    color: #856404;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.account-rating i {
+    color: #ffc107;
+    font-size: 0.75rem;
+}
+
+.account-status {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.account-status.active {
+    background: #d4edda;
+    color: #155724;
+}
+
+.account-status.inactive {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.account-status.pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .account-switcher {
+        padding: 16px;
+        margin: 16px 0;
+    }
+    
+    .accounts-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .account-card {
+        padding: 16px;
+    }
+    
+    .account-link {
+        gap: 12px;
+    }
+    
+    .account-avatar img {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .selected-badge {
+        width: 20px;
+        height: 20px;
+        font-size: 0.7rem;
+    }
+    
+    .account-info h4 {
+        font-size: 1rem;
+    }
+    
+    .account-meta {
+        gap: 6px;
+    }
+    
+    .account-type,
+    .account-rating,
+    .account-status {
+        font-size: 0.7rem;
+        padding: 3px 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .account-switcher-header h3 {
+        font-size: 1.3rem;
+    }
+    
+    .account-switcher-header p {
+        font-size: 0.9rem;
+    }
+    
+    .account-link {
+        flex-direction: column;
+        text-align: center;
+        gap: 8px;
+    }
+    
+    .account-avatar {
+        align-self: center;
+    }
+    
+    .account-info h4 {
+        white-space: normal;
+        text-align: center;
+    }
+    
+    .account-meta {
+        justify-content: center;
+    }
+}
+
+/* Dark theme variant */
+.current-account-info{
+    /* background: #1f2937; */
+    color:rgb(0, 0, 0);
+    border-left-color: #60a5fa;
+    margin-bottom: 20px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .current-account-info {
+        padding: 15px 20px;
+        /* margin-bottom: 20px; */
+    }
+    
+    .current-account-info h3 {
+        font-size: 1.1rem;
+        gap: 10px;
+    }
+    
+    .current-account-info i {
+        font-size: 1.2rem;
+    }
+}
+    </style>
+
+
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <div class="dashboard-title">
+                <h1>Tutor Dashboard</h1>
+            </div>
+            <a href="logout.php" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </a>
+        </div>
+        
+        <!-- Account Switcher Section -->
+        <?php if (count($all_tutors) > 1): ?>
+        <div class="account-switcher">
+            <div class="account-switcher-header">
+                <h3><i class="fas fa-users"></i> Your Accounts (<?php echo count($all_tutors); ?>)</h3>
+                <p>You have multiple tutor accounts. Select one to manage:</p>
+            </div>
+            <div class="accounts-grid">
+                <?php foreach ($all_tutors as $account): ?>
+                    <?php 
+                    $account_initial = strtoupper(substr($account['name'] ?? 'U', 0, 1));
+                    $account_pic = !empty($account['profile_picture']) 
+                        ? htmlspecialchars($account['profile_picture']) 
+                        : "https://via.placeholder.com/60x60/007bff/white?text=" . urlencode($account_initial);
+                    $is_selected = ($account['id'] == $selected_tutor_id);
+                    ?>
+                    <div class="account-card <?php echo $is_selected ? 'selected' : ''; ?>">
+                        <a href="?tutor_id=<?php echo $account['id']; ?>" class="account-link">
+                            <div class="account-avatar">
+                                <img src="<?php echo $account_pic; ?>" loading="lazy" alt="<?php echo htmlspecialchars($account['name']); ?>">
+                                <?php if ($is_selected): ?>
+                                <div class="selected-badge">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <?php endif; ?>
+                            </div>
+                            <div class="account-info">
+                                <h4><?php echo htmlspecialchars($account['name']); ?></h4>
+                                <p><?php echo htmlspecialchars($account['city']); ?></p>
+                                <div class="account-meta">
+                                    <span class="account-type"><?php echo ucfirst($account['type']); ?></span>
+                                    <span class="account-rating">
+                                        <i class="fas fa-star"></i>
+                                        <?php echo $account['rating']; ?>
+                                    </span>
+                                    <span class="account-status <?php echo $account['status']; ?>">
+                                        <?php echo ucfirst($account['status']); ?>
+                                    </span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <?php endif; ?>
+        
+        <!-- Current Account Info -->
+        <div class="current-account-info">
+            <h3><i class="fas fa-user-circle"></i> <?php echo htmlspecialchars($tutor['name']); ?></h3>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <div class="stat-value"><?php echo $visit_count; ?></div>
+                <div class="stat-label">Profile Visits</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="stat-value"><?php echo $tutor['rating']; ?></div>
+                <div class="stat-label">Current Rating</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <div class="stat-value"><?php echo $tutor['rating_count']; ?></div>
+                <div class="stat-label">Total Reviews</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-calendar-plus"></i>
+                </div>
+                <div class="stat-value"><?php echo date('M Y', strtotime($tutor['created_at'])); ?></div>
+                <div class="stat-label">Member Since</div>
+            </div>
+        </div>
+
+        <?php if (isset($update_message)): ?>
+            <div class="alert <?php echo strpos($update_message, 'successfully') !== false ? 'alert-success' : 'alert-error'; ?>">
+                <i class="fas <?php echo strpos($update_message, 'successfully') !== false ? 'fa-check-circle' : 'fa-exclamation-triangle'; ?>"></i>
+                <?php echo $update_message; ?>
+            </div>
+        <?php endif; ?>
+
+        <!-- Profile View Mode -->
+        <?php
+            $initial = strtoupper(substr($tutor['name'] ?? 'U', 0, 1));
+
+            $profilePic = !empty($tutor['profile_picture']) 
+                ? htmlspecialchars($tutor['profile_picture']) 
+                : "https://via.placeholder.com/80x80/007bff/white?text=" . urlencode($initial);
+
+            $fallback = "https://via.placeholder.com/80x80/6c757d/white?text=" . urlencode($initial);
+        ?>
+
+        <div id="profileView" class="profile-card">
+            <div class="card-header">
+                <div class="profile-header-content">
+                    <div class="profile-picture-container" onclick="document.getElementById('uploadInput').click();">
+    <img src="<?php echo $profilePic; ?>" 
+         alt="<?php echo htmlspecialchars($tutor['name'] ?? 'Unknown'); ?>" 
+         class="profile-picture" loading="lazy"
+         onerror="this.onerror=null;this.src='<?php echo $fallback; ?>';">
+
+    <div class="profile-picture-overlay">
+        <i class="fas fa-camera"></i>
+    </div>
+
+    <!-- Hidden File Input -->
+    <form id="uploadForm" method="POST" enctype="multipart/form-data" style="display: none;">
+        <input type="file" id="uploadInput" name="profile_picture" accept="image/*" onchange="document.getElementById('uploadForm').submit();">
+    </form>
+</div>
+                    <div class="profile-title-section">
+                        <h2 class="profile-name">
+                            <?php echo htmlspecialchars($tutor['name']); ?>
+                        </h2>
+                    </div>
+                </div>
+                <button onclick="toggleEditMode()" class="edit-btn">
+                    <i class="fas fa-edit"></i>
+                    Edit Profile
+                </button>
+            </div>
+            
+            <div class="profile-grid">
+                <div class="profile-item">
+                    <div class="profile-label">
+                        <i class="fas fa-id-badge"></i>
+                        User ID
+                    </div>
+                    <div class="profile-value">#<?php echo $tutor['id']; ?></div>
+                </div>
+                
+                <div class="profile-item">
+                    <div class="profile-label">
+                        <i class="fas fa-user"></i>
+                        Full Name
+                    </div>
+                    <div class="profile-value"><?php echo htmlspecialchars($tutor['name']); ?></div>
+                </div>
+                
+                <div class="profile-item">
+                    <div class="profile-label">
+                        <i class="fas fa-phone"></i>
+                        Phone Number
+                    </div>
+                    <div class="profile-value"><?php echo $tutor['phone']; ?></div>
+                </div>
+                
+                <div class="profile-item">
+                    <div class="profile-label">
+                        <i class="fas fa-envelope"></i>
+                        Email Address
+                    </div>
+                    <div class="profile-value"><?php echo htmlspecialchars($tutor['email']); ?></div>
+                </div>
+                
+                <div class="profile-item">
+                    <div class="profile-label">
+                        <i class="fas fa-graduation-cap"></i>
+                        Experience
+                    </div>
+                    <div class="profile-value"><?php echo htmlspecialchars($tutor['experience']); ?></div>
+                </div>
+                
+                <div class="profile-item">
+                    <div class="profile-label">
+                        <i class="fas fa-city"></i>
+                        City
+                    </div>
+                    <div class="profile-value"><?php echo htmlspecialchars($tutor['city']); ?></div>
+                </div>
+                
+                
+                
+                <div class="profile-item">
+                    <div class="profile-label">
+                        <i class="fas fa-crown"></i>
+                        Plan
+                    </div>
+                    <div class="profile-value"><?php echo ucfirst($tutor['plan']); ?></div>
+                </div>
+                
+                <div class="profile-item">
+                    <div class="profile-label">
+                        <i class="fas fa-toggle-on"></i>
+                        Status
+                    </div>
+                    <div class="profile-value">
+                        <span class="status-badge <?php echo $tutor['status'] == 'active' ? 'status-active' : 'status-inactive'; ?>">
+                            <i class="fas <?php echo $tutor['status'] == 'active' ? 'fa-check' : 'fa-times'; ?>"></i>
+                            <?php echo ucfirst($tutor['status']); ?>
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="profile-item">
+                    <div class="profile-label">
+                        <i class="fas fa-user-tag"></i>
+                        Type
+                    </div>
+                    <div class="profile-value"><?php echo htmlspecialchars($tutor['type']); ?></div>
+                </div>
+                
+                <div class="profile-item">
+                    <div class="profile-label">
+                        <i class="fas fa-briefcase"></i>
+                        Profession
+                    </div>
+                    <div class="profile-value"><?php echo ucfirst(str_replace('_', ' ', $tutor['profession'])); ?></div>
+                </div>
+                
+            </div>
+        </div>
+
+        <!-- Profile Edit Mode -->
+<div id="profileEdit" class="profile-card hidden">
+    <div class="card-header">
+        <h2 class="card-title">
+            <i class="fas fa-edit"></i>
+            Edit Profile
+        </h2>
+        <button onclick="toggleEditMode()" class="cancel-btn">
+            <i class="fas fa-times"></i>
+            Cancel
+        </button>
+    </div>
+    
+    <form method="POST" action="?tutor_id=<?php echo $selected_tutor_id; ?>">
+        <input type="hidden" name="update_profile" value="1">
+        <input type="hidden" name="latitude" id="selectedLatitude" value="<?php echo htmlspecialchars($tutor['latitude']); ?>">
+        <input type="hidden" name="longitude" id="selectedLongitude" value="<?php echo htmlspecialchars($tutor['longitude']); ?>">
+        <input type="hidden" name="address" id="selectedAddress" value="<?php echo htmlspecialchars($tutor['address']); ?>">
+        
+        <div class="profile-grid">
+            <div class="form-group">
+                <label class="form-label">
+                    <i class="fas fa-user"></i>
+                    Full Name
+                </label>
+                <input type="text" name="name" class="form-input" value="<?php echo htmlspecialchars($tutor['name']); ?>" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">
+                    <i class="fas fa-envelope"></i>
+                    Email Address
+                </label>
+                <input type="email" name="email" class="form-input" value="<?php echo htmlspecialchars($tutor['email']); ?>">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">
+                    <i class="fas fa-graduation-cap"></i>
+                    Experience
+                </label>
+                <input type="text" name="experience" class="form-input" value="<?php echo htmlspecialchars($tutor['experience']); ?>">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">
+                    <i class="fas fa-city"></i>
+                    City
+                </label>
+                <input type="text" name="city" class="form-input" value="<?php echo htmlspecialchars($tutor['city']); ?>">
+            </div>
+        </div>
+        
+        <!-- Location Selection Section -->
+        <div class="form-group location-section">
+            <label class="form-label">
+                <i class="fas fa-map-marker-alt"></i>
+                Location
+                <span class="help-text">Click on the map to select your location</span>
+            </label>
+            
+            <div class="location-info">
+                <div class="selected-location">
+                    <div class="location-display">
+                        <i class="fas fa-map-pin"></i>
+                        <span id="displayAddress"><?php echo htmlspecialchars($tutor['address']); ?></span>
+                    </div>
+                    <div class="coordinates-display">
+                        <small>
+                            Lat: <span id="displayLatitude"><?php echo htmlspecialchars($tutor['latitude']); ?></span>, 
+                            Lng: <span id="displayLongitude"><?php echo htmlspecialchars($tutor['longitude']); ?></span>
+                        </small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="map-container-edit">
+                <div id="editMap"></div>
+                <div class="map-instructions">
+                    <i class="fas fa-info-circle"></i>
+                    Click anywhere on the map to set your location
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label">
+                <i class="fas fa-lock"></i>
+                Password
+            </label>
+            <input type="password" name="password" class="form-input" value="<?php echo htmlspecialchars($tutor['password']); ?>" required>
+        </div>
+        
+        <button type="submit" class="update-btn">
+            <i class="fas fa-save"></i>
+            Update Profile
+        </button>
+    </form>
+</div>
+
+<script>
+let editMap;
+let editMarker;
+let geocoder;
+
+function initEditMap() {
+    console.log('Initializing edit map...');
+    
+    // Check if map container exists
+    const mapContainer = document.getElementById("editMap");
+    if (!mapContainer) {
+        console.error('Map container not found');
+        return;
+    }
+
+    // Current tutor location
+    const currentLocation = {
+        lat: <?php echo floatval($tutor['latitude']); ?>,
+        lng: <?php echo floatval($tutor['longitude']); ?>
+    };
+
+    console.log('Current location:', currentLocation);
+
+    // Initialize geocoder
+    geocoder = new google.maps.Geocoder();
+
+    // Create map
+    try {
+        editMap = new google.maps.Map(mapContainer, {
+            zoom: 15,
+            center: currentLocation,
+            styles: [
+                {
+                    featureType: "poi",
+                    elementType: "labels",
+                    stylers: [{ visibility: "off" }]
+                }
+            ],
+            mapTypeControl: true,
+            streetViewControl: false,
+            fullscreenControl: true,
+            zoomControl: true
+        });
+
+        console.log('Map created successfully');
+
+        // Custom marker icon
+        const markerIcon = {
+            url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="#28a745">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                </svg>
+            `),
+            scaledSize: new google.maps.Size(40, 40),
+            anchor: new google.maps.Point(20, 40)
+        };
+
+        // Create initial marker
+        editMarker = new google.maps.Marker({
+            position: currentLocation,
+            map: editMap,
+            icon: markerIcon,
+            title: "Your Location",
+            draggable: true,
+            animation: google.maps.Animation.BOUNCE
+        });
+
+        console.log('Marker created successfully');
+
+        // Stop bouncing after 2 seconds
+        setTimeout(() => {
+            editMarker.setAnimation(null);
+        }, 2000);
+
+        // Add click listener to map
+        editMap.addListener("click", (event) => {
+            updateLocation(event.latLng);
+        });
+
+        // Add drag listener to marker
+        editMarker.addListener("dragend", (event) => {
+            updateLocation(event.latLng);
+        });
+
+        console.log('Event listeners added successfully');
+
+    } catch (error) {
+        console.error('Error initializing map:', error);
+        alert('Error loading map. Please refresh the page and try again.');
+    }
+}
+
+function updateLocation(latLng) {
+    // Update marker position
+    editMarker.setPosition(latLng);
+    editMarker.setAnimation(google.maps.Animation.DROP);
+
+    // Get coordinates
+    const lat = latLng.lat();
+    const lng = latLng.lng();
+
+    // Update hidden form fields
+    document.getElementById('selectedLatitude').value = lat;
+    document.getElementById('selectedLongitude').value = lng;
+
+    // Update display coordinates
+    document.getElementById('displayLatitude').textContent = lat.toFixed(6);
+    document.getElementById('displayLongitude').textContent = lng.toFixed(6);
+
+    // Reverse geocode to get address
+    geocoder.geocode({ location: latLng }, (results, status) => {
+        if (status === "OK" && results[0]) {
+            const address = results[0].formatted_address;
+            document.getElementById('selectedAddress').value = address;
+            document.getElementById('displayAddress').textContent = address;
+        } else {
+            const fallbackAddress = `Location at ${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+            document.getElementById('selectedAddress').value = fallbackAddress;
+            document.getElementById('displayAddress').textContent = fallbackAddress;
+        }
+    });
+
+    // Show visual feedback
+    const locationInfo = document.querySelector('.location-info');
+    locationInfo.style.borderLeftColor = '#28a745';
+    locationInfo.style.backgroundColor = '#d4edda';
+    
+    setTimeout(() => {
+        locationInfo.style.backgroundColor = '#f8f9fa';
+    }, 1000);
+}
+
+// Initialize map when edit mode is opened
+function toggleEditMode() {
+    const profileView = document.getElementById('profileView');
+    const profileEdit = document.getElementById('profileEdit');
+    
+    if (profileEdit.classList.contains('hidden')) {
+        profileView.classList.add('hidden');
+        profileEdit.classList.remove('hidden');
+        
+        // Initialize map after a short delay to ensure the container is visible
+        setTimeout(() => {
+            initializeEditMapWhenReady();
+        }, 200);
+    } else {
+        profileEdit.classList.add('hidden');
+        profileView.classList.remove('hidden');
+    }
+}
+
+// Initialize map if Google Maps is already loaded
+if (typeof google !== 'undefined') {
+    google.maps.event.addDomListener(window, 'load', function() {
+        // Map will be initialized when edit mode is opened
+    });
+}
+</script>
+    
+
+        <div class="profile-item">
+            <div class="profile-label">
+                <i class="fas fa-map-marker-alt"></i>
+                Location
+            </div>
+            <div class="profile-value">
+                <div class="address-info">
+                    <p><?php echo htmlspecialchars($tutor['address']); ?></p>
+                </div>
+                <div class="map-container">
+                    <div id="map"></div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+        function initTutorMap() {
+            // Tutor's coordinates
+            const tutorLocation = {
+                lat: <?php echo floatval($tutor['latitude']); ?>,
+                lng: <?php echo floatval($tutor['longitude']); ?>
+            };
+
+            // Create map
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 15,
+                center: tutorLocation,
+                styles: [
+                    {
+                        featureType: "poi",
+                        elementType: "labels",
+                        stylers: [{ visibility: "off" }]
+                    }
+                ],
+                mapTypeControl: true,
+                streetViewControl: true,
+                fullscreenControl: true,
+                zoomControl: true
+            });
+
+            // Custom marker icon
+            const markerIcon = {
+                url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="#007bff">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                `),
+                scaledSize: new google.maps.Size(40, 40),
+                anchor: new google.maps.Point(20, 40)
+            };
+
+            // Create marker
+            const marker = new google.maps.Marker({
+                position: tutorLocation,
+                map: map,
+                icon: markerIcon,
+                title: "<?php echo htmlspecialchars($tutor['name'] ?? 'Tutor Location'); ?>",
+                animation: google.maps.Animation.DROP
+            });
+
+            // Create info window
+            const infoWindow = new google.maps.InfoWindow({
+                content: `
+                    <div style="padding: 10px; max-width: 250px;">
+                        <h4 style="margin: 0 0 8px 0; color: #007bff;">
+                            <i class="fas fa-user-graduate"></i> 
+                            <?php echo htmlspecialchars($tutor['name'] ?? 'Tutor'); ?>
+                        </h4>
+                        <p style="margin: 0; color: #666; font-size: 14px;">
+                            <i class="fas fa-map-marker-alt"></i> 
+                            <?php echo htmlspecialchars($tutor['address']); ?>
+                        </p>
+                    </div>
+                `
+            });
+
+            // Show info window on marker click
+            marker.addListener("click", () => {
+                infoWindow.open(map, marker);
+            });
+
+            // Auto-open info window after 1 second
+            setTimeout(() => {
+                infoWindow.open(map, marker);
+            }, 1000);
+        }
+
+        // Initialize map when page loads
+        window.onload = function() {
+            initTutorMap();
+        };
+        </script>
+
+        <!-- Google Maps API Script -->
+        <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTy16l_Zhg8IgEWj2nu_MnBJjCRg_SrB8&callback=initTutorMap">
+        </script><br>
+                <div class="profile-item">
+                    <div class="profile-label">
+                        <i class="fas fa-star"></i>
+                        Rating & Reviews
+                    </div>
+                    <div class="profile-value">
+                        <div class="rating-display">
+                            <span class="stars">
+                                <?php 
+                                $rating = floatval($tutor['rating']);
+                                for ($i = 1; $i <= 5; $i++) {
+                                    if ($i <= $rating) {
+                                        echo '<i class="fas fa-star"></i>';
+                                    } elseif ($i - 0.5 <= $rating) {
+                                        echo '<i class="fas fa-star-half-alt"></i>';
+                                    } else {
+                                        echo '<i class="far fa-star"></i>';
+                                    }
+                                }
+                                ?>
+                            </span>
+                            <span><?php echo $tutor['rating']; ?> (<?php echo $tutor['rating_count']; ?> reviews)</span>
+                        </div>
+                        
+                        <!-- Reviews Section -->
+<?php if (!empty($reviews)): ?>
+<div class="reviews-section">
+    <div class="section-header">
+        <h3><i class="fas fa-comments"></i> Student Reviews (<?php echo count($reviews); ?>)</h3>
+    </div>
+    
+    <div class="reviews-container">
+        <?php foreach ($reviews as $review): ?>
+        <div class="review-card">
+            <div class="review-header">
+                <div class="reviewer-info">
+                    <div class="reviewer-details">
+                        <h4><?php echo htmlspecialchars($review['student_name']); ?></h4>
+                        <div class="review-rating">
+                            <?php for ($i = 1; $i <= 5; $i++): ?>
+                                <i class="fas fa-star <?php echo $i <= $review['rating'] ? 'star-filled' : 'star-empty'; ?>"></i>
+                            <?php endfor; ?>
+                            <span class="rating-text"><?php echo $review['rating']; ?>/5</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-date">
+                    <i class="fas fa-clock"></i>
+                    <?php echo date('M d, Y', strtotime($review['created_at'])); ?>
+                </div>
+            </div>
+            
+            <?php if (!empty($review['review_text'])): ?>
+            <div class="review-content">
+                <p><?php echo htmlspecialchars($review['review_text']); ?></p>
+            </div>
+            <?php endif; ?>
+        </div>
+        <?php endforeach; ?>
+    </div>
+</div>
+<?php else: ?>
+<div class="no-reviews">
+    <div class="no-reviews-icon">
+        <i class="fas fa-comments"></i>
+    </div>
+    <h3>No Reviews Yet</h3>
+    <p>You haven't received any reviews from students yet. Keep providing excellent tutoring to earn your first review!</p>
+</div>
+<?php endif; ?>
+
+    </div>
+</div>
+
+
+
+
+</div> <br>
+
+    <script>
+        // Replace your existing toggleEditMode function with this:
+function toggleEditMode() {
+    const profileView = document.getElementById('profileView');
+    const profileEdit = document.getElementById('profileEdit');
+    
+    if (profileEdit.classList.contains('hidden')) {
+        profileView.classList.add('hidden');
+        profileEdit.classList.remove('hidden');
+        
+        // Check if Google Maps is loaded, if not wait for it
+        if (typeof google !== 'undefined' && google.maps) {
+            setTimeout(() => {
+                initEditMap();
+            }, 300);
+        } else {
+            // Wait for Google Maps to load
+            const checkGoogleMaps = setInterval(() => {
+                if (typeof google !== 'undefined' && google.maps) {
+                    clearInterval(checkGoogleMaps);
+                    setTimeout(() => {
+                        initEditMap();
+                    }, 300);
+                }
+            }, 100);
+        }
+    } else {
+        profileEdit.classList.add('hidden');
+        profileView.classList.remove('hidden');
+    }
+}
+
+    </script>
+</body>
+</html>

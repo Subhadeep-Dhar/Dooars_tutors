@@ -1934,8 +1934,7 @@ button:active {
                     <a href="sports&health.php">Sports & Health</a>
                     <ul class="dropdown-menu">
                         <li><a href="sports.php">Sports</a></li>
-                        <li><a href="yoga.php">Yoga</a></li>
-                        <li><a href="gym.php">Gym</a></li>
+                        <li><a href="gym&yoga.php">Gym / Yoga</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -1980,8 +1979,7 @@ button:active {
                     <a href="sports&health.php">Sports & Health</a>
                     <ul class="dropdown-menu">
                         <li><a href="sports.php">Sports</a></li>
-                        <li><a href="yoga.php">Yoga</a></li>
-                        <li><a href="gym.php">Gym</a></li>
+                        <li><a href="gym&yoga.php">Gym / Yoga</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">

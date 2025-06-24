@@ -21,7 +21,7 @@ try {
     $subject = $_POST['subject'] ?? '';
     $class = $_POST['classGrade'] ?? '';
 
-    // Base SQL query - focus on profession_details JSON
+    // Base SQL query - focus on profession_details JSON  AND payment_status = 'paid'
     $sql = "
         SELECT t.id, t.name, t.phone, t.email, t.experience, t.profession_details,
                t.teaching_preferences, t.city, t.address, t.rating, t.rating_count, t.status

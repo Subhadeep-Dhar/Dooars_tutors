@@ -20,6 +20,7 @@ if (!$teacher_id) {
     exit();
 }
 
+
 // Fetch teacher details from database
 $stmt = $pdo->prepare("SELECT * FROM tutors WHERE id = ? OR name = ?");
 $stmt->execute([$teacher_id, urldecode($teacher_id)]);
@@ -29,6 +30,12 @@ if (!$teacher) {
     header("Location: index.php");
     exit();
 }
+
+// Increment profile visits
+$stmt = $pdo->prepare("INSERT INTO teacher_scount (tutor_id, visits) 
+                       VALUES (?, 1) 
+                       ON DUPLICATE KEY UPDATE visits = visits + 1");
+$stmt->execute([$teacher['id']]);
 
 // Handle review submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_review'])) {
@@ -62,6 +69,13 @@ $name_parts = explode(' ', $teacher['name']);
 foreach ($name_parts as $part) {
     $initials .= strtoupper($part[0]);
 }
+
+$profilePic = !empty($teacher['profile_picture']) && file_exists($teacher['profile_picture'])
+    ? htmlspecialchars($teacher['profile_picture'])
+    : "https://via.placeholder.com/80x80/007bff/white?text=" . urlencode($initials);
+
+$fallbackPic = "https://via.placeholder.com/80x80/6c757d/white?text=" . urlencode($initials);
+
 
 // Generate star rating
 $full_stars = floor($teacher['rating']);
@@ -145,6 +159,12 @@ $stars_html = str_repeat('★', $full_stars) . str_repeat('☆', $empty_stars);
             margin: 0 auto 24px;
             border: 3px solid rgba(255,255,255,0.2);
         }
+        .profile-avatar img.avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
 
         .teacher-name {
             font-size: 36px;
@@ -627,12 +647,18 @@ $stars_html = str_repeat('★', $full_stars) . str_repeat('☆', $empty_stars);
     <div class="container">
         <!-- Header Section -->
         <div class="header">
-            <a href="javascript:history.back()" class="back-button">
+            <a href="index.php" class="back-button">
                 <i class="fas fa-arrow-left"></i> Back to Search
             </a>
             
             <div class="profile-avatar">
-                <?php echo $initials; ?>
+                <?php if (!empty($teacher['profile_picture']) && file_exists($teacher['profile_picture'])): ?>
+                    <img src="<?php echo $profilePic; ?>" onerror="this.src='<?php echo $fallbackPic; ?>'"
+                        alt="<?php echo htmlspecialchars($teacher['name'] ?? 'User'); ?>" 
+                        class="avatar-img">
+                <?php else: ?>
+                    <?php echo $initials; ?>
+                <?php endif; ?>
             </div>
             
             <h1 class="teacher-name"><?php echo htmlspecialchars($teacher['name']); ?></h1>
@@ -807,40 +833,41 @@ $stars_html = str_repeat('★', $full_stars) . str_repeat('☆', $empty_stars);
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTy16l_Zhg8IgEWj2nu_MnBJjCRg_SrB8&callback=initTutorMap" async defer></script>
     
     <script>
-        // Initialize Google Map
         function initTutorMap() {
-            const teacherLocation = '<?php echo htmlspecialchars($teacher['city']); ?>';
-            const geocoder = new google.maps.Geocoder();
-            
-            geocoder.geocode({ address: teacherLocation }, function(results, status) {
-                if (status === 'OK') {
-                    const map = new google.maps.Map(document.getElementById('map'), {
-                        zoom: 13,
-                        center: results[0].geometry.location,
-                        styles: [
-                            {
-                                featureType: 'all',
-                                elementType: 'geometry.fill',
-                                stylers: [{ color: '#f8fafc' }]
-                            },
-                            {
-                                featureType: 'water',
-                                elementType: 'geometry',
-                                stylers: [{ color: '#e2e8f0' }]
-                            }
-                        ]
-                    });
-                    
-                    const marker = new google.maps.Marker({
-                        position: results[0].geometry.location,
-                        map: map,
-                        title: '<?php echo htmlspecialchars($teacher['name']); ?>'
-                    });
-                } else {
-                    document.getElementById('map').innerHTML = '<div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #64748b;">Map could not be loaded</div>';
-                }
-            });
-        }
+    const lat = <?php echo json_encode(floatval($teacher['latitude'])); ?>;
+    const lng = <?php echo json_encode(floatval($teacher['longitude'])); ?>;
+
+    if (!lat || !lng) {
+        document.getElementById('map').innerHTML = '<div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #64748b;">Location not available</div>';
+        return;
+    }
+
+    const location = { lat: lat, lng: lng };
+
+    const map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 14,
+        center: location,
+        styles: [
+            {
+                featureType: 'all',
+                elementType: 'geometry.fill',
+                stylers: [{ color: '#f8fafc' }]
+            },
+            {
+                featureType: 'water',
+                elementType: 'geometry',
+                stylers: [{ color: '#e2e8f0' }]
+            }
+        ]
+    });
+
+    const marker = new google.maps.Marker({
+        position: location,
+        map: map,
+        title: '<?php echo htmlspecialchars($teacher['name']); ?>'
+    });
+}
+
 
         // Toggle review form
         function toggleReviewForm() {

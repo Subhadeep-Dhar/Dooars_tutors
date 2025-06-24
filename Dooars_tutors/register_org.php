@@ -1005,6 +1005,17 @@ button[onclick="addSubjectGroup()"]:hover::after {
                         </div>
                     </div>
 
+                    <div class="two-column">
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" required placeholder="Enter your password">
+                        </div>
+                        <div class="form-group">
+                            <label for="referral_code">Referral code</label>
+                            <input type="text" id="referral_code" name="referral_code" placeholder="Referral Code (optional)">
+                        </div>
+                    </div>
+
                     <!-- Organization Dropdown -->
                     <div class="dropdown-section" id="profession-section">
                         <div class="dropdown-header" onclick="toggleDropdown('profession-section')">
